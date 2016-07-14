@@ -1,0 +1,68 @@
+{% extends 'account_layout.html' %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block account_content %}
+<div>
+    <h1>{% trans 'Config' %}</h1>
+    <form action="/account/config_dl" method="get" class="pure-form pure-form-aligned">
+        <fieldset>
+            <div class="pure-control-group">
+                <label for="p_os">{% trans 'OS' %}</label>
+                <select name="client_os" id="p_os" class="pure-input-1-2">
+                    {% for k, v in config_os %}
+                        <option value="{{k}}">{{v}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="pure-control-group">
+                <label for="p_gw">{% trans 'Gateway' %}</label>
+                <select name="gateway" id="p_gw" class="pure-input-1-2">
+                    <option value="" selected>{% trans 'Random' %}</option>
+                    <option value="all">{% trans 'All (multiple config files)' %}</option>
+                    {% for c in config_countries %}
+                        <option value="cc_{{c.country_code}}">
+                            {% trans 'Country' %}: {{c.country_name}}
+                            {% if c.message %}
+                            [ {{ c.message }} ]
+                            {% endif %}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="pure-control-group">
+                <label for="p_proto">{% trans 'Protocol' %}</label>
+                <select name="protocol" id="p_proto" class="pure-input-1-2">
+                    {% for k, v in config_protocols %}
+                        <option value="{{k}}">{{v}}</option>
+                    {% endfor %}
+                </select>
+                <p class="inputinfo">{% trans 'TCP is slower. Use it only if you have important packet loss or if UDP is filtered.' %}</p>
+            </div>
+
+            <div class="pure-control-group">
+                <label for="p_proxy">{% trans 'Use HTTP Proxy?' %}</label>
+                <input type="text" name="http_proxy" id="p_proxy"
+                       placeholder="{% trans "Leave empty if you don't know." %}"
+                       class="pure-input-1-2" />
+                <p class="inputinfo">{% trans 'Requires TCP.' %}</p>
+            </div>
+
+            <div class="pure-controls">
+                <label for="p_ipv6" class="pure-checkbox">
+                    <input type="checkbox" name="enable_ipv6" id="p_ipv6" checked />
+                    {% trans 'Enable IPv6?' %}
+                </label>
+                
+                <input type="submit" class="pure-button pure-button-primary"
+                       value="{% trans 'Download config' %}" />
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+{% endblock %}
+
+

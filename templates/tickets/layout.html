@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="page">
+    <div class="left-menu">
+        <p class="menu-title">{% trans 'Support' %}</p>
+        <ul>
+            <li><a href="/chat"><b>{% trans 'Live Chat' %}</b></a></li>
+            <li><a href="/tickets/new"><b>{% trans 'New Ticket' %}</b></a></li>
+            <li><a href="/tickets/open">{% trans 'Open Tickets' %}
+                    {% if open_n > 0 %}({{open_n}}){% endif %}</a></li>
+            <li><a href="/tickets/closed">{% trans 'Closed Tickets' %}</a></li>
+            {% if perms.tickets.view_any_ticket %}
+                <li><a href="/tickets/all_open">{% trans 'All Open' %}
+                        {% if all_open_n > 0 %}({{all_open_n}}){% endif %}</a></li>
+                <li><a href="/tickets/all_closed">{% trans 'All Closed' %}</a></li>
+            {% endif %}
+        </ul>
+    </div>
+    <div class="content">
+        {% block tickets_content %}{% endblock %}
+    </div>
+</div>
+{% endblock %}
+

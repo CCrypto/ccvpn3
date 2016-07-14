@@ -1,0 +1,14 @@
+{% load i18n %}
+{{ site_name }}
+========================================
+
+{% trans "A new ticket has been created." %}
+{{ url }}
+
+{% trans "Category:" %} {{ ticket.get_category_display }}
+{% trans "Subject:" %} {{ ticket.subject }}
+{% trans "User:" %} {{ ticket.user.username }}
+
+{{ message.message | safe }}
+
+

@@ -1,0 +1,50 @@
+{% extends 'tickets/layout.html' %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block tickets_content %}
+<div class="formpage">
+    <h1>{% trans 'Ticket:' %} {{ ticket.subject }}
+        {% if not ticket.is_open %}
+        <b>[{% trans 'closed' %}]</b>
+        {% endif %}
+    </h1>
+
+    <div class="ticket-messages">
+    {% for message in ticket_messages %}
+        <div class="ticket-message
+                    {% if ticket.user == message.user %} ticket-message-user
+                    {% else %} ticket-message-staff {% endif %}
+                    {% if message.staff_only %} ticket-message-private {% endif %}">
+            <p class="ticket-message-author">
+                {% if message.staff_only %}[{% trans "Private" %}]{% endif %}
+                {% if ticket.user != message.user %} CCrypto Support - {% endif %}
+                {{ message.user.username|default:'-' }}:
+            </p>
+            <p class="ticket-message-date">
+                {% with created=message.created|date:'d/m/Y H:i' %}
+                    {{ created }}
+                {% endwith %}
+            </p>
+            <p class="ticket-message-content">
+                {{ message.message | linebreaksbr | urlize }}
+            </p>
+        </div>
+    {% endfor %}
+    </div>
+
+    <form class="pure-form pure-form-stacked" action="" method="post">
+        {% csrf_token %}
+        {{ form }}
+
+        <input type="submit" class="pure-button pure-button-primary button-1-2" value="{% trans 'Reply' %}" />
+        {% if ticket.is_open %}
+                <input type="submit" class="pure-button button-1-2" name="close" value="{% trans 'Close Ticket' %}" />
+        {% else %}
+                <input type="submit" class="pure-button button-1-2" name="reopen" value="{% trans 'Re-open Ticket' %}" />
+        {% endif %}
+        </div>
+    </form>
+</div>
+{% endblock %}
+

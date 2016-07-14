@@ -1,0 +1,69 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_static %}
+
+{% block extrastyle %}{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}" />
+<link rel="stylesheet" type="text/css" href="{% static "admin_ref.css" %}" />
+{% endblock %}
+
+{% block coltype %}{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+&rsaquo; <a href="{% url 'admin_ref' %}">{% trans 'Status' %}</a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+    <div class="module half-module">
+    <table>
+    <caption>
+        <a href="{% url 'admin_ref' %}" class="section">{% trans 'Top Referrers (week)' %}</a>
+    </caption>
+        {% for r in top_ref_week %}
+            <tr>
+                <th><a href="{% url 'admin:auth_user_change' r.id %}">{{r.username}}</a></th>
+                <th style="width: auto">{{r.n_ref}}</th>
+            </tr>
+        {% endfor %}
+    </table>
+    </div>
+
+    <div class="module half-module">
+    <table>
+    <caption>
+        <a href="{% url 'admin_ref' %}" class="section">{% trans 'Top Referrers (month)' %}</a>
+    </caption>
+        {% for r in top_ref_month %}
+            <tr>
+                <th><a href="{% url 'admin:auth_user_change' r.id %}">{{r.username}}</a></th>
+                <th style="width: auto">{{r.n_ref}}</th>
+            </tr>
+        {% endfor %}
+    </table>
+    </div>
+
+    <div class="module half-module">
+    <table>
+    <caption>
+        <a href="{% url 'admin_ref' %}" class="section">{% trans 'Top Referrers (all time)' %}</a>
+    </caption>
+        {% for r in top_ref %}
+            <tr>
+                <th><a href="{% url 'admin:auth_user_change' r.id %}">{{r.username}}</a></th>
+                <th style="width: auto">{{r.n_ref}}</th>
+            </tr>
+        {% endfor %}
+    </table>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+{% endblock %}
+

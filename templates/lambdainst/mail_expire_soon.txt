@@ -1,0 +1,7 @@
+{% load i18n %}{{ site_name }}
+========================================
+
+{% blocktrans with exp=exp|timeuntil %}Your account will expire in {{exp}}{% endblocktrans %}
+{% trans 'You can renew it here:' %}
+{{ url }}
+

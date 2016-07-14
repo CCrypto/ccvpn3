@@ -1,0 +1,31 @@
+{% extends 'account_layout.html' %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block account_content %}
+<h1>{% trans 'Settings' %}</h1>
+
+<form action="/account/settings" method="post" class="pure-form pure-form-aligned">
+    {% csrf_token %}
+    <fieldset>
+        <div class="pure-control-group">
+            <label for="ins_password">{% trans 'Change password' %}</label>
+            <input type="password" id="ins_password" autocomplete="off" name="password" />
+        </div>
+
+        <div class="pure-control-group">
+            <label for="ins_password2">{% trans 'Change password' %} ({% trans 'repeat' %})</label>
+            <input type="password" id="ins_password2" autocomplete="off" name="password2" />
+        </div>
+
+        <div class="pure-control-group">
+            <label for="ins_email">{% trans 'E-Mail' %}</label>
+            <input type="email" id="ins_email" name="email" autocomplete="off" value="{{user.email}}" />
+        </div>
+    
+        <div class="pure-controls">
+            <input type="submit" class="pure-button pure-button-primary" value="{% trans 'Save' %}" />
+        </div>
+    </fieldset>
+</form>
+{% endblock %}

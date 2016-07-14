@@ -1,0 +1,52 @@
+{% extends 'tickets/layout.html' %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block tickets_content %}
+<h1>{% trans 'Tickets' %}</h1>
+
+{% if tickets %}
+    <table class="admin-list">
+        <thead>
+            <tr>
+                <td>#{% trans 'ID' %}</td>
+                <td>{% trans 'Subject' %}</td>
+                <td>{% trans 'Status' %}</td>
+                {% if not single_user %}
+                    <td>{% trans 'User' %}</td>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for ticket in tickets %}
+                <tr>
+                    <td>#{{ticket.id}}</td>
+                    <td><a href="{% url 'tickets:view' ticket.id %}">{{ ticket.subject }}</a></td>
+                    <td>{{ ticket.status_text }}</td>
+                    {% if not single_user %}
+                        {% if ticket.user %}
+                            <td><a href="{% url 'admin:auth_user_change' ticket.user.id %}">
+                                    {{ticket.user.username}}
+                            </a></td>
+                        {% else %}
+                            <td>-</td>
+                        {% endif %}
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p class="pages">
+        {% if tickets.has_previous %}
+        <a href="?{{ filter }}&amp;page={{ tickets.previous_page_number }}">&lt;</a>
+        {% endif %}
+        <a href="?{{ filter }}&amp;page={{ tickets.number }}">{{ tickets.number }}</a>
+        {% if tickets.has_next %}
+            <a href="?{{ filter }}&amp;page={{ tickets.next_page_number }}">&gt;</a>
+        {% endif %}
+    </p>
+{% else %}
+<p>{% trans 'No ticket to show.' %}</p>
+{% endif %}
+{% endblock %}
+

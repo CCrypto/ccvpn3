@@ -1,0 +1,9 @@
+{% load i18n %}
+{{ site_name }}
+========================================
+
+{% trans "New reply on your ticket:" %} {{ ticket.subject }}
+{{ url }}
+
+{{ message.message | safe}}
+

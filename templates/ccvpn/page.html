@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="page">
+    <div class="left-menu">
+        <p class="menu-title">{% trans 'Help' %}</p>
+        <ul>
+            <li><a href="/page/faq">{% trans 'Frequently Asked Questions' %}</a></li>
+            <li><a href="/page/self-diagnosis">{% trans 'Self-Diagnosis' %}</a></li>
+        </ul>
+
+        <p class="menu-title">{% trans 'Installation' %}</p>
+        <ul>
+            <li><a href="/page/install-android">{% trans 'Android' %}</a></li>
+            <li><a href="/page/install-windows">{% trans 'Windows' %}</a></li>
+            <li><a href="/page/install-gnulinux">{% trans 'GNU/Linux' %}</a></li>
+            <li><a href="/page/install-osx">{% trans 'OS X' %}</a></li>
+        </ul>
+    </div>
+    <div class="content">
+        {% if title %}
+            <h1>{{ title }}</h1>
+        {% endif %}
+        {{ content|safe }}
+    </div>
+</section>
+{% endblock %}
+

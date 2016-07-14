@@ -1,0 +1,56 @@
+{% extends 'tickets/layout.html' %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block tickets_content %}
+<h1>{% trans 'Support' %}</h1>
+
+{% url 'chat' as chat_url %}
+
+<p>{% trans 'Before creating a ticket, please check if you question is convered in' %}
+    <a href="/page/faq">{% trans 'the FAQ' %}</a>.
+</p>
+<p>{% blocktrans trimmed with chat_url as chat_url %}
+    If you would prefer to talk us in real time, we have a 
+    <a href="{{chat_url}}">live chat</a>.<br />
+    You can also use your own IRC client on #ccrypto on chat.freenode.net.
+    We are however not always online and you may have to wait.
+    {% endblocktrans %}
+</p>
+
+
+{% if tickets %}
+<h2>{% trans 'Your open tickets' %}</h2>
+    <table class="admin-list">
+        <thead>
+            <tr>
+                <td>#{% trans 'ID' %}</td>
+                <td>{% trans 'Subject' %}</td>
+                <td>{% trans 'Status' %}</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ticket in tickets %}
+                <tr>
+                    <td>#{{ticket.id}}</td>
+                    <td><a href="{% url 'tickets:view' ticket.id %}">{{ ticket.subject }}</a></td>
+                    <td>{{ ticket.status_text }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if tickets.has_previous or tickets.has_next %}
+    <p class="pages">
+        {% if tickets.has_previous %}
+        <a href="?{{ filter }}&amp;page={{ tickets.previous_page_number }}">&lt;</a>
+        {% endif %}
+        <a href="?{{ filter }}&amp;page={{ tickets.number }}">{{ tickets.number }}</a>
+        {% if tickets.has_next %}
+            <a href="?{{ filter }}&amp;page={{ tickets.next_page_number }}">&gt;</a>
+        {% endif %}
+    </p>
+    {% endif %}
+{% endif %}
+{% endblock %}
+

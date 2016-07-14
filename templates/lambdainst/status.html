@@ -1,0 +1,61 @@
+{% extends 'layout.html' %}
+{% load i18n %}
+{% load staticfiles %}
+{% load bw %}
+
+{% block content %}
+<div class="content" id="gateways">
+    <h1>{% trans 'Our Servers' %}</h1>
+
+    <ul>
+        <li>
+            {% blocktrans trimmed with n_users=n_users %}
+                We have <em>{{ n_users }}</em> active users.
+            {% endblocktrans %}
+            {% blocktrans trimmed with n_sess=n_sess %}
+                <em>{{ n_sess }}</em> are using our VPN right now.
+            {% endblocktrans %}
+        </li>
+        <li>
+            {% blocktrans trimmed with n_gw=n_gw n_countries=n_countries %}
+                They are connected to <em>{{ n_gws }}</em> servers spread across
+                <em>{{ n_countries }}</em> countries to provide a low-latency
+                and secure access anywhere in the world.
+            {% endblocktrans %}
+        </li>
+        <li>
+            {% with total_bw|bwformat as total_bw_f %}
+                {% blocktrans trimmed with total_bw=total_bw_f %}
+                    Our network has a total bandwidth of <em>{{ total_bw }}</em> and
+                    all our servers are DDoS-protected.
+                {% endblocktrans %}
+            {% endwith %}
+        </li>
+    </ul>
+
+    <h2>{% trans 'Locations' %}</h2>
+    <table>
+        <thead>
+            <tr><td>{% trans 'Location' %}</td>
+                <td>{% trans 'Hostname' %}</td>
+                <td>{% trans 'Servers' %}</td>
+                <td>{% trans 'Bandwidth' %}</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for country, d in locations %}
+                <tr><td>{{ d.country_name }}</td>
+                    <td class="host_line">
+                        <span class="host_name">{{ d.hostname }}</span>
+                    </td>
+                    <td>{{ d.servers }}</td>
+                    <td>{{ d.bandwidth|bwformat }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+    <script type="text/javascript" src="/static/ping.js"></script>
+</section>
+
+{% endblock %}

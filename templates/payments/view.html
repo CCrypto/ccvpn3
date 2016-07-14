@@ -1,0 +1,34 @@
+{% extends 'account_layout.html' %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block headers %}
+    {% if payment.status == 'new' %}
+        <meta http-equiv="refresh" content="30" />
+    {% endif %}
+{% endblock %}
+
+{% block account_content %}
+<section id="account">
+    <h1>{% trans 'Payment' %} #{{payment.id}}:
+        {{ payment.get_status_display }}
+    </h1>
+
+    {% if payment.status_message %}
+        <p><b>{{payment.status_message}}</b></p>
+    {% endif %}
+
+    <p>
+        {% if payment.status == 'confirmed' %}
+            {% trans 'The payment has been confirmed.' %}
+        {% elif payment.status == 'cancelled' %}
+            {% trans 'The payment has been cancelled.' %}
+        {% elif payment.status == 'new' %}
+            {% trans 'This page will be updated with payment progress.' %}
+        {% endif %}
+        <br />
+        <a href="{% url 'account:index' %}">{% trans 'Go back to your account' %}</a>
+    </p>
+</section>
+{% endblock %}
+
