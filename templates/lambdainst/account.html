@@ -1,0 +1,126 @@
+{% extends 'account_layout.html' %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block headers %}
+{% endblock %}
+
+{% block account_content %}
+<div>
+    <h1>{% trans 'Account' %} : {{user.username}}</h1>
+
+    <div class="account-status">
+        {% if user.vpnuser.is_paid %}
+            <p class="account-status-paid">
+                {% blocktrans trimmed with until=user.vpnuser.expiration|date:'DATETIME_FORMAT' %}
+                Your account is paid until {{until}}
+                {% endblocktrans %}
+                {% blocktrans trimmed with left=user.vpnuser.expiration|timeuntil %}
+                ({{ left }} left)
+                {% endblocktrans %}
+            </p>
+        {% elif user.vpnuser.can_have_trial %}
+            <p class="account-status-trial">
+                {% blocktrans trimmed with left=user.vpnuser. %}
+                    You can activate your free trial account for two hours periods for up to one week,
+                    by clicking this button:
+                {% endblocktrans %}
+                <form action="/account/trial" method="post" class="pure-form" name="trial_form">
+                    {% csrf_token %}
+                    <fieldset>
+                        <div id="captcha"></div>
+                        <noscript>
+                            <input type="submit" class="pure-button pure-button-primary" value="{% trans 'Activate' %}" />
+                        </noscript>
+                    </fieldset>
+                </form>
+            </p>
+
+            <script type="text/javascript">
+                var captchaLoadCallback = function() {
+                    grecaptcha.render("captcha", {
+                        "sitekey": "{{ recaptcha_site_key }}",
+                        "callback": function(response) { document.trial_form.submit(); },
+                    });
+                };
+            </script>
+            <script src="https://www.google.com/recaptcha/api.js?onload=captchaLoadCallback&render=explicit"
+                    async defer></script>
+        {% else %}
+            <p class="account-status-disabled">{% trans 'Your account is not paid.' %}</p>
+        {% endif %}
+    </div>
+
+    <div class="pure-g">
+        <div class="pure-u-1 pure-u-lg-1-2 account-payment-box">
+            <form action="/payments/new" method="post" class="pure-form pure-form-aligned">
+                {% csrf_token %}
+
+                <fieldset>
+                    <div class="pure-control-group">
+                        <label for="ino_time">{% trans 'Add' %}</label>
+                        <select id="ino_time" name="time" class="pure-input-1-2">
+                            <option value="1">1 {% trans 'month' %}</option>
+                            <option value="3">3 {% trans 'months' %}</option>
+                            <option value="6">6 {% trans 'months' %}</option>
+                            <option value="12">12 {% trans 'months' %}</option>
+                        </select>
+                    </div>
+
+                    <div class="pure-control-group">
+                        <label for="ino_method">{% trans 'with' %}</label>
+                        <select id="ino_method" name="method" class="pure-input-1-2">
+                            {% for backend in backends %}
+                                <option value="{{ backend.backend_id }}" {% if backend.backend_id == default_backend %}selected{% endif %}>
+                                    {{ backend.backend_display_name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="pure-controls">
+                        <input type="submit" class="pure-button pure-button-primary"
+                               value="{% trans 'Add' %}" />
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <div class="pure-u-1 pure-u-lg-1-2 account-giftcode-box">
+            <form action="/account/gift_code" method="post" class="pure-form pure-form-aligned">
+                {% csrf_token %}
+                <fieldset>
+                    <div class="pure-control-group">
+                        <label for="ins_code">{% trans 'Gift code' %}</label>
+                        <input type="text" id="ins_code" name="code" maxlength="32"
+                               pattern="[ ]*[a-zA-Z0-9]{1,32}[ ]*" autocomplete="off" />
+                    </div>
+                    <div class="pure-controls">
+                        <input type="submit" class="pure-button pure-button-primary"
+                               value="{% trans 'Use' %}" />
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+    <div class="account-aff-box">
+        <p>
+            {% blocktrans trimmed %}
+            Get two weeks for free for every referral that takes at least one month!
+            {% endblocktrans %}
+            {% trans 'Share this link' %}:
+            <form class="pure-form">
+                <fieldset>
+                    <input type="text" size="30" value="{{ref_url}}" />
+                    <a target="_blank" href="{{twitter_link}}">{% trans 'tweet' %}</a>
+                    <a href="/static/affimg/banner.png">banner</a>
+                    <a href="/static/affimg/leaderboard.png">leaderboard</a>
+                </fieldset>
+            </form>
+        </p>
+    </div>
+</div>
+
+{% endblock %}
+
+

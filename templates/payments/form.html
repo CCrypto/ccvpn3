@@ -1,0 +1,13 @@
+{% extends 'account_layout.html' %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block account_content %}
+<section id="account">
+    <h1>{% trans 'Payment' %}</h1>
+
+    {{ html | safe }}
+</section>
+
+{% endblock %}
+

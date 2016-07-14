@@ -1,0 +1,23 @@
+.dashboard #content {
+    width: auto;
+}
+
+.admin-graph {
+    width: 48%;
+    margin: auto;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+
+.half-module {
+    display: inline-block;
+    width: 50%;
+}
+.half-module table {
+    width: 95%;
+}
+.half-module + .half-module {
+    float: left;
+}

@@ -1,0 +1,22 @@
+
+{% extends 'layout.html' %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="page">
+    <div class="left-menu">
+        <p class="menu-title">{% trans 'Account' %}</p>
+        <ul>
+            <li><a href="/account/">{% trans 'Account' %}</a></li>
+            <li><a href="/account/config">{% trans 'Config Download' %}</a></li>
+            <li><a href="/account/settings">{% trans 'Settings' %}</a></li>
+            <li><a href="/payments">{% trans 'Payments' %}</a></li>
+            <li><a href="/account/logs">{% trans 'Logs' %}</a></li>
+        </ul>
+    </div>
+    <div class="content">
+        {% block account_content %}{% endblock %}
+    </div>
+</div>
+{% endblock %}

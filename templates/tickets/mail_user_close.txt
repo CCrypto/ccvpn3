@@ -1,0 +1,7 @@
+{% load i18n %}
+{{ site_name }}
+========================================
+
+{% trans "Your ticket was closed." %}
+{{ url }}
+

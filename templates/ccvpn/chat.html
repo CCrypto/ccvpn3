@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block wrap %}
+    <iframe id="livechat-iframe" src="https://vpn.ccrypto.org/kiwi/?nick={{username}}&theme=ccrelaxed#ccrypto"></iframe>
+
+    <script type="text/javascript">
+        (function() {
+            function resize() {
+                var h = (document.body.offsetHeight
+                         - document.getElementById("topbar").offsetHeight
+                         - document.getElementById("header").offsetHeight
+                         - document.getElementById("footer").offsetHeight
+                         - 10);
+                console.log(h);
+                document.getElementById("livechat-iframe").style.height = h + "px";
+            }
+            window.addEventListener("load", resize);
+            window.addEventListener("resize", resize);
+        })();
+    </script>
+{% endblock %}
+
+{# Remove the blue live chat link in the corner #}
+{% block livechat_thing %}
+{% endblock %}

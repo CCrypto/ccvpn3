@@ -1,0 +1,93 @@
+{% load i18n %}
+{% load staticfiles %}
+{% get_current_language as LANGUAGE_CODE %}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ LANGUAGE_CODE }}">
+<head>
+    <title>{{ title | default:'CCrypto VPN' }}</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="{% static 'css/pure-min.css' %}" media="screen" />
+    <link rel="stylesheet" href="{% static 'css/grids-responsive-min.css' %}" media="screen" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" media="screen" />
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" media="screen" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    {{ADDITIONAL_HEADER_HTML | safe}}
+    {% block headers %}{% endblock %}
+</head>
+<body>
+    <div id="topbar">
+        <div class="topbar-left">
+            <p>
+                <a href="http://ccrypto.org">CCrypto</a>
+                // <a href="//status.ccrypto.org/">{% trans 'Service Status' %}</a>
+                {% for l, _ in LANGUAGES %}
+                | <a href="{% url 'set_lang' %}?lang={{l}}&amp;next={{request.get_full_path}}">{{l.upper}}</a>
+                {% endfor %}
+            </p>
+        </div>
+        <div class="topbar-right">
+            {% if user.is_authenticated %}
+                <p><a class="create" href="/account/">{% trans 'Your account' %}</a>
+                    <a class="create" href="/account/logout">{% trans 'Logout' %}</a>
+                    </p>
+            {% else %}
+                <p><a href="/account/signup" class="create">{% trans 'Sign up' %}</a>
+                    <a href="/account/login" class="create">{% trans 'Log in' %}</a>
+                    </p>
+            {% endif %}
+        </div>
+        <div style="clear:both"></div>
+    </div>
+    
+    <header id="header">
+        <div id="logo">
+            <h2><a href="//ccrypto.org/">CCrypto</a></h2>
+            <h1><a href="/">VPN</a></h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">{% trans "VPN" %}</a></li>
+                <li><a href="/status">{% trans "Servers" %}</a></li>
+                <li><a href="/page/help">{% trans "Guides" %}</a></li>
+                {% if user.is_authenticated %}
+                <li><a href="/tickets/">{% trans "Support" %}</a></li>
+                {% endif %}
+                {% if user.is_staff %}
+                <li><a href="/admin/">{% trans "Admin" %}</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        <div style="clear: both"></div>
+    </header>
+
+    {% block wrap %}
+    {% for message in messages %}
+        <div class="message">
+            <p class="{{message.tags}}">{{ message }}</p>
+        </div>
+    {% endfor %}
+
+    {% block content %}{% endblock %}
+    {% endblock %}
+
+    <footer id="footer">
+        <p><a href="//ccrypto.org/">Cognitive Cryptography</a>
+        - <a href="https://twitter.com/CCrypto_VPN">{% trans 'CCrypto_VPN on Twitter' %}</a>
+        - <a href="/page/tos">{% trans 'ToS' %}</a>
+        - <a href="https://github.com/CCrypto/ccvpn3">{% trans "It's open-source!" %}</a>
+        </p>
+    </footer>
+
+    {% block livechat_thing %}
+        <div class="livechat-thing">
+            <a href="/chat">
+                <span class="icon"></span>
+                {% blocktrans %}Any question? <b>Chat with us</b>{% endblocktrans %}
+            </a>
+        </div>
+    {% endblock %}
+
+    {{ADDITIONAL_HTML | safe}}
+</body>
+</html>
+

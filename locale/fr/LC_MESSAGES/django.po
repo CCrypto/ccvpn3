@@ -1,0 +1,1141 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-07-07 17:43+0000\n"
+"PO-Revision-Date: 2016-04-07 01:32+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Language: fr\n"
+"X-Source-Language: C\n"
+"X-Generator: Poedit 1.8.7.1\n"
+
+#: ccvpn/passwords.py:41
+msgid "algorithm"
+msgstr ""
+
+#: ccvpn/passwords.py:42
+msgid "salt"
+msgstr ""
+
+#: ccvpn/passwords.py:43
+msgid "hash"
+msgstr ""
+
+#: lambdainst/admin.py:17
+msgid "Code must be [a-zA-Z0-9]"
+msgstr ""
+
+#: lambdainst/admin.py:19
+msgid "Code must be between 1 and 32 characters"
+msgstr ""
+
+#: lambdainst/admin.py:39
+msgid "(rewarded)"
+msgstr ""
+
+#: lambdainst/admin.py:41
+msgid "(not rewarded)"
+msgstr ""
+
+#: lambdainst/admin.py:43
+msgid "Referrer"
+msgstr ""
+
+#: lambdainst/admin.py:48 lambdainst/admin.py:92
+msgid "Is paid?"
+msgstr "Est payé?"
+
+#: lambdainst/admin.py:83
+msgid "Important dates"
+msgstr "Dates importantes"
+
+#: lambdainst/admin.py:84
+msgid "Permissions"
+msgstr "Permissions"
+
+#: lambdainst/admin.py:116 tickets/admin.py:52
+msgid "Comment"
+msgstr "Notes"
+
+#: lambdainst/forms.py:25
+msgid "Username taken."
+msgstr "Identifiant réservé."
+
+#: lambdainst/forms.py:32 lambdainst/forms.py:35 templates/ccvpn/signup.html:13
+msgid "Username"
+msgstr "Identifiant"
+
+#: lambdainst/forms.py:39 templates/ccvpn/signup.html.py:19
+msgid "Password"
+msgstr "Mot de passe"
+
+#: lambdainst/forms.py:40
+msgid "Anything"
+msgstr "N'importe quoi"
+
+#: lambdainst/forms.py:43 templates/ccvpn/signup.html.py:24
+msgid "Repeat"
+msgstr "Répétez"
+
+#: lambdainst/forms.py:44
+msgid "Same Anything"
+msgstr "La même chose"
+
+#: lambdainst/forms.py:47 lambdainst/forms.py:48 templates/ccvpn/signup.html:30
+#: templates/lambdainst/settings.html.py:22
+#: templates/registration/password_reset_form.html:11
+msgid "E-Mail"
+msgstr "E-Mail"
+
+#: lambdainst/forms.py:54
+msgid "Passwords are not the same"
+msgstr "Les mots de passe de correspondent pas"
+
+#: lambdainst/models.py:24
+msgid "VPN User"
+msgstr "VPN User"
+
+#: lambdainst/models.py:25
+msgid "VPN Users"
+msgstr "VPN Users"
+
+#: lambdainst/models.py:92
+msgid "Gift Code"
+msgstr "Code cadeau"
+
+#: lambdainst/models.py:93
+msgid "Gift Codes"
+msgstr "Codes cadeau"
+
+#: lambdainst/models.py:138
+msgid "Gift Code User"
+msgstr "Utilisateur de codes"
+
+#: lambdainst/models.py:139
+msgid "Gift Code Users"
+msgstr "Utilisateurs de codes"
+
+#: lambdainst/openvpn.py:8 templates/ccvpn/page.html.py:17
+msgid "Windows"
+msgstr "Windows"
+
+#: lambdainst/openvpn.py:9 templates/ccvpn/page.html.py:16
+msgid "Android"
+msgstr "Android"
+
+#: lambdainst/openvpn.py:10
+msgid "Ubuntu"
+msgstr "Ubuntu"
+
+#: lambdainst/openvpn.py:11 templates/ccvpn/page.html.py:19
+msgid "OS X"
+msgstr "OS X"
+
+#: lambdainst/openvpn.py:12
+msgid "iOS"
+msgstr "iOS"
+
+#: lambdainst/openvpn.py:13
+msgid "Freebox"
+msgstr "Freebox"
+
+#: lambdainst/openvpn.py:14
+msgid "Other / GNU/Linux"
+msgstr "Autre / GNU/Linux"
+
+#: lambdainst/openvpn.py:18
+msgid "UDP (default)"
+msgstr "UDP (par défaut)"
+
+#: lambdainst/openvpn.py:19
+msgid "TCP"
+msgstr "TCP"
+
+#: lambdainst/openvpn.py:20
+msgid "UDP (low MTU)"
+msgstr "UDP (MTU réduit)"
+
+#: lambdainst/templatetags/bw.py:14
+#, python-format
+msgid "%(bw)d bps"
+msgid_plural "%(bw)d bps"
+msgstr[0] ""
+msgstr[1] ""
+
+#: lambdainst/templatetags/bw.py:26
+#, python-format
+msgid "%(size)d bps"
+msgid_plural "%(size)d bps"
+msgstr[0] ""
+msgstr[1] ""
+
+#: lambdainst/templatetags/bw.py:28
+#, python-format
+msgid "%s Kbps"
+msgstr ""
+
+#: lambdainst/templatetags/bw.py:30
+#, python-format
+msgid "%s Mbps"
+msgstr ""
+
+#: lambdainst/templatetags/bw.py:32
+#, python-format
+msgid "%s Gbps"
+msgstr ""
+
+#: lambdainst/templatetags/bw.py:34
+#, python-format
+msgid "%s Tbps"
+msgstr ""
+
+#: lambdainst/templatetags/bw.py:36
+#, python-format
+msgid "%s Pbps"
+msgstr ""
+
+#: lambdainst/views.py:91
+msgid "Awesome VPN! 3€ per month, with a free 7 days trial!"
+msgstr ""
+
+#: lambdainst/views.py:98 templates/account_layout.html.py:9
+#: templates/account_layout.html:11 templates/lambdainst/account.html.py:10
+msgid "Account"
+msgstr "Compte"
+
+#: lambdainst/views.py:137 lambdainst/views.py:180
+msgid "OK!"
+msgstr "OK!"
+
+#: lambdainst/views.py:139
+msgid "Invalid captcha"
+msgstr "Captcha invalide"
+
+#: lambdainst/views.py:153
+msgid "Passwords do not match"
+msgstr "Les mots de passe ne correspondent pas"
+
+#: lambdainst/views.py:165 templates/account_layout.html.py:13
+#: templates/lambdainst/settings.html:6
+msgid "Settings"
+msgstr "Options"
+
+#: lambdainst/views.py:176
+msgid "Gift code not found or already used."
+msgstr "Code inconnu ou déjà utilisé."
+
+#: lambdainst/views.py:178
+msgid "Gift code only available to free accounts."
+msgstr "Code uniquement disponible pour les nouveaux comptes."
+
+#: lambdainst/views.py:200 templates/account_layout.html.py:15
+#: templates/lambdainst/logs.html:6
+msgid "Logs"
+msgstr "Logs"
+
+#: lambdainst/views.py:207 templates/lambdainst/config.html.py:7
+msgid "Config"
+msgstr "Config"
+
+#: lambdainst/views.py:296 payments/backends.py:120 payments/backends.py:122
+#: templates/admin/index.html:53 templates/admin/index.html.py:56
+#: templates/lambdainst/admin_ref.html:16
+#: templates/lambdainst/admin_status.html:16 templates/payments/list.html:13
+#: templates/tickets/index.html.py:29 templates/tickets/list.html:14
+msgid "Status"
+msgstr "État"
+
+#: payments/admin.py:16
+msgid "Payment Data"
+msgstr "Données de paiement"
+
+#: payments/admin.py:39
+msgid "Amount"
+msgstr "Montant"
+
+#: payments/admin.py:43
+msgid "Paid amount"
+msgstr "Montant payé"
+
+#: payments/backends.py:47 payments/backends.py:48
+msgid "Bitcoin"
+msgstr ""
+
+#: payments/backends.py:81
+#, python-format
+msgid "Please send %(amount)s BTC to %(address)s"
+msgstr "Envoyez %(amount)s BTC à %(address)s"
+
+#: payments/backends.py:125
+msgid "Bitcoin value"
+msgstr "Valeur du Bitcoin"
+
+#: payments/backends.py:126
+msgid "Testnet"
+msgstr ""
+
+#: payments/backends.py:127
+msgid "Balance"
+msgstr "Balance"
+
+#: payments/backends.py:128
+msgid "Blocks"
+msgstr "Blocks"
+
+#: payments/backends.py:129
+msgid "Bitcoind version"
+msgstr "Version de Bitcoind"
+
+#: payments/backends.py:147
+msgid "Manual"
+msgstr "Manuel"
+
+#: payments/backends.py:152 payments/backends.py:153
+msgid "PayPal"
+msgstr "PayPal"
+
+#: payments/backends.py:189
+msgid ""
+"Waiting for PayPal to confirm the transaction... It can take up to a few "
+"minutes..."
+msgstr ""
+"En attente de la confirmation par Paypal... Cette étape peut durer quelques "
+"minutes..."
+
+#: payments/backends.py:258
+msgid "Stripe"
+msgstr "Stripe"
+
+#: payments/backends.py:259
+msgid "Credit Card or Alipay (Stripe)"
+msgstr "Carte ou Alipay (Stripe)"
+
+#: payments/backends.py:312
+msgid "No payment information was received."
+msgstr "Aucune information de paiement reçue."
+
+#: payments/backends.py:329
+msgid "The payment has been refunded or rejected."
+msgstr "Le paiement a été remboursé ou rejeté."
+
+#: payments/backends.py:337
+msgid "The paid amount is under the required amount."
+msgstr "La montant payé est inférieur au montant requis."
+
+#: payments/backends.py:361
+msgid "Coinbase"
+msgstr "Coinbase"
+
+#: payments/backends.py:362
+msgid "Bitcoin with CoinBase"
+msgstr "Bitcoin avec CoinBase"
+
+#: payments/models.py:14
+msgid "Waiting for payment"
+msgstr "En attente du paiement"
+
+#: payments/models.py:15
+msgid "Confirmed"
+msgstr "Confirmé"
+
+#: payments/models.py:16
+msgid "Cancelled"
+msgstr "Annullé"
+
+#: payments/models.py:17
+msgid "Rejected by processor"
+msgstr "Rejeté"
+
+#: payments/models.py:18
+msgid "Payment processing failed"
+msgstr "Traitement échoué"
+
+#: payments/models.py:22
+msgid "Every 6 months"
+msgstr "Tous les 6 mois"
+
+#: payments/models.py:23
+msgid "Yearly"
+msgstr "Annuel"
+
+#: templates/account_layout.html:12
+msgid "Config Download"
+msgstr "Configuration"
+
+#: templates/account_layout.html:14
+msgid "Payments"
+msgstr "Paiements"
+
+#: templates/admin/index.html:20
+#, python-format
+msgid "Models in the %(name)s application"
+msgstr ""
+
+#: templates/admin/index.html:31 templates/lambdainst/account.html.py:61
+#: templates/lambdainst/account.html:83
+msgid "Add"
+msgstr "Ajouter"
+
+#: templates/admin/index.html:37
+msgid "Change"
+msgstr ""
+
+#: templates/admin/index.html:47
+msgid "You don't have permission to edit anything."
+msgstr ""
+
+#: templates/admin/index.html:60
+msgid "Referrers Stats"
+msgstr ""
+
+#: templates/admin/index.html:71
+msgid "Recent Actions"
+msgstr ""
+
+#: templates/admin/index.html:72
+msgid "My Actions"
+msgstr ""
+
+#: templates/admin/index.html:76
+msgid "None available"
+msgstr ""
+
+#: templates/admin/index.html:90
+msgid "Unknown content"
+msgstr ""
+
+#: templates/ccvpn/index.html:6
+msgid "CCrypto VPN is a cheap, fast, anonymous and secure VPN service"
+msgstr ""
+"CCrypto VPN est un service de VPN peu cher, rapide, anonyme et sécurisé"
+
+#: templates/ccvpn/index.html:15
+msgid "Unlimited"
+msgstr "Illimité"
+
+#: templates/ccvpn/index.html:16
+msgid "Unlimited bandwidth"
+msgstr "Bande passante illimitée"
+
+#: templates/ccvpn/index.html:17
+msgid "Uncensored"
+msgstr "Sans censure"
+
+#: templates/ccvpn/index.html:18
+msgid "We have porn and pirates."
+msgstr "Avec du porn et des pirates."
+
+#: templates/ccvpn/index.html:24
+msgid "Cheap"
+msgstr "Pas cher"
+
+#: templates/ccvpn/index.html:25
+msgid "per month!"
+msgstr "par mois!"
+
+#: templates/ccvpn/index.html:26
+msgid "We accept Paypal, Bitcoins and Stripe."
+msgstr "Accepte PayPal, des Bitcoins et Stripe."
+
+#: templates/ccvpn/index.html:32
+msgid "Secure"
+msgstr "Sécurisé"
+
+#: templates/ccvpn/index.html:33
+msgid "Encrypted tunnel"
+msgstr "Tunnel chiffré"
+
+#: templates/ccvpn/index.html:34
+msgid "with an <b>anonymous address</b>."
+msgstr "avec une <b>adresse anonyme</b>."
+
+#: templates/ccvpn/index.html:35
+msgid "Supports DNSSEC and PFS."
+msgstr "Avec du DNSSEC et PFS."
+
+#: templates/ccvpn/index.html:41
+msgid "OpenVPN"
+msgstr "OpenVPN"
+
+#: templates/ccvpn/index.html:42
+msgid "Secure, Free, easy. On:"
+msgstr "Sécurisé, Libre, simple. Sur:"
+
+#: templates/ccvpn/index.html:54
+msgid "Fast"
+msgstr "Rapide"
+
+#: templates/ccvpn/index.html:56
+msgid "Compressed tunnel."
+msgstr "Tunnel compressé."
+
+#: templates/ccvpn/index.html:57
+msgid "Even on Youtube."
+msgstr "Même sur YouTube."
+
+#: templates/ccvpn/index.html:66
+msgid "Sign up and get your free trial"
+msgstr "Créez un compte et profitez de l'essai gratuit"
+
+#: templates/ccvpn/index.html:72
+msgid "Why?"
+msgstr "Pourquoi?"
+
+#: templates/ccvpn/index.html:74
+msgid "Hide any personal data found from your IP address"
+msgstr "Cacher les données personnelles liées à votre adresse IP"
+
+#: templates/ccvpn/index.html:75
+msgid "Protect yourself on open networks"
+msgstr "Protéger vos données et votre vie privée sur des réseaux non sécurisés"
+
+#: templates/ccvpn/index.html:76
+msgid "Compress traffic on slow connections"
+msgstr "Compresser les données sur les connexions lentes"
+
+#: templates/ccvpn/index.html:77
+msgid "Bypass overly restrictive firewalls"
+msgstr "Contourner les firewalls restrictifs"
+
+#: templates/ccvpn/index.html:78
+msgid "Enable IPv6 on IPv4-only networks"
+msgstr "Avoir de l'IPv6 sur les réseaux sans IPv6"
+
+#: templates/ccvpn/index.html:82
+msgid "VPN done the right way"
+msgstr "Le VPN, bien fait"
+
+#: templates/ccvpn/index.html:84
+msgid "Anonymity"
+msgstr "Anonymat"
+
+#: templates/ccvpn/index.html:84
+msgid "We don't even require your email address."
+msgstr "Il n'y a même pas besoin de donner son adresse e-mail."
+
+#: templates/ccvpn/index.html:85 tickets/models.py:15
+msgid "Security"
+msgstr "Sécurité"
+
+#: templates/ccvpn/index.html:85
+msgid "Best TLS available, RSA 4096b, BlowFish 128b."
+msgstr "Meilleur TLS disponible, RSA 4096b, BlowFish 128b."
+
+#: templates/ccvpn/index.html:86
+msgid "Privacy"
+msgstr "Intimité"
+
+#: templates/ccvpn/index.html:86
+msgid "Not a single byte of your traffic is logged."
+msgstr "Pas un seul byte du trafic n'est enregistré."
+
+#: templates/ccvpn/page.html:8
+msgid "Help"
+msgstr "Aide"
+
+#: templates/ccvpn/page.html:10
+msgid "Frequently Asked Questions"
+msgstr "Questions fréquemment posées"
+
+#: templates/ccvpn/page.html:11
+msgid "Self-Diagnosis"
+msgstr "Auto-Diagnostic"
+
+#: templates/ccvpn/page.html:14
+msgid "Installation"
+msgstr "Installation"
+
+#: templates/ccvpn/page.html:18
+msgid "GNU/Linux"
+msgstr "GNU/Linux"
+
+#: templates/ccvpn/signup.html:8 templates/ccvpn/signup.html.py:37
+#: templates/layout.html:34
+msgid "Sign up"
+msgstr "Créer un compte"
+
+#: templates/ccvpn/signup.html:16
+msgid "2 to 32 alphanumeric characters."
+msgstr "2 à 32 caractères alphanumériques."
+
+#: templates/ccvpn/signup.html:22
+msgid "Anything from 1 to 256 characters."
+msgstr "N'importe quoi entre 1 et 256 caractères."
+
+#: templates/ccvpn/signup.html:27
+msgid "Same password."
+msgstr "Le même mot de passe."
+
+#: templates/ccvpn/signup.html:33
+msgid "Optional."
+msgstr "Optionnel."
+
+#: templates/ccvpn/signup.html:34
+msgid "Used to recover your password and confirm stuff."
+msgstr "Utilisé pour retrouver votre mot de passe."
+
+#: templates/ccvpn/signup.html:41
+msgid "Already a member? Log in"
+msgstr "Déjà membre ? Connectez vous"
+
+#: templates/ccvpn/signup.html:42 templates/registration/login.html.py:18
+msgid "Forgot your password?"
+msgstr "Mot de passe oublié ?"
+
+#: templates/ccvpn/signup.html:43 templates/registration/login.html.py:19
+#: templates/registration/password_reset_confirm.html:22
+#: templates/registration/password_reset_form.html:21
+msgid "Need help?"
+msgstr "Besoin d'aide ?"
+
+#: templates/lambdainst/account.html:15
+#, python-format
+msgid "Your account is paid until %(until)s"
+msgstr "Votre compte est activé jusqu'au %(until)s"
+
+#: templates/lambdainst/account.html:18
+#, python-format
+msgid "(%(left)s left)"
+msgstr "(%(left)s restant)"
+
+#: templates/lambdainst/account.html:24
+msgid ""
+"You can activate your free trial account for two hours periods for up to one "
+"week, by clicking this button:"
+msgstr ""
+"Vous pouvez activez votre compte d'essai pour des périodes de deux heures "
+"pendant jusqu'à une semaine avec ce bouton:"
+
+#: templates/lambdainst/account.html:33
+msgid "Activate"
+msgstr "Activer"
+
+#: templates/lambdainst/account.html:50
+msgid "Your account is not paid."
+msgstr "Votre compte n'est pas payé."
+
+#: templates/lambdainst/account.html:63
+msgid "month"
+msgstr "mois"
+
+#: templates/lambdainst/account.html:64 templates/lambdainst/account.html:65
+#: templates/lambdainst/account.html:66
+msgid "months"
+msgstr "mois"
+
+#: templates/lambdainst/account.html:71
+msgid "with"
+msgstr "avec"
+
+#: templates/lambdainst/account.html:93
+msgid "Gift code"
+msgstr "Code cadeau"
+
+#: templates/lambdainst/account.html:99
+msgid "Use"
+msgstr "Utiliser"
+
+#: templates/lambdainst/account.html:108
+msgid ""
+"Get two weeks for free for every referral that takes at least one month!"
+msgstr ""
+"Gagnez deux semaines gratuites pour chaque client qui a utilisé ce lien !"
+
+#: templates/lambdainst/account.html:111
+msgid "Share this link"
+msgstr "Partagez ce lien"
+
+#: templates/lambdainst/account.html:115
+msgid "tweet"
+msgstr ""
+
+#: templates/lambdainst/admin_ref.html:15
+#: templates/lambdainst/admin_status.html:15
+msgid "Home"
+msgstr "Accueil"
+
+#: templates/lambdainst/admin_ref.html:25
+msgid "Top Referrers (week)"
+msgstr ""
+
+#: templates/lambdainst/admin_ref.html:39
+msgid "Top Referrers (month)"
+msgstr ""
+
+#: templates/lambdainst/admin_ref.html:53
+msgid "Top Referrers (all time)"
+msgstr ""
+
+#: templates/lambdainst/admin_status.html:25
+msgid "Core API Info"
+msgstr ""
+
+#: templates/lambdainst/admin_status.html:39
+msgid "Active Payment Backends"
+msgstr "Méthodes de payment actives"
+
+#: templates/lambdainst/admin_status.html:57
+msgid "Backend: "
+msgstr "Méthode :"
+
+#: templates/lambdainst/config.html:11
+msgid "OS"
+msgstr "OS"
+
+#: templates/lambdainst/config.html:20
+msgid "Gateway"
+msgstr "Serveur"
+
+#: templates/lambdainst/config.html:22
+msgid "Random"
+msgstr "Aléatoire"
+
+#: templates/lambdainst/config.html:23
+msgid "All (multiple config files)"
+msgstr "Tous (plusieurs fichiers)"
+
+#: templates/lambdainst/config.html:26
+msgid "Country"
+msgstr "Pays"
+
+#: templates/lambdainst/config.html:36
+msgid "Protocol"
+msgstr "Protocole"
+
+#: templates/lambdainst/config.html:42
+msgid ""
+"TCP is slower. Use it only if you have important packet loss or if UDP is "
+"filtered."
+msgstr ""
+"TCP est plus lent. Ne l'utilisez que si l'UDP est bloqué ou pose des "
+"problèmes."
+
+#: templates/lambdainst/config.html:46
+msgid "Use HTTP Proxy?"
+msgstr "Utiliser un proxy?"
+
+#: templates/lambdainst/config.html:48
+msgid "Leave empty if you don't know."
+msgstr "Dans le doute, laissez vide."
+
+#: templates/lambdainst/config.html:50
+msgid "Requires TCP."
+msgstr "Nécéssite TCP."
+
+#: templates/lambdainst/config.html:56
+msgid "Enable IPv6?"
+msgstr "Activer l'IPv6?"
+
+#: templates/lambdainst/config.html:60
+msgid "Download config"
+msgstr "Télécharger la config"
+
+#: templates/lambdainst/logs.html:7
+msgid ""
+"Everything we have to keep about you. Automatically deleted after 1 year."
+msgstr ""
+"Tout ce que nous avons l'obligation de garder. Automatiquement éffacé au "
+"bout de 1 an."
+
+#: templates/lambdainst/logs.html:12 templates/payments/list.html.py:11
+msgid "Date"
+msgstr "Date"
+
+#: templates/lambdainst/logs.html:13
+msgid "Duration"
+msgstr "Durée"
+
+#: templates/lambdainst/logs.html:14
+msgid "Client IP"
+msgstr "IP Source"
+
+#: templates/lambdainst/logs.html:15
+msgid "Shared IP"
+msgstr "IP Partagée"
+
+#: templates/lambdainst/logs.html:16 templates/lambdainst/status.html.py:42
+msgid "Bandwidth"
+msgstr "Bande passante"
+
+#: templates/lambdainst/logs.html:27 tickets/admin.py:58 tickets/models.py:58
+msgid "Open"
+msgstr "Open"
+
+#: templates/lambdainst/logs.html:30 templates/lambdainst/logs.html.py:31
+msgid "[unknown]"
+msgstr "[inconnu]"
+
+#: templates/lambdainst/mail_expire_soon.txt:4
+#, python-format
+msgid "Your account will expire in %(exp)s"
+msgstr "Votre compte expirera le %(exp)s"
+
+#: templates/lambdainst/mail_expire_soon.txt:5
+msgid "You can renew it here:"
+msgstr "Vous pouvez le renouveller ici:"
+
+#: templates/lambdainst/settings.html:12 templates/lambdainst/settings.html:17
+msgid "Change password"
+msgstr "Changer le mot de passe"
+
+#: templates/lambdainst/settings.html:17
+msgid "repeat"
+msgstr "répétez"
+
+#: templates/lambdainst/settings.html:27
+msgid "Save"
+msgstr "Enregistrer"
+
+#: templates/lambdainst/status.html:8
+msgid "Our Servers"
+msgstr "Nos Serveurs"
+
+#: templates/lambdainst/status.html:12
+#, python-format
+msgid "We have <em>%(n_users)s</em> active users."
+msgstr "Il y a <em>%(n_users)s</em> comptes actifs."
+
+#: templates/lambdainst/status.html:15
+#, python-format
+msgid "<em>%(n_sess)s</em> are using our VPN right now."
+msgstr "<em>%(n_sess)s</em> sont connectés en ce moment."
+
+#: templates/lambdainst/status.html:20
+#, python-format
+msgid ""
+"They are connected to <em>%(n_gws)s</em> servers spread across <em>"
+"%(n_countries)s</em> countries to provide a low-latency and secure access "
+"anywhere in the world."
+msgstr ""
+"Ils sont connectés à <em>%(n_gws)s</em> serveurs répartis sur <em>"
+"%(n_countries)s</em> pays, pour fournir un accès rapide et sécurisé dans le "
+"monde entier."
+
+#: templates/lambdainst/status.html:28
+#, python-format
+msgid ""
+"Our network has a total bandwidth of <em>%(total_bw)s</em> and all our "
+"servers are DDoS-protected."
+msgstr ""
+"Notre réseau a une bande passante totale de <em>%(total_bw)s</em> et tous "
+"nos serveurs sont protégés contre les attaques DDoS."
+
+#: templates/lambdainst/status.html:36
+msgid "Locations"
+msgstr "Localisations"
+
+#: templates/lambdainst/status.html:39
+msgid "Location"
+msgstr "Localisation"
+
+#: templates/lambdainst/status.html:40
+msgid "Hostname"
+msgstr "Nom"
+
+#: templates/lambdainst/status.html:41 templates/layout.html.py:50
+msgid "Servers"
+msgstr "Serveurs"
+
+#: templates/layout.html:22
+msgid "Service Status"
+msgstr "État des services"
+
+#: templates/layout.html:30
+msgid "Your account"
+msgstr "Votre compte"
+
+#: templates/layout.html:31
+msgid "Logout"
+msgstr "Se déconnecter"
+
+#: templates/layout.html:35 templates/registration/login.html.py:8
+#: templates/registration/login.html:13
+msgid "Log in"
+msgstr "Se connecter"
+
+#: templates/layout.html:49
+msgid "VPN"
+msgstr "VPN"
+
+#: templates/layout.html:51
+msgid "Guides"
+msgstr "Guides"
+
+#: templates/layout.html:53 templates/tickets/index.html.py:6
+#: templates/tickets/layout.html:8 tickets/models.py:14
+msgid "Support"
+msgstr "Support"
+
+#: templates/layout.html:56
+msgid "Admin"
+msgstr "Admin"
+
+#: templates/layout.html:75
+msgid "CCrypto_VPN on Twitter"
+msgstr "CCrypto_VPN sur Twitter"
+
+#: templates/layout.html:76
+msgid "ToS"
+msgstr "CGU"
+
+#: templates/layout.html:77
+msgid "It's open-source!"
+msgstr "C'est open-source!"
+
+#: templates/layout.html:85
+msgid "Any question? <b>Chat with us</b>"
+msgstr "Une question ? <b>Contactez nous</b>"
+
+#: templates/payments/form.html:7 templates/payments/view.html.py:13
+msgid "Payment"
+msgstr "Paiement"
+
+#: templates/payments/list.html:6
+msgid "Subscription"
+msgstr "Abonnement"
+
+#: templates/payments/list.html:12
+msgid "Value"
+msgstr "Valeur"
+
+#: templates/payments/view.html:23
+msgid "The payment has been confirmed."
+msgstr "Le paiement a été confirmé."
+
+#: templates/payments/view.html:25
+msgid "The payment has been cancelled."
+msgstr "Le paiement a été annulé."
+
+#: templates/payments/view.html:27
+msgid "This page will be updated with payment progress."
+msgstr "Cette page sera mise à jour avec la progression du paiement."
+
+#: templates/payments/view.html:30
+msgid "Go back to your account"
+msgstr "Retourner sur votre compte"
+
+#: templates/registration/login.html:17
+#: templates/registration/password_reset_confirm.html:20
+#: templates/registration/password_reset_form.html:19
+msgid "Don't have an account? Create one"
+msgstr "Pas de compte ? Créez-en un"
+
+#: templates/registration/password_reset_complete.html:8
+#: templates/registration/password_reset_confirm.html:8
+#: templates/registration/password_reset_done.html:8
+#: templates/registration/password_reset_form.html:8
+msgid "Password Reset"
+msgstr "Réinitialisation de mot de passe"
+
+#: templates/registration/password_reset_complete.html:10
+msgid "Your password has been changed."
+msgstr "Votre mot de passe a bien été changé."
+
+#: templates/registration/password_reset_complete.html:11
+msgid "You can now log in with your new password."
+msgstr "Vous pouvez maintenant vous connecter avec votre nouveau mot de passe."
+
+#: templates/registration/password_reset_confirm.html:13
+msgid "Reset"
+msgstr "Réinitialiser"
+
+#: templates/registration/password_reset_confirm.html:16
+msgid "Invalid reset link."
+msgstr "Lien de réinitialisatio invalide."
+
+#: templates/registration/password_reset_confirm.html:21
+#: templates/registration/password_reset_form.html:20
+msgid "Remember your password? Log in"
+msgstr "Vous vous en rappelez ? Connectez-vous"
+
+#: templates/registration/password_reset_done.html:10
+msgid "Sent! Check your emails to reset your password."
+msgstr "Envoyé! Allez voir vos emails pour confirmer."
+
+#: templates/registration/password_reset_form.html:15
+msgid "Reset Password"
+msgstr "Changer le mot de passe"
+
+#: templates/tickets/index.html:10
+msgid "Before creating a ticket, please check if you question is convered in"
+msgstr "Avant d'ouvrir un ticket, vérifiez que votre question n'est pas dans"
+
+#: templates/tickets/index.html:11
+msgid "the FAQ"
+msgstr "la FAQ"
+
+#: templates/tickets/index.html:13
+#, python-format
+msgid ""
+"If you would prefer to talk us in real time, we have a <a href=\"%(chat_url)s"
+"\">live chat</a>.<br /> You can also use your own IRC client on #ccrypto on "
+"chat.freenode.net. We are however not always online and you may have to wait."
+msgstr ""
+"Si vous préférez nous parler directement, nous avons un <a href="
+"\"%(chat_url)s\">chat live</a>.<br /> Vous pouvez aussi utiliser un client "
+"IRC sur #ccrypto sur chat.freenode.net. Nous ne sommes pas présents 24h/24,"
+"il faudra peut-être attendre."
+
+#: templates/tickets/index.html:23
+msgid "Your open tickets"
+msgstr "Vos tickets ouverts"
+
+#: templates/tickets/index.html:27 templates/tickets/list.html.py:12
+msgid "ID"
+msgstr "ID"
+
+#: templates/tickets/index.html:28 templates/tickets/list.html.py:13
+#: tickets/forms.py:8
+msgid "Subject"
+msgstr "Sujet"
+
+#: templates/tickets/layout.html:10
+msgid "Live Chat"
+msgstr "Chat Live"
+
+#: templates/tickets/layout.html:11 templates/tickets/new.html.py:7
+msgid "New Ticket"
+msgstr "Nouveau ticket"
+
+#: templates/tickets/layout.html:12
+msgid "Open Tickets"
+msgstr "Tickets ouverts"
+
+#: templates/tickets/layout.html:14
+msgid "Closed Tickets"
+msgstr "Tickets fermés"
+
+#: templates/tickets/layout.html:16
+msgid "All Open"
+msgstr "Tous ouverts"
+
+#: templates/tickets/layout.html:18
+msgid "All Closed"
+msgstr "Tous fermés"
+
+#: templates/tickets/list.html:6
+msgid "Tickets"
+msgstr "Tickets"
+
+#: templates/tickets/list.html:16
+msgid "User"
+msgstr "Auteur"
+
+#: templates/tickets/list.html:49
+msgid "No ticket to show."
+msgstr "Aucun ticket."
+
+#: templates/tickets/mail_support_new.txt:5
+msgid "A new ticket has been created."
+msgstr "Un nouveau ticket a été crée."
+
+#: templates/tickets/mail_support_new.txt:8
+msgid "Category:"
+msgstr "Catégorie :"
+
+#: templates/tickets/mail_support_new.txt:9
+msgid "Subject:"
+msgstr "Sujet :"
+
+#: templates/tickets/mail_support_new.txt:10
+msgid "User:"
+msgstr "Auteur :"
+
+#: templates/tickets/mail_support_reply.txt:5
+msgid "New reply on ticket:"
+msgstr "Nouvelle réponse au ticket :"
+
+#: templates/tickets/mail_support_reply.txt:6
+msgid "From:"
+msgstr "Par :"
+
+#: templates/tickets/mail_user_close.txt:5
+msgid "Your ticket was closed."
+msgstr "Votre ticket a été fermé."
+
+#: templates/tickets/mail_user_reply.txt:5
+msgid "New reply on your ticket:"
+msgstr "Nouvelle réponse à votre ticket:"
+
+#: templates/tickets/new.html:13
+msgid "Open Ticket"
+msgstr "Créer le ticket"
+
+#: templates/tickets/view.html:7 tickets/models.py:66 tickets/models.py:72
+#: tickets/models.py:82
+msgid "Ticket:"
+msgstr "Ticket:"
+
+#: templates/tickets/view.html:9
+msgid "closed"
+msgstr "fermé"
+
+#: templates/tickets/view.html:20 tickets/forms.py:23
+msgid "Private"
+msgstr "Privé"
+
+#: templates/tickets/view.html:40
+msgid "Reply"
+msgstr "Répondre"
+
+#: templates/tickets/view.html:42
+msgid "Close Ticket"
+msgstr "Fermer le ticket"
+
+#: templates/tickets/view.html:44
+msgid "Re-open Ticket"
+msgstr "Ré-ouvrir le ticket"
+
+#: tickets/admin.py:11
+msgid "Close selected tickets (without notice)"
+msgstr "Fermer les tickets (sans notification)"
+
+#: tickets/admin.py:19
+msgid "Close selected tickets"
+msgstr "Fermer les tickets séléctionnés"
+
+#: tickets/admin.py:56
+msgid "Re-opened"
+msgstr "Ré-ouvert"
+
+#: tickets/admin.py:60 tickets/models.py:53
+msgid "Closed"
+msgstr "Fermé"
+
+#: tickets/forms.py:7
+msgid "Category"
+msgstr "Catégorie"
+
+#: tickets/forms.py:9
+msgid "Message"
+msgstr "Message"
+
+#: tickets/models.py:16
+msgid "Account / Billing"
+msgstr "Compte / Facturation"
+
+#: tickets/models.py:36
+msgid "Can view any ticket"
+msgstr "Peut voir n'importe quel ticket"
+
+#: tickets/models.py:37
+msgid "Can reply to any ticket"
+msgstr "Peut répondre à n'importe quel ticket"
+
+#: tickets/models.py:38
+msgid "Can view private messages on tickets"
+msgstr "Peut voir les messages privés"
+
+#: tickets/models.py:39
+msgid "Can post private messages on tickets"
+msgstr "Peut envoyer des messages privés"
+
+#: tickets/models.py:56
+msgid "Waiting for staff"
+msgstr "En attente du support"

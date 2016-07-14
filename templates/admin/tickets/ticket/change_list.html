@@ -1,0 +1,17 @@
+{% extends "admin/change_list.html" %}
+
+{% block extrahead %}
+{{ block.super }}
+<script type="text/javascript">
+(function($) {
+    $(document).ready(function() {
+        $('#result_list tr').each(function() {
+            if ($(this).find('td.field-is_open img').attr('alt') == 'False') {
+                console.log("yay");
+                $(this).css('opacity', '0.6');
+            }
+        });
+    });
+})(django.jQuery);
+</script>
+{% endblock %}

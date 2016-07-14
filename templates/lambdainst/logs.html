@@ -1,0 +1,54 @@
+{% extends 'account_layout.html' %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block account_content %}
+<h1>{% trans 'Logs' %}</h1>
+<p>{% trans 'Everything we have to keep about you. Automatically deleted after 1 year.' %}</p>
+
+<table class="admin-list">
+    <thead>
+        <tr>
+            <td>{% trans 'Date' %}</td>
+            <td>{% trans 'Duration' %}</td>
+            <td>{% trans 'Client IP' %}</td>
+            <td>{% trans 'Shared IP' %}</td>
+            <td>{% trans 'Bandwidth' %}</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for line in sessions %}
+            <tr>
+                <td>{{ line.connect_date }}</td>
+                <td>
+                    {% if line.disconnect_date != None %}
+                    {{ line.connect_date|timesince:line.disconnect_date }}
+                    {% else %}
+                    <b>{% trans "Open" %}</b>
+                    {% endif %}
+                </td>
+                <td>{{ line.remote.addr|default:_('[unknown]') }}</td>
+                <td>{{ line.gateway.main_addr.ipv4|default:_('[unknown]') }}</td>
+                <td>{{ line.stats.up | filesizeformat }} /
+                    {{ line.stats.down | filesizeformat }}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<p class="pages">
+    {% if prev != None and prev > 0 %}
+        <a href="?page=0">&lt;&lt;</a>
+    {% endif %}
+    {% if prev != None %}
+    <a href="?page={{ prev }}">&lt;</a>
+    {% endif %}
+    <a href="?page={{ page }}">{{ page }}</a>
+    {% if next != None %}
+        <a href="?page={{ next }}">&gt;</a>
+    {% endif %}
+    {% if next != None and last_page > next %}
+        <a href="?page={{ last_page }}">&gt;&gt;</a>
+    {% endif %}
+</p>
+{% endblock %}

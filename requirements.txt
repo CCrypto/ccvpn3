@@ -1,0 +1,10 @@
+django
+django-jsonfield
+django_countries
+markdown
+requests
+pygal
+pytz
+python-bitcoinlib
+stripe
+

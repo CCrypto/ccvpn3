@@ -1,0 +1,82 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_static %}
+
+{% block extrastyle %}{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}" />
+<link rel="stylesheet" type="text/css" href="{% static "css/admin_status.css" %}" />
+{% endblock %}
+
+{% block coltype %}{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+&rsaquo; <a href="{% url 'admin_status' %}">{% trans 'Status' %}</a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+    <div class="module half-module">
+    <table>
+    <caption>
+        <a href="{% url 'admin_status' %}" class="section">{% trans 'Core API Info' %}</a>
+    </caption>
+        {% for k, v in api_status.items %}
+            <tr>
+                <th style="width: auto">{{k}}</th>
+                <th style="width: auto">{{v}}</th>
+            </tr>
+        {% endfor %}
+    </table>
+    </div><!--
+    
+    --><div class="module half-module">
+    <table>
+    <caption>
+        <a href="{% url 'admin_status' %}" class="section">{% trans 'Active Payment Backends' %}</a>
+    </caption>
+        {% for backend in payment_backends %}
+            <tr>
+                <th style="width: auto">{{backend.backend_id}}</th>
+                <th style="width: auto">{{backend.backend_verbose_name}}</th>
+                <th style="width: auto">{{backend.backend_display_name}}</th>
+            </tr>
+        {% endfor %}
+    </table>
+    </div>
+
+    <div style="clear: both;"></div>
+
+    {% for backend, info in payment_status %}
+        <div class="module half-module">
+        <table>
+        <caption>
+            <a href="{% url 'admin_status' %}" class="section">{% trans 'Backend: ' %} {{ backend.backend_verbose_name }}</a>
+        </caption>
+            {% for name, value in info %}
+                <tr>
+                    <th style="width: auto">{{name}}</th>
+                    <th style="width: auto">{{value}}</th>
+                </tr>
+            {% endfor %}
+        </table>
+        </div>
+    {% endfor %}
+</div>
+
+<figure class="admin-graph"><embed src="{% url 'admin_status' %}?graph_name=users&amp;period=m" /></figure>
+<figure class="admin-graph"><embed src="{% url 'admin_status' %}?graph_name=users&amp;period=y" /></figure>
+
+<figure class="admin-graph"><embed src="{% url 'admin_status' %}?graph_name=payments_paid&amp;period=m" /></figure>
+<figure class="admin-graph"><embed src="{% url 'admin_status' %}?graph_name=payments_paid&amp;period=y" /></figure>
+
+<figure class="admin-graph"><embed src="{% url 'admin_status' %}?graph_name=payments_success&amp;period=m" /></figure>
+<figure class="admin-graph"><embed src="{% url 'admin_status' %}?graph_name=payments_success&amp;period=y" /></figure>
+{% endblock %}
+
+{% block sidebar %}
+{% endblock %}
+
