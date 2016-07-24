@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
+from datetime import timedelta
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -163,7 +165,51 @@ with open(BASE_DIR + '/ccvpn/ca.crt') as ca_file:
 ADDITIONAL_HEADER_HTML = ''
 ADDITIONAL_HTML = ''
 
-LAMBDAINST_CLUSTER_MESSAGES = {}
+LAMBDAINST_CLUSTER_MESSAGES = {}  # 'cluster_name': "No P2P"
+
+TICKETS_SITE_NAME = 'CCrypto VPN Support'
+
+ROOT_URL = ""  # Full URL to the site root
+
+RECAPTCHA_API = 'https://www.google.com/recaptcha/api/siteverify'
+RECAPTCHA_SITE_KEY = ''
+RECAPTCHA_SECRET_KEY = ''
+
+# lcore API
+
+LCORE = dict(
+    BASE_URL='https://core.test.lambdavpn.net/v1/',
+    API_KEY='',
+    API_SECRET='',
+    INST_SECRET='',
+    CACHE_TTL=10,
+)
+
+
+# Payment & Trial
+
+PAYMENTS_BACKENDS = {
+    'paypal': {
+        'TEST': True,
+        'ADDRESS': 'paypal@xomg.net',  # Your PayPal primary address
+    },
+    # Remove the leading '_' to enable these backends.
+    '_stripe': {
+        'API_KEY': '',
+        'PUBLIC_KEY': '',
+    },
+    '_bitcoin': {
+        'URL': 'http://test:test@127.0.0.1:18332/',
+        'BITCOIN_VALUE': 36000,  # Value of one bitcoin in currency*100
+    },
+}
+
+PAYMENTS_CURRENCY = ('eur', '€')
+PAYMENTS_MONTHLY_PRICE = 300  # in currency*100
+TRIAL_PERIOD = timedelta(hours=2)
+TRIAL_PERIOD_LIMIT = 2  # 2 * 2h = 4h, still has to push the button twice
+NOTIFY_DAYS_BEFORE = (3, 1)  # notify twice 3 and 1 days before expiration
+
 
 # Local settings
 try:
