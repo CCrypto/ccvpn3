@@ -23,8 +23,8 @@ from django_countries import countries
 from payments.models import ACTIVE_BACKENDS
 from .forms import SignupForm
 from .models import GiftCode, VPNUser
-from .core import core_api, current_active_sessions, get_locations as core_get_locations
-from .core import LCORE_INST_SECRET, LCORE_SOURCE_ADDR
+from .core import core_api
+from . import core
 from . import graphs
 from . import openvpn
 
@@ -34,7 +34,7 @@ def get_locations():
     that depends on the request
     """
     countries_d = dict(countries)
-    locations = core_get_locations()
+    locations = core.get_locations()
     for k, v in locations:
         cc = v['country_code'].upper()
         v['country_name'] = countries_d.get(cc, cc)
@@ -68,6 +68,9 @@ def signup(request):
                                     form.cleaned_data['email'],
                                     form.cleaned_data['password'])
     user.save()
+
+    if core.VPN_AUTH_STORAGE == 'core':
+        core.create_user(form.cleaned_data['username'], form.cleaned_data['password'])
 
     try:
         user.vpnuser.referrer = User.objects.get(id=request.session.get('referrer'))
@@ -153,6 +156,11 @@ def settings(request):
             messages.error(request, _("Passwords do not match"))
         else:
             request.user.set_password(pw)
+
+            if core.VPN_AUTH_STORAGE == 'core':
+                core.update_user_password(request.user, pw)
+
+            messages.success(request, _("OK!"))
 
     email = request.POST.get('email')
     if email:
@@ -269,11 +277,14 @@ def api_auth(request):
     if request.method != 'POST':
         return HttpResponseNotFound()
 
+    if core.VPN_AUTH_STORAGE != 'inst':
+        return HttpResponseNotFound()
+
     username = request.POST.get('username')
     password = request.POST.get('password')
     secret = request.POST.get('secret')
 
-    if secret != LCORE_INST_SECRET:
+    if secret != core.LCORE_INST_SECRET:
         return HttpResponseForbidden(content="Invalid secret")
 
     user = authenticate(username=username, password=password)
@@ -295,7 +306,7 @@ def status(request):
     ctx = {
         'title': _("Status"),
         'n_users': VPNUser.objects.filter(expiration__gte=timezone.now()).count(),
-        'n_sess': current_active_sessions(),
+        'n_sess': core.current_active_sessions(),
         'n_gws': sum(l['servers'] for cc, l in locations),
         'n_countries': len(set(cc for cc, l in locations)),
         'total_bw': sum(l['bandwidth'] for cc, l in locations),

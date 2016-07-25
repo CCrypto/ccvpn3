@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from . import core
 
 assert isinstance(settings.TRIAL_PERIOD, timedelta)
 assert isinstance(settings.TRIAL_PERIOD_LIMIT, int)
@@ -54,6 +55,10 @@ class VPNUser(models.Model):
         if not self.expiration or self.expiration < now:
             self.expiration = now
         self.expiration += time
+
+        # Propagate update to core
+        if core.VPN_AUTH_STORAGE == 'core':
+            core.update_user_expiration(self.user)
 
     def give_trial_period(self):
         self.add_paid_time(settings.TRIAL_PERIOD)

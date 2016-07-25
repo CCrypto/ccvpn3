@@ -157,26 +157,31 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
 
 # OpenVPN CA Certificate
-
 with open(BASE_DIR + '/ccvpn/ca.crt') as ca_file:
     OPENVPN_CA = ca_file.read()
 
-
+# HTML added before </head>
 ADDITIONAL_HEADER_HTML = ''
+
+# HTML added before </body>
 ADDITIONAL_HTML = ''
 
-LAMBDAINST_CLUSTER_MESSAGES = {}  # 'cluster_name': "No P2P"
+# Custom per cluster message displayed config page
+# 'cluster_name': "No P2P"
+LAMBDAINST_CLUSTER_MESSAGES = {}
 
+# Name used in ticket emails
 TICKETS_SITE_NAME = 'CCrypto VPN Support'
 
-ROOT_URL = ""  # Full URL to the site root
+# Full URL to the site root
+ROOT_URL = ''
 
+# reCAPTCHA API details. If empty, no captcha is displayed.
 RECAPTCHA_API = 'https://www.google.com/recaptcha/api/siteverify'
 RECAPTCHA_SITE_KEY = ''
 RECAPTCHA_SECRET_KEY = ''
 
-# lcore API
-
+# lcore API settings
 LCORE = dict(
     BASE_URL='https://core.test.lambdavpn.net/v1/',
     API_KEY='',
@@ -185,13 +190,24 @@ LCORE = dict(
     CACHE_TTL=10,
 )
 
+# VPN auth credentials and expiration time storage
+# - if 'core', password and expiration_date will be replicated to core and
+#   auth will be done from there.
+# - if 'inst', both will be kept here and core should call the API here to
+#   authenticate users.
+# 'core' is faster and doesn't depend on the instance's stability, 'inst'
+# lets you generate client_config dynamically.
+# /!\ don't use 'core' with unit tests for now.
+VPN_AUTH_STORAGE = 'inst'
+
 
 # Payment & Trial
 
+# Payment backends. See payments/backends.py for more infos.
 PAYMENTS_BACKENDS = {
     'paypal': {
-        'TEST': True,
-        'ADDRESS': 'paypal@xomg.net',  # Your PayPal primary address
+        'TEST': True,  # Sandbox
+        'ADDRESS': 'paypal@ccrypto.org',  # Your PayPal primary address
     },
     # Remove the leading '_' to enable these backends.
     '_stripe': {
@@ -206,9 +222,9 @@ PAYMENTS_BACKENDS = {
 
 PAYMENTS_CURRENCY = ('eur', '€')
 PAYMENTS_MONTHLY_PRICE = 300  # in currency*100
-TRIAL_PERIOD = timedelta(hours=2)
+TRIAL_PERIOD = timedelta(hours=2)  # Time added on each trial awarded
 TRIAL_PERIOD_LIMIT = 2  # 2 * 2h = 4h, still has to push the button twice
-NOTIFY_DAYS_BEFORE = (3, 1)  # notify twice 3 and 1 days before expiration
+NOTIFY_DAYS_BEFORE = (3, 1)  # notify twice: 3 and 1 days before expiration
 
 
 # Local settings
