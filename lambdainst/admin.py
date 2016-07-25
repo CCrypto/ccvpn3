@@ -52,11 +52,6 @@ class VPNUserInline(admin.StackedInline):
     is_paid.boolean = True
     is_paid.short_description = _("Is paid?")
 
-    def save_model(self, request, obj, form, change):
-        obj.save()
-        if change and 'expiration' in form.changed_data:
-            core.update_user_expiration(obj.user)
-
 
 class GiftCodeUserAdmin(admin.TabularInline):
     model = GiftCodeUser
@@ -113,9 +108,8 @@ class UserAdmin(UserAdmin):
         super().save_model(request, obj, form, change)
 
         # Notify core
-        if core.VPN_AUTH_STORAGE == 'core':
-            if change and 'is_active' in form.changed_data:
-                core.update_user_expiration(obj)
+        if change and core.VPN_AUTH_STORAGE == 'core':
+            core.update_user_expiration(obj)
 
     def delete_model(self, request, obj):
         if core.VPN_AUTH_STORAGE == 'core':
