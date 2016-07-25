@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 
 from lambdainst.models import VPNUser, GiftCode, GiftCodeUser
-
+from . import core
 
 def make_user_link(user):
     change_url = resolve_url('admin:auth_user_change', user.id)
@@ -51,6 +51,11 @@ class VPNUserInline(admin.StackedInline):
         return object.is_paid
     is_paid.boolean = True
     is_paid.short_description = _("Is paid?")
+
+    def save_model(self, request, obj, form, change):
+        obj.save()
+        if change and 'expiration' in form.changed_data:
+            core.update_user_expiration(obj.user)
 
 
 class GiftCodeUserAdmin(admin.TabularInline):
@@ -103,6 +108,20 @@ class UserAdmin(UserAdmin):
         s += ' - ' + fmt % (tickets_url, object.id, "Tickets")
         return s
     links.allow_tags = True
+
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+
+        # Notify core
+        if core.VPN_AUTH_STORAGE == 'core':
+            if change and 'is_active' in form.changed_data:
+                core.update_user_expiration(obj)
+
+    def delete_model(self, request, obj):
+        if core.VPN_AUTH_STORAGE == 'core':
+            core.delete_user(obj.username)
+
+        super().delete_model(request, obj)
 
 
 class GiftCodeAdmin(admin.ModelAdmin):

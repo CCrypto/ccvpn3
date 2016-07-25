@@ -23,6 +23,9 @@ if isinstance(LCORE_CACHE_TTL, int):
     LCORE_CACHE_TTL = timedelta(seconds=LCORE_CACHE_TTL)
 assert isinstance(LCORE_CACHE_TTL, timedelta)
 
+VPN_AUTH_STORAGE = settings.VPN_AUTH_STORAGE
+assert VPN_AUTH_STORAGE in ('core', 'inst')
+
 core_api = lcoreapi.API(LCORE_API_KEY, LCORE_API_SECRET, LCORE_BASE_URL)
 
 
@@ -96,4 +99,55 @@ def get_locations():
     locations = sorted(locations.items(), key=lambda x: x[1]['country_code'])
     return locations
 
+
+def create_user(username, cleartext_password):
+    """ The password will be hashed and stored safely on the core,
+    so we have to send it clearly here.
+    """
+    path = core_api.info['current_instance'] + '/users/'
+    core_api.post(path, data={
+        'username': username,
+        'password': cleartext_password,
+        'expiration_date': datetime(1, 1, 1).isoformat(),  # Expired.
+    })
+
+
+def update_user_expiration(user):
+    path = core_api.info['current_instance'] + '/users/' + user.username
+
+    try:
+        if not user.is_active:
+            core_api.patch(path, data={
+                'expiration_date': datetime(1, 1, 1).isoformat(),  # Expired.
+            })
+            return
+
+        core_api.patch(path, data={
+            'expiration_date': user.vpnuser.expiration,
+        })
+    except lcoreapi.APIError:
+        # User can't do anything to this, we should just report it
+        logger = logging.getLogger('django.request')
+        logger.exception("core api error, missing user (exp update)")
+
+
+def update_user_password(user, cleartext_password):
+    path = core_api.info['current_instance'] + '/users/' + user.username
+
+    try:
+        core_api.patch(path, data={
+            'password': cleartext_password,
+        })
+    except lcoreapi.APINotFoundError:
+        # This time we can try fix it!
+        create_user(user.username, cleartext_password)
+    except lcoreapi.APIError:
+        # and maybe fail.
+        logger = logging.getLogger('django.request')
+        logger.exception("core api error (password update)")
+
+
+def delete_user(username):
+    path = core_api.info['current_instance'] + '/users/' + username
+    core_api.delete(path)
 
