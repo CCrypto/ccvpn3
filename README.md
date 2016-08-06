@@ -19,6 +19,7 @@ Getting Started
 ---------------
 
 ```bash
+    pip install --user git+git://github.com/PacketImpact/lcoreapi.git
     git clone https://github.com/CCrypto/ccvpn3.git
     cd ccvpn3/
 
