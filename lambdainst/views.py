@@ -300,6 +300,18 @@ def api_auth(request):
     return JsonResponse(dict(status='ok'))
 
 
+def api_locations(request):
+    def format_loc(cc, l):
+        return {
+            'country_name': l['country_name'],
+            'country_code': cc,
+            'hostname': l['hostname'],
+            'bandwidth': l['bandwidth'],
+            'servers': l['servers'],
+        }
+    return JsonResponse(dict(locations=[format_loc(cc, l) for cc, l in get_locations()]))
+
+
 def status(request):
     locations = get_locations()
 

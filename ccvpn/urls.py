@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^admin/referrers$', account_views.admin_ref, name='admin_ref'),
     url(r'^admin/', include(admin.site.urls)),
 
+    url(r'^api/locations$', account_views.api_locations),
     url(r'^api/auth$', account_views.api_auth),
 
     url(r'^$', views.index, name='index'),
