@@ -1,7 +1,6 @@
 from datetime import timedelta, datetime
 import lcoreapi
 from django.conf import settings
-from django.core.mail import mail_admins
 import logging
 
 cluster_messages = settings.LAMBDAINST_CLUSTER_MESSAGES
@@ -13,6 +12,7 @@ LCORE_API_KEY = lcore_settings['API_KEY']
 LCORE_API_SECRET = lcore_settings['API_SECRET']
 LCORE_SOURCE_ADDR = lcore_settings.get('SOURCE_ADDRESS')
 LCORE_INST_SECRET = lcore_settings['INST_SECRET']
+LCORE_TIMEOUT = lcore_settings.get('TIMEOUT', 10)
 
 # The default is to log the exception and only raise it if we cannot show
 # the previous value or a default value instead.
@@ -26,7 +26,8 @@ assert isinstance(LCORE_CACHE_TTL, timedelta)
 VPN_AUTH_STORAGE = settings.VPN_AUTH_STORAGE
 assert VPN_AUTH_STORAGE in ('core', 'inst')
 
-core_api = lcoreapi.API(LCORE_API_KEY, LCORE_API_SECRET, LCORE_BASE_URL)
+core_api = lcoreapi.API(LCORE_API_KEY, LCORE_API_SECRET, LCORE_BASE_URL,
+                        timeout=LCORE_TIMEOUT)
 
 
 class APICache:
