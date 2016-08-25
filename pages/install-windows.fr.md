@@ -1,5 +1,18 @@
 Title: Installation sous Windows
 
+Avec CCVPNGUI
+-------------
+
+CCVPNGUI est fait pour CCrypto VPN et contient tout ce qu'il faut. Téléchargez et lancez juste :  
+<https://dl.ccrypto.org/ccvpngui/releases/ccvpngui-1.0.0-1.exe>
+[(sig)](https://dl.ccrypto.org/ccvpngui/releases/ccvpngui-1.0.0-1.exe.asc)
+
+
+C'est open-source et basé sur [LVPNGUI](https://github.com/PacketImpact/lvpngui/).
+
+
+Avec OpenVPN GUI
+----------------
 
 1. Téléchargez le Windows Installer d'OpenVPN sur 
     [OpenVPN.net](http://openvpn.net/index.php/open-source/downloads.html)  
