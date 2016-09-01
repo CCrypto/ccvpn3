@@ -1,11 +1,17 @@
 import requests
 import io
 import zipfile
-from urllib.parse import urlencode
+import hmac
+import base64
+from hashlib import sha256
+from urllib.parse import urlencode, parse_qsl
 from datetime import timedelta, datetime
 
-from django.http import HttpResponse, HttpResponseNotFound, HttpResponseForbidden
-from django.http import JsonResponse
+from django.http import (
+    HttpResponse, JsonResponse,
+    HttpResponseRedirect,
+    HttpResponseNotFound, HttpResponseForbidden
+)
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -21,7 +27,7 @@ from django.contrib.auth.models import User
 from django_countries import countries
 
 from payments.models import ACTIVE_BACKENDS
-from .forms import SignupForm
+from .forms import SignupForm, ReqEmailForm
 from .models import GiftCode, VPNUser
 from .core import core_api
 from . import core
@@ -83,6 +89,58 @@ def signup(request):
     auth.login(request, user)
 
     return redirect('account:index')
+
+
+@login_required
+def discourse_login(request):
+    sso_secret = project_settings.DISCOURSE_SECRET
+    discourse_url = project_settings.DISCOURSE_URL
+
+    if project_settings.DISCOURSE_SSO is not True:
+        return HttpResponseNotFound()
+
+    payload = request.GET.get('sso', '')
+    signature = request.GET.get('sig', '')
+
+    expected_signature = hmac.new(sso_secret.encode('utf-8'),
+                                  payload.encode('utf-8'),
+                                  sha256).hexdigest()
+
+    if signature != expected_signature:
+        return HttpResponseNotFound()
+
+    if request.method == 'POST' and 'email' in request.POST:
+        form = ReqEmailForm(request.POST)
+        if not form.is_valid():
+            return render(request, 'ccvpn/require_email.html', dict(form=form))
+
+        request.user.email = form.cleaned_data['email']
+        request.user.save()
+
+    if not request.user.email:
+        form = ReqEmailForm()
+        return render(request, 'ccvpn/require_email.html', dict(form=form))
+
+    try:
+        payload = base64.b64decode(payload).decode('utf-8')
+        payload_data = dict(parse_qsl(payload))
+    except (TypeError, ValueError):
+        return HttpResponseNotFound()
+
+    payload_data.update({
+        'external_id': request.user.id,
+        'username': request.user.username,
+        'email': request.user.email,
+        'require_activation': 'true',
+    })
+
+    payload = urlencode(payload_data)
+    payload = base64.b64encode(payload.encode('utf-8'))
+    signature = hmac.new(sso_secret.encode('utf-8'), payload, sha256).hexdigest()
+    redirect_query = urlencode(dict(sso=payload, sig=signature))
+    redirect_path = '/session/sso_login?' + redirect_query
+
+    return HttpResponseRedirect(discourse_url + redirect_path)
 
 
 @login_required

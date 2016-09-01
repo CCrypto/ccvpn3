@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-07 17:43+0000\n"
+"POT-Creation-Date: 2016-09-01 03:18+0000\n"
 "PO-Revision-Date: 2016-04-07 01:32+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -27,39 +27,39 @@ msgstr ""
 msgid "hash"
 msgstr ""
 
-#: lambdainst/admin.py:17
+#: lambdainst/admin.py:22
 msgid "Code must be [a-zA-Z0-9]"
 msgstr ""
 
-#: lambdainst/admin.py:19
+#: lambdainst/admin.py:24
 msgid "Code must be between 1 and 32 characters"
 msgstr ""
 
-#: lambdainst/admin.py:39
+#: lambdainst/admin.py:43
 msgid "(rewarded)"
 msgstr ""
 
-#: lambdainst/admin.py:41
+#: lambdainst/admin.py:45
 msgid "(not rewarded)"
 msgstr ""
 
-#: lambdainst/admin.py:43
+#: lambdainst/admin.py:48
 msgid "Referrer"
 msgstr ""
 
-#: lambdainst/admin.py:48 lambdainst/admin.py:92
+#: lambdainst/admin.py:53 lambdainst/admin.py:96
 msgid "Is paid?"
 msgstr "Est payé?"
 
-#: lambdainst/admin.py:83
+#: lambdainst/admin.py:87
 msgid "Important dates"
 msgstr "Dates importantes"
 
-#: lambdainst/admin.py:84
+#: lambdainst/admin.py:88
 msgid "Permissions"
 msgstr "Permissions"
 
-#: lambdainst/admin.py:116 tickets/admin.py:52
+#: lambdainst/admin.py:133 tickets/admin.py:52
 msgid "Comment"
 msgstr "Notes"
 
@@ -87,8 +87,9 @@ msgstr "Répétez"
 msgid "Same Anything"
 msgstr "La même chose"
 
-#: lambdainst/forms.py:47 lambdainst/forms.py:48 templates/ccvpn/signup.html:30
-#: templates/lambdainst/settings.html.py:22
+#: lambdainst/forms.py:47 lambdainst/forms.py:48 lambdainst/forms.py:60
+#: lambdainst/forms.py:61 templates/ccvpn/require_email.html.py:13
+#: templates/ccvpn/signup.html:30 templates/lambdainst/settings.html.py:22
 #: templates/registration/password_reset_form.html:11
 msgid "E-Mail"
 msgstr "E-Mail"
@@ -97,27 +98,27 @@ msgstr "E-Mail"
 msgid "Passwords are not the same"
 msgstr "Les mots de passe de correspondent pas"
 
-#: lambdainst/models.py:24
+#: lambdainst/models.py:25
 msgid "VPN User"
 msgstr "VPN User"
 
-#: lambdainst/models.py:25
+#: lambdainst/models.py:26
 msgid "VPN Users"
 msgstr "VPN Users"
 
-#: lambdainst/models.py:92
+#: lambdainst/models.py:97
 msgid "Gift Code"
 msgstr "Code cadeau"
 
-#: lambdainst/models.py:93
+#: lambdainst/models.py:98
 msgid "Gift Codes"
 msgstr "Codes cadeau"
 
-#: lambdainst/models.py:138
+#: lambdainst/models.py:143
 msgid "Gift Code User"
 msgstr "Utilisateur de codes"
 
-#: lambdainst/models.py:139
+#: lambdainst/models.py:144
 msgid "Gift Code Users"
 msgstr "Utilisateurs de codes"
 
@@ -200,50 +201,50 @@ msgstr ""
 msgid "%s Pbps"
 msgstr ""
 
-#: lambdainst/views.py:91
+#: lambdainst/views.py:152
 msgid "Awesome VPN! 3€ per month, with a free 7 days trial!"
 msgstr ""
 
-#: lambdainst/views.py:98 templates/account_layout.html.py:9
+#: lambdainst/views.py:159 templates/account_layout.html.py:9
 #: templates/account_layout.html:11 templates/lambdainst/account.html.py:10
 msgid "Account"
 msgstr "Compte"
 
-#: lambdainst/views.py:137 lambdainst/views.py:180
+#: lambdainst/views.py:198 lambdainst/views.py:221 lambdainst/views.py:246
 msgid "OK!"
 msgstr "OK!"
 
-#: lambdainst/views.py:139
+#: lambdainst/views.py:200
 msgid "Invalid captcha"
 msgstr "Captcha invalide"
 
-#: lambdainst/views.py:153
+#: lambdainst/views.py:214
 msgid "Passwords do not match"
 msgstr "Les mots de passe ne correspondent pas"
 
-#: lambdainst/views.py:165 templates/account_layout.html.py:13
+#: lambdainst/views.py:231 templates/account_layout.html.py:13
 #: templates/lambdainst/settings.html:6
 msgid "Settings"
 msgstr "Options"
 
-#: lambdainst/views.py:176
+#: lambdainst/views.py:242
 msgid "Gift code not found or already used."
 msgstr "Code inconnu ou déjà utilisé."
 
-#: lambdainst/views.py:178
+#: lambdainst/views.py:244
 msgid "Gift code only available to free accounts."
 msgstr "Code uniquement disponible pour les nouveaux comptes."
 
-#: lambdainst/views.py:200 templates/account_layout.html.py:15
+#: lambdainst/views.py:266 templates/account_layout.html.py:15
 #: templates/lambdainst/logs.html:6
 msgid "Logs"
 msgstr "Logs"
 
-#: lambdainst/views.py:207 templates/lambdainst/config.html.py:7
+#: lambdainst/views.py:273 templates/lambdainst/config.html.py:7
 msgid "Config"
 msgstr "Config"
 
-#: lambdainst/views.py:296 payments/backends.py:120 payments/backends.py:122
+#: lambdainst/views.py:377 payments/backends.py:120 payments/backends.py:122
 #: templates/admin/index.html:53 templates/admin/index.html.py:56
 #: templates/lambdainst/admin_ref.html:16
 #: templates/lambdainst/admin_status.html:16 templates/payments/list.html:13
@@ -554,6 +555,18 @@ msgstr "Installation"
 #: templates/ccvpn/page.html:18
 msgid "GNU/Linux"
 msgstr "GNU/Linux"
+
+#: templates/ccvpn/require_email.html:8
+msgid "E-mail Confirmation"
+msgstr "Confirmation de l'adresse e-mail"
+
+#: templates/ccvpn/require_email.html:16
+msgid "Required to use the forums. A confirmation will be sent."
+msgstr "Nécessaire pour les forums. Une confirmation sera envoyée."
+
+#: templates/ccvpn/require_email.html:19
+msgid "Continue"
+msgstr "Continuer"
 
 #: templates/ccvpn/signup.html:8 templates/ccvpn/signup.html.py:37
 #: templates/layout.html:34
