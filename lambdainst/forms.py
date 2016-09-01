@@ -54,3 +54,11 @@ class SignupForm(forms.Form, FormPureRender):
             raise forms.ValidationError(_("Passwords are not the same"))
         return self.data['password']
 
+
+class ReqEmailForm(forms.Form, FormPureRender):
+    email = forms.EmailField(
+        label=_("E-Mail"),
+        widget=forms.EmailInput(attrs={'placeholder': _("E-Mail")}),
+    )
+
+

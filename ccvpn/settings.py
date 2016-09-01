@@ -155,6 +155,10 @@ SECURE_SSL_REDIRECT = False
 SECURE_HSTS_SECONDS = 3600
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
+# Enable Discourse SSO
+DISCOURSE_SSO = False
+DISCOURSE_SECRET = '...'
+DISCOURSE_URL = 'https://forum.ccrypto.org/'
 
 # OpenVPN CA Certificate
 with open(BASE_DIR + '/ccvpn/ca.crt') as ca_file:
