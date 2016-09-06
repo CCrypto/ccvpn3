@@ -5,33 +5,8 @@ from django.test import TestCase, RequestFactory
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 
-from .models import Payment, Subscription
-from .backends import BitcoinBackend, PaypalBackend, StripeBackend
-
-from decimal import Decimal
-
-
-class FakeBTCRPCNew:
-    def getnewaddress(self, account):
-        return 'TEST_ADDRESS'
-
-
-class FakeBTCRPCUnpaid:
-    def getreceivedbyaddress(self, address):
-        assert address == 'TEST_ADDRESS'
-        return Decimal('0')
-
-
-class FakeBTCRPCPartial:
-    def getreceivedbyaddress(self, address):
-        assert address == 'TEST_ADDRESS'
-        return Decimal('0.5') * 100000000
-
-
-class FakeBTCRPCPaid:
-    def getreceivedbyaddress(self, address):
-        assert address == 'TEST_ADDRESS'
-        return Decimal('1') * 100000000
+from payments.models import Payment, Subscription
+from payments.backends import PaypalBackend
 
 
 PAYPAL_IPN_TEST = '''\
@@ -152,82 +127,7 @@ mc_amount3=9.00&\
 ipn_track_id=546a4aa4300a0'''
 
 
-class BitcoinBackendTest(TestCase):
-    def setUp(self):
-        self.user = User.objects.create_user('test', 'test_user@example.com', None)
-
-        self.p = Payment.objects.create(
-            user=self.user, time=timedelta(days=30), backend='bitcoin',
-            amount=300)
-
-    def test_new(self):
-        backend = BitcoinBackend(dict(BITCOIN_VALUE=300, URL=''))
-        backend.make_rpc = FakeBTCRPCNew
-
-        backend.new_payment(self.p)
-        redirect = backend.new_payment(self.p)
-        self.assertEqual(self.p.backend_extid, 'TEST_ADDRESS')
-        self.assertEqual(self.p.status, 'new')
-        self.assertIn('btc_price', self.p.backend_data)
-        self.assertIn('btc_address', self.p.backend_data)
-        self.assertEqual(self.p.backend_data['btc_address'], 'TEST_ADDRESS')
-        self.assertIsInstance(redirect, HttpResponseRedirect)
-        self.assertEqual(redirect.url, '/payments/view/%d' % self.p.id)
-        self.assertEqual(self.p.status_message, "Please send 1.00000 BTC to TEST_ADDRESS")
-
-    def test_rounding(self):
-        """ Rounding test
-        300 / 300 = 1 => 1.00000 BTC
-        300 / 260 = Decimal('1.153846153846153846153846154') => 1.15385 BTC
-        """
-        backend = BitcoinBackend(dict(BITCOIN_VALUE=300, URL=''))
-        backend.make_rpc = FakeBTCRPCNew
-        backend.new_payment(self.p)
-        self.assertEqual(self.p.status_message, "Please send 1.00000 BTC to TEST_ADDRESS")
-
-        backend = BitcoinBackend(dict(BITCOIN_VALUE=260, URL=''))
-        backend.make_rpc = FakeBTCRPCNew
-        backend.new_payment(self.p)
-        self.assertEqual(self.p.status_message, "Please send 1.15385 BTC to TEST_ADDRESS")
-
-
-class BitcoinBackendConfirmTest(TestCase):
-    def setUp(self):
-        self.user = User.objects.create_user('test', 'test_user@example.com', None)
-
-        self.p = Payment.objects.create(
-            user=self.user, time=timedelta(days=30), backend='bitcoin',
-            amount=300)
-
-        # call new_payment
-        backend = BitcoinBackend(dict(BITCOIN_VALUE=300, URL=''))
-        backend.make_rpc = FakeBTCRPCNew
-        backend.new_payment(self.p)
-
-    def test_check_unpaid(self):
-        backend = BitcoinBackend(dict(BITCOIN_VALUE=300, URL=''))
-        backend.make_rpc = FakeBTCRPCUnpaid
-
-        backend.check(self.p)
-        self.assertEqual(self.p.status, 'new')
-        self.assertEqual(self.p.paid_amount, 0)
-
-    def test_check_partially_paid(self):
-        backend = BitcoinBackend(dict(BITCOIN_VALUE=300, URL=''))
-        backend.make_rpc = FakeBTCRPCPartial
-        backend.check(self.p)
-        self.assertEqual(self.p.status, 'new')
-        self.assertEqual(self.p.paid_amount, 150)
-
-    def test_check_paid(self):
-        backend = BitcoinBackend(dict(BITCOIN_VALUE=300, URL=''))
-        backend.make_rpc = FakeBTCRPCPaid
-        backend.check(self.p)
-        self.assertEqual(self.p.paid_amount, 300)
-        self.assertEqual(self.p.status, 'confirmed')
-
-
-class BackendTest(TestCase):
+class PaypalBackendTest(TestCase):
     def setUp(self):
         self.user = User.objects.create_user('test', 'test_user@example.com', None)
 
@@ -310,8 +210,6 @@ class BackendTest(TestCase):
 
         host, params = redirect.url.split('?', 1)
         params = parse_qs(params)
-
-        expected_notify_url = 'root/payments/callback/paypal/%d' % payment.id
 
         # Replace PaypalBackend.verify_ipn to not call the PayPal API
         # we will assume the IPN is authentic
@@ -424,72 +322,4 @@ class BackendTest(TestCase):
 
         payments = Payment.objects.filter(subscription=subscription).all()
         self.assertEqual(len(payments), 1)
-
-    def test_stripe(self):
-        payment = Payment.objects.create(
-            user=self.user,
-            time=timedelta(days=30),
-            backend='stripe',
-            amount=300
-        )
-
-        settings = dict(
-            API_KEY='test_secret_key',
-            PUBLIC_KEY='test_public_key',
-            CURRENCY='EUR',
-            NAME='Test Name',
-        )
-
-        with self.settings(ROOT_URL='root'):
-            backend = StripeBackend(settings)
-            form_html = backend.new_payment(payment)
-
-        expected_form = '''
-        <form action="/payments/callback/stripe/{id}" method="POST">
-          <script
-            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-            data-key="test_public_key"
-            data-image=""
-            data-name="Test Name"
-            data-currency="EUR"
-            data-description="30 days, 0:00:00 for test"
-            data-amount="300"
-            data-email="test_user@example.com"
-            data-locale="auto"
-            data-zip-code="true"
-            data-alipay="true">
-          </script>
-        </form>
-        '''.format(id=payment.id)
-        self.maxDiff = None
-        self.assertEqual(expected_form, form_html)
-
-        def create_charge(**kwargs):
-            self.assertEqual(kwargs, {
-                'amount': 300,
-                'currency': 'EUR',
-                'card': 'TEST_TOKEN',
-                'description': "1 months for test",
-            })
-            return {
-                'id': 'TEST_CHARGE_ID',
-                'refunded': False,
-                'paid': True,
-                'amount': 300,
-            }
-
-        # Replace the Stripe api instance
-        backend.stripe = type('Stripe', (object, ), {
-            'Charge': type('Charge', (object, ), {
-                'create': create_charge,
-            }),
-            'error': type('error', (object, ), {
-                'CardError': type('CardError', (Exception, ), {}),
-            }),
-        })
-
-        request = RequestFactory().post('', {'stripeToken': 'TEST_TOKEN'})
-        backend.callback(payment, request)
-
-        self.assertEqual(payment.backend_extid, 'TEST_CHARGE_ID')
 
