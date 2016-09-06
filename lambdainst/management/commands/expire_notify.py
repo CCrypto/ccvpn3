@@ -6,7 +6,6 @@ from django.db.models import Q, F
 from django.conf import settings
 from django.utils import timezone
 from django.template.loader import get_template
-from django.template import Context
 from django.core.mail import send_mass_mail
 
 from lambdainst.models import VPNUser
@@ -46,11 +45,17 @@ class Command(BaseCommand):
             qs = get_next_expirations(v)
             users = list(qs)
             for u in users:
-                ctx = Context(dict(site_name=SITE_NAME, user=u.user,
-                                   exp=u.expiration, url=ROOT_URL))
+                # Ignore users with active subscriptions
+                # They will get notified only if it gets cancelled (payments
+                # processors will cancel after a few failed payments)
+                if u.get_subscription():
+                    continue
+
+                ctx = dict(site_name=SITE_NAME, user=u.user,
+                           exp=u.expiration, url=ROOT_URL)
                 text = get_template('lambdainst/mail_expire_soon.txt').render(ctx)
                 emails.append(("CCVPN Expiration", text, from_email, [u.user.email]))
-                print("sending -%d days notify to %s ..." % (v, u.user.email))
+                self.stdout.write("sending -%d days notify to %s ..." % (v, u.user.email))
 
             send_mass_mail(emails)
             qs.update(last_expiry_notice=timezone.now())

@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from jsonfield import JSONField
+from datetime import timedelta
 
 from .backends import BackendBase
 
@@ -9,6 +10,7 @@ backend_settings = settings.PAYMENTS_BACKENDS
 assert isinstance(backend_settings, dict)
 
 CURRENCY_CODE, CURRENCY_NAME = settings.PAYMENTS_CURRENCY
+MONTHLY_PRICE = settings.PAYMENTS_MONTHLY_PRICE
 
 STATUS_CHOICES = (
     ('new', _("Waiting for payment")),
@@ -18,9 +20,23 @@ STATUS_CHOICES = (
     ('error', _("Payment processing failed")),
 )
 
-PERIOD_CHOICES = (
+# A Subscription is created with status='new'. When getting back from PayPal,
+# it may get upgraded to 'unconfirmed'. It will be set 'active' with the first
+# confirmed payment.
+# 'unconfirmed' exists to prevent creation of a second Subscription while
+# waiting for the first one to be confirmed.
+SUBSCR_STATUS_CHOICES = (
+    ('new', _("Created")),
+    ('unconfirmed', _("Waiting for payment")),
+    ('active', _("Active")),
+    ('cancelled', _("Cancelled")),
+    ('error', _("Error")),
+)
+
+SUBSCR_PERIOD_CHOICES = (
+    ('3m', _("Every 3 months")),
     ('6m', _("Every 6 months")),
-    ('1year', _("Yearly")),
+    ('12m', _("Every year")),
 )
 
 # All known backends (classes)
@@ -51,10 +67,18 @@ BACKEND_CHOICES = sorted(BACKEND_CHOICES, key=lambda x: x[0])
 ACTIVE_BACKEND_CHOICES = sorted(ACTIVE_BACKEND_CHOICES, key=lambda x: x[0])
 
 
+def period_months(p):
+    return {
+        '3m': 3,
+        '6m': 6,
+        '12m': 12,
+    }[p]
+
+
 class Payment(models.Model):
     """ Just a payment.
-    If recurring_source is not null, it has been automatically issued.
-    backend_id is the external transaction ID, backend_data is other
+    If subscription is not null, it has been automatically issued.
+    backend_extid is the external transaction ID, backend_data is other
     things that should only be used by the associated backend.
     """
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -66,7 +90,7 @@ class Payment(models.Model):
     amount = models.IntegerField()
     paid_amount = models.IntegerField(default=0)
     time = models.DurationField()
-    recurring_source = models.ForeignKey('RecurringPaymentSource', null=True, blank=True)
+    subscription = models.ForeignKey('Subscription', null=True, blank=True)
     status_message = models.TextField(blank=True, null=True)
 
     backend_extid = models.CharField(max_length=64, null=True, blank=True)
@@ -97,18 +121,65 @@ class Payment(models.Model):
     class Meta:
         ordering = ('-created', )
 
+    @classmethod
+    def create_payment(self, backend_id, user, months):
+        payment = Payment(
+            user=user,
+            backend_id=backend_id,
+            status='new',
+            time=timedelta(days=30 * months),
+            amount=MONTHLY_PRICE * months
+        )
+        return payment
 
-class RecurringPaymentSource(models.Model):
-    """ Used as a source to periodically make Payments.
-    They use the same backends.
-    """
+
+class Subscription(models.Model):
+    """ Recurring payment subscription. """
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    backend = models.CharField(max_length=16, choices=BACKEND_CHOICES)
+    backend_id = models.CharField(max_length=16, choices=BACKEND_CHOICES)
     created = models.DateTimeField(auto_now_add=True)
-    modified = models.DateTimeField(auto_now=True)
-    period = models.CharField(max_length=16, choices=PERIOD_CHOICES)
+    period = models.CharField(max_length=16, choices=SUBSCR_PERIOD_CHOICES)
     last_confirmed_payment = models.DateTimeField(blank=True, null=True)
+    status = models.CharField(max_length=16, choices=SUBSCR_STATUS_CHOICES, default='new')
 
-    backend_id = models.CharField(max_length=64, null=True, blank=True)
+    backend_extid = models.CharField(max_length=64, null=True, blank=True)
     backend_data = JSONField(blank=True)
+
+    @property
+    def backend(self):
+        """ Returns a global instance of the backend
+        :rtype: BackendBase
+        """
+        return BACKENDS[self.backend_id]
+
+    @property
+    def months(self):
+        return period_months(self.period)
+
+    @property
+    def period_amount(self):
+        return self.months * MONTHLY_PRICE
+
+    @property
+    def next_renew(self):
+        """ Approximate date of the next payment """
+        if self.last_confirmed_payment:
+            return self.last_confirmed_payment + timedelta(days=self.months * 30)
+        return self.created + timedelta(days=self.months * 30)
+
+    @property
+    def monthly_amount(self):
+        return MONTHLY_PRICE
+
+    def create_payment(self):
+        payment = Payment(
+            user=self.user,
+            backend_id=self.backend_id,
+            status='new',
+            time=timedelta(days=30 * self.months),
+            amount=MONTHLY_PRICE * self.months,
+            subscription=self,
+        )
+        return payment
+
 

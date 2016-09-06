@@ -10,6 +10,7 @@ class NewPaymentForm(forms.Form):
         ('12', '12'),
     )
 
+    subscr = forms.ChoiceField(choices=(('0', 'no'), ('1', 'yes')))
     time = forms.ChoiceField(choices=TIME_CHOICES)
     method = forms.ChoiceField(choices=BACKEND_CHOICES)
 

@@ -1,10 +1,13 @@
-from datetime import timedelta, datetime
+from datetime import timedelta
 from django.test import TestCase
 from django.utils import timezone
+from django.core.management import call_command
+from django.core import mail
+from django.utils.six import StringIO
 
 from .forms import SignupForm
 from .models import VPNUser, User, random_gift_code, GiftCode, GiftCodeUser
-from payments.models import Payment
+from payments.models import Payment, Subscription
 
 
 class UserTestMixin:
@@ -270,5 +273,81 @@ class CACrtViewTest(TestCase):
             self.assertEqual(response.status_code, 200)
             self.assertEqual(response['Content-Type'], 'application/x-x509-ca-cert')
             self.assertEqual(response.content, b'test ca')
+
+
+def email_text(body):
+    return body.replace('\n', ' ') \
+               .replace('\xa0', ' ')  # nbsp
+
+
+class ExpireNotifyTest(TestCase):
+    def setUp(self):
+        pass
+
+    def test_notify_first(self):
+        out = StringIO()
+        u = User.objects.create_user('test_username', 'test@example.com', 'testpw')
+        u.vpnuser.add_paid_time(timedelta(days=2))
+        u.vpnuser.save()
+
+        call_command('expire_notify', stdout=out)
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(mail.outbox[0].to, ['test@example.com'])
+        self.assertIn('expire in 1 day', email_text(mail.outbox[0].body))
+
+        u = User.objects.get(username='test_username')
+        self.assertAlmostEqual(u.vpnuser.last_expiry_notice, timezone.now(),
+                               delta=timedelta(minutes=1))
+
+    def test_notify_second(self):
+        out = StringIO()
+        u = User.objects.create_user('test_username', 'test@example.com', 'testpw')
+        u.vpnuser.last_expiry_notice = timezone.now() - timedelta(days=2)
+        u.vpnuser.add_paid_time(timedelta(days=1))
+        u.vpnuser.save()
+
+        call_command('expire_notify', stdout=out)
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(mail.outbox[0].to, ['test@example.com'])
+        self.assertIn('expire in 23 hours, 59 minutes', email_text(mail.outbox[0].body))
+
+        u = User.objects.get(username='test_username')
+        self.assertAlmostEqual(u.vpnuser.last_expiry_notice, timezone.now(),
+                               delta=timedelta(minutes=1))
+
+    def test_notify_subscription(self):
+        out = StringIO()
+        u = User.objects.create_user('test_username', 'test@example.com', 'testpw')
+        u.vpnuser.add_paid_time(timedelta(days=2))
+        u.vpnuser.save()
+
+        s = Subscription(user=u, backend_id='paypal', status='active')
+        s.save()
+
+        call_command('expire_notify', stdout=out)
+        self.assertEqual(len(mail.outbox), 0)
+
+        u = User.objects.get(username='test_username')
+        # FIXME:
+        # self.assertNotAlmostEqual(u.vpnuser.last_expiry_notice, timezone.now(),
+        #                           delta=timedelta(minutes=1))
+
+    def test_notify_subscription_new(self):
+        out = StringIO()
+        u = User.objects.create_user('test_username', 'test@example.com', 'testpw')
+        u.vpnuser.add_paid_time(timedelta(days=2))
+        u.vpnuser.last_expiry_notice = timezone.now() - timedelta(days=5)
+        u.vpnuser.save()
+
+        s = Subscription(user=u, backend_id='paypal', status='new')
+        s.save()
+
+        call_command('expire_notify', stdout=out)
+        self.assertEqual(len(mail.outbox), 1)
+
+        u = User.objects.get(username='test_username')
+        # FIXME:
+        # self.assertNotAlmostEqual(u.vpnuser.last_expiry_notice, timezone.now(),
+        #                           delta=timedelta(minutes=1))
 
 
