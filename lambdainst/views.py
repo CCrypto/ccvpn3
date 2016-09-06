@@ -155,13 +155,27 @@ def index(request):
         'related': 'CCrypto_VPN,CCrypto_org'
     }
 
+    class price_fn:
+        """ Clever hack to get the price in templates with {{price.3}} with
+        3 an arbitrary number of months
+        """
+        def __getitem__(self, months):
+            n = int(months) * project_settings.PAYMENTS_MONTHLY_PRICE / 100
+            c = project_settings.PAYMENTS_CURRENCY[1]
+            return '%.2f %s' % (n, c)
+
     context = dict(
         title=_("Account"),
         ref_url=ref_url,
         twitter_link=twitter_url + urlencode(twitter_args),
+        subscription=request.user.vpnuser.get_subscription(include_unconfirmed=True),
         backends=sorted(ACTIVE_BACKENDS.values(), key=lambda x: x.backend_id),
+        subscr_backends=sorted((b for b in ACTIVE_BACKENDS.values()
+                                if b.backend_has_recurring),
+                               key=lambda x: x.backend_id),
         default_backend='paypal',
         recaptcha_site_key=project_settings.RECAPTCHA_SITE_KEY,
+        price=price_fn(),
     )
     return render(request, 'lambdainst/account.html', context)
 

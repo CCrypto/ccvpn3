@@ -15,6 +15,7 @@ class BackendBase:
     backend_verbose_name = ""
     backend_display_name = ""
     backend_enabled = False
+    backend_has_recurring = False
 
     def __init__(self, settings):
         pass
@@ -30,11 +31,23 @@ class BackendBase:
         """ Handle a callback """
         raise NotImplementedError()
 
+    def callback_subscr(self, payment, request):
+        """ Handle a callback (recurring payments) """
+        raise NotImplementedError()
+
+    def cancel_subscription(self, subscr):
+        """ Cancel a subscription """
+        raise NotImplementedError()
+
     def get_info(self):
         """ Returns some status (key, value) list """
         return ()
 
     def get_ext_url(self, payment):
+        """ Returns URL to external payment view, or None """
+        return None
+
+    def get_subscr_ext_url(self, subscr):
         """ Returns URL to external payment view, or None """
         return None
 
@@ -151,6 +164,7 @@ class PaypalBackend(BackendBase):
     backend_id = 'paypal'
     backend_verbose_name = _("PayPal")
     backend_display_name = _("PayPal")
+    backend_has_recurring = True
 
     def __init__(self, settings):
         self.test = settings.get('TEST', False)
@@ -191,6 +205,37 @@ class PaypalBackend(BackendBase):
 
         return redirect(self.api_base + '/cgi-bin/webscr?' + urlencode(params))
 
+    def new_subscription(self, rps):
+        months = {
+            '3m': 3,
+            '6m': 6,
+            '12m': 12,
+        }[rps.period]
+
+        ROOT_URL = project_settings.ROOT_URL
+        params = {
+            'cmd': '_xclick-subscriptions',
+            'notify_url': ROOT_URL + reverse('payments:cb_paypal_subscr', args=(rps.id,)),
+            'item_name': self.title,
+            'currency_code': self.currency,
+            'business': self.account_address,
+            'no_shipping': '1',
+            'return': ROOT_URL + reverse('payments:return_subscr', args=(rps.id,)),
+            'cancel_return': ROOT_URL + reverse('account:index'),
+
+            'a3': '%.2f' % (rps.period_amount / 100),
+            'p3': str(months),
+            't3': 'M',
+            'src': '1',
+        }
+
+        if self.header_image:
+            params['cpp_header_image'] = self.header_image
+
+        rps.save()
+
+        return redirect(self.api_base + '/cgi-bin/webscr?' + urlencode(params))
+
     def handle_verified_callback(self, payment, params):
         if self.test and params['test_ipn'] != '1':
             raise ValueError('Test IPN')
@@ -205,32 +250,71 @@ class PaypalBackend(BackendBase):
             payment.status_message = None
 
         elif params['payment_status'] == 'Completed':
-            if self.receiver_address != params['receiver_email']:
-                raise ValueError('Wrong receiver: ' + params['receiver_email'])
-            if self.currency.lower() != params['mc_currency'].lower():
-                raise ValueError('Wrong currency: ' + params['mc_currency'])
+            self.handle_completed_payment(payment, params)
 
-            payment.paid_amount = int(float(params['mc_gross']) * 100)
-            if payment.paid_amount < payment.amount:
-                raise ValueError('Not fully paid.')
+    def handle_verified_callback_subscr(self, subscr, params):
+        if self.test and params['test_ipn'] != '1':
+            raise ValueError('Test IPN')
 
-            payment.user.vpnuser.add_paid_time(payment.time)
-            payment.user.vpnuser.on_payment_confirmed(payment)
-            payment.user.vpnuser.save()
+        txn_type = params.get('txn_type')
+        if not txn_type.startswith('subscr_'):
+            # Not handled here and can be ignored
+            return
 
-            payment.backend_extid = params['txn_id']
-            payment.status = 'confirmed'
-            payment.status_message = None
-            payment.save()
+        if txn_type == 'subscr_payment':
+            if params['payment_status'] == 'Refunded':
+                # FIXME: Find the payment and do something
+                pass
 
-    def verify_ipn(self, payment, request):
+            elif params['payment_status'] == 'Completed':
+                payment = subscr.create_payment()
+                if not self.handle_completed_payment(payment, params):
+                    return
+
+                subscr.last_confirmed_payment = payment.created
+                subscr.backend_extid = params.get('subscr_id', '')
+                if subscr.status == 'new' or subscr.status == 'unconfirmed':
+                    subscr.status = 'active'
+                subscr.save()
+        elif txn_type == 'subscr_cancel' or txn_type == 'subscr_eot':
+            subscr.status = 'cancelled'
+            subscr.save()
+
+    def handle_completed_payment(self, payment, params):
+        from payments.models import Payment
+
+        # Prevent making duplicate Payments if IPN is received twice
+        pc = Payment.objects.filter(backend_extid=params['txn_id']).count()
+        if pc > 0:
+            return False
+
+        if self.receiver_address != params['receiver_email']:
+            raise ValueError('Wrong receiver: ' + params['receiver_email'])
+        if self.currency.lower() != params['mc_currency'].lower():
+            raise ValueError('Wrong currency: ' + params['mc_currency'])
+
+        payment.paid_amount = int(float(params['mc_gross']) * 100)
+        if payment.paid_amount < payment.amount:
+            raise ValueError('Not fully paid.')
+
+        payment.user.vpnuser.add_paid_time(payment.time)
+        payment.user.vpnuser.on_payment_confirmed(payment)
+        payment.user.vpnuser.save()
+
+        payment.backend_extid = params['txn_id']
+        payment.status = 'confirmed'
+        payment.status_message = None
+        payment.save()
+        return True
+
+    def verify_ipn(self, request):
         v_url = self.api_base + '/cgi-bin/webscr?cmd=_notify-validate'
         v_req = urlopen(v_url, data=request.body, timeout=5)
         v_res = v_req.read()
         return v_res == b'VERIFIED'
 
     def callback(self, payment, request):
-        if not self.verify_ipn(payment, request):
+        if not self.verify_ipn(request):
             return False
 
         params = request.POST
@@ -246,6 +330,23 @@ class PaypalBackend(BackendBase):
             payment.save()
             raise
 
+    def callback_subscr(self, subscr, request):
+        if not self.verify_ipn(request):
+            return False
+
+        params = request.POST
+
+        try:
+            self.handle_verified_callback_subscr(subscr, params)
+            return True
+        except (KeyError, ValueError) as e:
+            subscr.status = 'error'
+            subscr.status_message = None
+            subscr.backend_data['ipn_exception'] = repr(e)
+            subscr.backend_data['ipn_last_data'] = repr(request.POST)
+            subscr.save()
+            raise
+
     def get_ext_url(self, payment):
         if not payment.backend_extid:
             return None
@@ -256,7 +357,11 @@ class PaypalBackend(BackendBase):
 class StripeBackend(BackendBase):
     backend_id = 'stripe'
     backend_verbose_name = _("Stripe")
-    backend_display_name = _("Credit Card or Alipay (Stripe)")
+    backend_display_name = _("Credit Card")
+    backend_has_recurring = True
+
+    def get_plan_id(self, period):
+        return 'ccvpn_' + period
 
     def __init__(self, settings):
         if 'API_KEY' not in settings or 'PUBLIC_KEY' not in settings:
@@ -302,6 +407,54 @@ class StripeBackend(BackendBase):
             amount=payment.amount,
             curr=self.currency,
         )
+
+    def new_subscription(self, subscr):
+        desc = 'Subscription (' + str(subscr.period) + ') for ' + subscr.user.username
+        form = '''
+        <form action="{post}" method="POST">
+          <script
+            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="{pubkey}"
+            data-image="{img}"
+            data-name="{name}"
+            data-currency="{curr}"
+            data-description="{desc}"
+            data-amount="{amount}"
+            data-email="{email}"
+            data-locale="auto"
+            data-zip-code="true"
+            data-alipay="true">
+          </script>
+        </form>
+        '''
+        return form.format(
+            post=reverse('payments:cb_stripe_subscr', args=(subscr.id,)),
+            pubkey=self.pubkey,
+            img=self.header_image,
+            email=subscr.user.email or '',
+            name=self.name,
+            desc=desc,
+            amount=subscr.period_amount,
+            curr=self.currency,
+        )
+
+    def cancel_subscription(self, subscr):
+        if subscr.status not in ('new', 'unconfirmed', 'active'):
+            return
+
+        try:
+            cust = self.stripe.Customer.retrieve(subscr.backend_extid)
+        except self.stripe.error.InvalidRequestError:
+            return
+
+        try:
+            # Delete customer and cancel any active subscription
+            cust.delete()
+        except self.stripe.error.InvalidRequestError:
+            pass
+
+        subscr.status = 'cancelled'
+        subscr.save()
 
     def callback(self, payment, request):
         post_data = request.POST
@@ -350,10 +503,79 @@ class StripeBackend(BackendBase):
             payment.status_message = e.json_body['error']['message']
             payment.save()
 
+    def callback_subscr(self, subscr, request):
+        post_data = request.POST
+        token = post_data.get('stripeToken')
+        if not token:
+            subscr.status = 'cancelled'
+            subscr.save()
+            return
+
+        try:
+            cust = self.stripe.Customer.create(
+                source=token,
+                plan=self.get_plan_id(subscr.period),
+            )
+        except self.stripe.error.InvalidRequestError:
+            return
+
+        try:
+            if subscr.status == 'new':
+                subscr.status = 'unconfirmed'
+            subscr.backend_extid = cust['id']
+            subscr.save()
+        except (self.stripe.error.InvalidRequestError, self.stripe.error.CardError) as e:
+            subscr.status = 'error'
+            subscr.backend_data['stripe_error'] = e.json_body['error']['message']
+            subscr.save()
+
+    def webhook_payment_succeeded(self, event):
+        from payments.models import Subscription, Payment
+
+        invoice = event['data']['object']
+        customer_id = invoice['customer']
+
+        # Prevent making duplicate Payments if event is received twice
+        pc = Payment.objects.filter(backend_extid=invoice['id']).count()
+        if pc > 0:
+            return
+
+        subscr = Subscription.objects.get(backend_extid=customer_id)
+        payment = subscr.create_payment()
+        payment.status = 'confirmed'
+        payment.paid_amount = invoice['total']
+        payment.backend_extid = invoice['id']
+        payment.backend_data = {'event_id': event['id']}
+        payment.save()
+
+        payment.user.vpnuser.add_paid_time(payment.time)
+        payment.user.vpnuser.on_payment_confirmed(payment)
+        payment.user.vpnuser.save()
+        payment.save()
+
+        subscr.status = 'active'
+        subscr.save()
+
+    def webhook(self, request):
+        try:
+            event_json = json.loads(request.body.decode('utf-8'))
+            event = self.stripe.Event.retrieve(event_json["id"])
+        except (ValueError, self.stripe.error.InvalidRequestError):
+            return False
+
+        if event['type'] == 'invoice.payment_succeeded':
+            self.webhook_payment_succeeded(event)
+        return True
+
     def get_ext_url(self, payment):
         if not payment.backend_extid:
             return None
         return 'https://dashboard.stripe.com/payments/%s' % payment.backend_extid
+
+    def get_subscr_ext_url(self, subscr):
+        if not subscr.backend_extid:
+            return None
+        return 'https://dashboard.stripe.com/customers/%s' % subscr.backend_extid
 
 
 class CoinbaseBackend(BackendBase):
@@ -453,4 +675,5 @@ class CoinbaseBackend(BackendBase):
         payment.user.vpnuser.on_payment_confirmed(payment)
         payment.user.vpnuser.save()
         return True
+
 

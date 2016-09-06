@@ -6,9 +6,11 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFound
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
+from django.contrib import messages
+from django.utils.translation import ugettext_lazy as _
 
 from .forms import NewPaymentForm
-from .models import Payment, BACKENDS
+from .models import Payment, Subscription, BACKENDS, ACTIVE_BACKENDS
 
 
 monthly_price = settings.PAYMENTS_MONTHLY_PRICE
@@ -24,21 +26,34 @@ def new(request):
     if not form.is_valid():
         return redirect('account:index')
 
-    months = int(form.cleaned_data['time'])
-    payment = Payment(
-        user=request.user,
-        backend_id=form.cleaned_data['method'],
-        status='new',
-        time=timedelta(days=30 * months),
-        amount=monthly_price * months
-    )
+    if request.user.vpnuser.get_subscription() is not None:
+        return redirect('account:index')
 
-    if not payment.backend.backend_enabled:
+    subscr = form.cleaned_data['subscr'] == '1'
+    backend_id = form.cleaned_data['method']
+    months = int(form.cleaned_data['time'])
+
+    if backend_id not in ACTIVE_BACKENDS:
         return HttpResponseNotFound()
 
-    payment.save()
+    if subscr:
+        if months not in (3, 6, 12):
+            return redirect('account:index')
 
-    r = payment.backend.new_payment(payment)
+        rps = Subscription(
+            user=request.user,
+            backend_id=backend_id,
+            period=str(months) + 'm',
+        )
+        rps.save()
+
+        r = rps.backend.new_subscription(rps)
+
+    else:
+        payment = Payment.create_payment(backend_id, request.user, months)
+        payment.save()
+
+        r = payment.backend.new_payment(payment)
 
     if not r:
         payment.status = 'error'
@@ -89,6 +104,42 @@ def callback_coinbase(request):
         return HttpResponseBadRequest()
 
 
+@csrf_exempt
+def callback_paypal_subscr(request, id):
+    """ PayPal Subscription IPN """
+    if not BACKENDS['paypal'].backend_enabled:
+        return HttpResponseNotFound()
+
+    p = Subscription.objects.get(id=id)
+    if BACKENDS['paypal'].callback_subscr(p, request):
+        return HttpResponse()
+    else:
+        return HttpResponseBadRequest()
+
+
+@csrf_exempt
+@login_required
+def callback_stripe_subscr(request, id):
+    """ Stripe subscription form target """
+    if not BACKENDS['stripe'].backend_enabled:
+        return HttpResponseNotFound()
+
+    p = Subscription.objects.get(id=id)
+    BACKENDS['stripe'].callback_subscr(p, request)
+    return redirect(reverse('account:index'))
+
+
+@csrf_exempt
+def stripe_hook(request):
+    if not BACKENDS['stripe'].backend_enabled:
+        return HttpResponseNotFound()
+
+    if BACKENDS['stripe'].webhook(request):
+        return HttpResponse()
+    else:
+        return HttpResponseBadRequest()
+
+
 @login_required
 @csrf_exempt
 def view(request, id):
@@ -103,6 +154,29 @@ def cancel(request, id):
         p.status = 'cancelled'
         p.save()
     return render(request, 'payments/view.html', dict(payment=p))
+
+
+@login_required
+def cancel_subscr(request, id):
+    if request.method != 'POST':
+        return redirect('account:index')
+
+    p = Subscription.objects.get(id=id, user=request.user)
+    try:
+        p.backend.cancel_subscription(p)
+        messages.add_message(request, messages.INFO, _("Subscription cancelled!"))
+    except NotImplementedError:
+        pass
+    return redirect('account:index')
+
+
+@login_required
+def return_subscr(request, id):
+    p = Subscription.objects.get(id=id, user=request.user)
+    if p.status == 'new':
+        p.status = 'unconfirmed'
+        p.save()
+    return redirect('account:index')
 
 
 @login_required

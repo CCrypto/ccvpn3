@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-01 03:18+0000\n"
+"POT-Creation-Date: 2016-09-06 15:15+0000\n"
 "PO-Revision-Date: 2016-04-07 01:32+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -98,27 +98,27 @@ msgstr "E-Mail"
 msgid "Passwords are not the same"
 msgstr "Les mots de passe de correspondent pas"
 
-#: lambdainst/models.py:25
+#: lambdainst/models.py:27
 msgid "VPN User"
 msgstr "VPN User"
 
-#: lambdainst/models.py:26
+#: lambdainst/models.py:28
 msgid "VPN Users"
 msgstr "VPN Users"
 
-#: lambdainst/models.py:97
+#: lambdainst/models.py:111
 msgid "Gift Code"
 msgstr "Code cadeau"
 
-#: lambdainst/models.py:98
+#: lambdainst/models.py:112
 msgid "Gift Codes"
 msgstr "Codes cadeau"
 
-#: lambdainst/models.py:143
+#: lambdainst/models.py:157
 msgid "Gift Code User"
 msgstr "Utilisateur de codes"
 
-#: lambdainst/models.py:144
+#: lambdainst/models.py:158
 msgid "Gift Code Users"
 msgstr "Utilisateurs de codes"
 
@@ -205,46 +205,46 @@ msgstr ""
 msgid "Awesome VPN! 3€ per month, with a free 7 days trial!"
 msgstr ""
 
-#: lambdainst/views.py:159 templates/account_layout.html.py:9
+#: lambdainst/views.py:168 templates/account_layout.html.py:9
 #: templates/account_layout.html:11 templates/lambdainst/account.html.py:10
 msgid "Account"
 msgstr "Compte"
 
-#: lambdainst/views.py:198 lambdainst/views.py:221 lambdainst/views.py:246
+#: lambdainst/views.py:212 lambdainst/views.py:235 lambdainst/views.py:260
 msgid "OK!"
 msgstr "OK!"
 
-#: lambdainst/views.py:200
+#: lambdainst/views.py:214
 msgid "Invalid captcha"
 msgstr "Captcha invalide"
 
-#: lambdainst/views.py:214
+#: lambdainst/views.py:228
 msgid "Passwords do not match"
 msgstr "Les mots de passe ne correspondent pas"
 
-#: lambdainst/views.py:231 templates/account_layout.html.py:13
+#: lambdainst/views.py:245 templates/account_layout.html.py:13
 #: templates/lambdainst/settings.html:6
 msgid "Settings"
 msgstr "Options"
 
-#: lambdainst/views.py:242
+#: lambdainst/views.py:256
 msgid "Gift code not found or already used."
 msgstr "Code inconnu ou déjà utilisé."
 
-#: lambdainst/views.py:244
+#: lambdainst/views.py:258
 msgid "Gift code only available to free accounts."
 msgstr "Code uniquement disponible pour les nouveaux comptes."
 
-#: lambdainst/views.py:266 templates/account_layout.html.py:15
+#: lambdainst/views.py:280 templates/account_layout.html.py:15
 #: templates/lambdainst/logs.html:6
 msgid "Logs"
 msgstr "Logs"
 
-#: lambdainst/views.py:273 templates/lambdainst/config.html.py:7
+#: lambdainst/views.py:287 templates/lambdainst/config.html.py:7
 msgid "Config"
 msgstr "Config"
 
-#: lambdainst/views.py:377 payments/backends.py:120 payments/backends.py:122
+#: lambdainst/views.py:391 payments/backends.py:129 payments/backends.py:131
 #: templates/admin/index.html:53 templates/admin/index.html.py:56
 #: templates/lambdainst/admin_ref.html:16
 #: templates/lambdainst/admin_status.html:16 templates/payments/list.html:13
@@ -252,56 +252,60 @@ msgstr "Config"
 msgid "Status"
 msgstr "État"
 
-#: payments/admin.py:16
+#: payments/admin.py:9
+msgid "Mark as cancelled (do not actually cancel)"
+msgstr "Marquer comme annulé (n'annule pas)"
+
+#: payments/admin.py:22 payments/admin.py:76
 msgid "Payment Data"
 msgstr "Données de paiement"
 
-#: payments/admin.py:39
+#: payments/admin.py:45
 msgid "Amount"
 msgstr "Montant"
 
-#: payments/admin.py:43
+#: payments/admin.py:49
 msgid "Paid amount"
 msgstr "Montant payé"
 
-#: payments/backends.py:47 payments/backends.py:48
+#: payments/backends.py:56 payments/backends.py:57
 msgid "Bitcoin"
 msgstr ""
 
-#: payments/backends.py:81
+#: payments/backends.py:90
 #, python-format
 msgid "Please send %(amount)s BTC to %(address)s"
 msgstr "Envoyez %(amount)s BTC à %(address)s"
 
-#: payments/backends.py:125
+#: payments/backends.py:134
 msgid "Bitcoin value"
 msgstr "Valeur du Bitcoin"
 
-#: payments/backends.py:126
+#: payments/backends.py:135
 msgid "Testnet"
 msgstr ""
 
-#: payments/backends.py:127
+#: payments/backends.py:136
 msgid "Balance"
 msgstr "Balance"
 
-#: payments/backends.py:128
+#: payments/backends.py:137
 msgid "Blocks"
 msgstr "Blocks"
 
-#: payments/backends.py:129
+#: payments/backends.py:138
 msgid "Bitcoind version"
 msgstr "Version de Bitcoind"
 
-#: payments/backends.py:147
+#: payments/backends.py:156
 msgid "Manual"
 msgstr "Manuel"
 
-#: payments/backends.py:152 payments/backends.py:153
+#: payments/backends.py:161 payments/backends.py:162
 msgid "PayPal"
 msgstr "PayPal"
 
-#: payments/backends.py:189
+#: payments/backends.py:199
 msgid ""
 "Waiting for PayPal to confirm the transaction... It can take up to a few "
 "minutes..."
@@ -309,61 +313,81 @@ msgstr ""
 "En attente de la confirmation par Paypal... Cette étape peut durer quelques "
 "minutes..."
 
-#: payments/backends.py:258
+#: payments/backends.py:355
 msgid "Stripe"
 msgstr "Stripe"
 
-#: payments/backends.py:259
-msgid "Credit Card or Alipay (Stripe)"
-msgstr "Carte ou Alipay (Stripe)"
+#: payments/backends.py:356
+msgid "Credit Card"
+msgstr "Carte"
 
-#: payments/backends.py:312
+#: payments/backends.py:461
 msgid "No payment information was received."
 msgstr "Aucune information de paiement reçue."
 
-#: payments/backends.py:329
+#: payments/backends.py:478
 msgid "The payment has been refunded or rejected."
 msgstr "Le paiement a été remboursé ou rejeté."
 
-#: payments/backends.py:337
+#: payments/backends.py:486
 msgid "The paid amount is under the required amount."
 msgstr "La montant payé est inférieur au montant requis."
 
-#: payments/backends.py:361
+#: payments/backends.py:574
 msgid "Coinbase"
 msgstr "Coinbase"
 
-#: payments/backends.py:362
+#: payments/backends.py:575
 msgid "Bitcoin with CoinBase"
 msgstr "Bitcoin avec CoinBase"
 
-#: payments/models.py:14
+#: payments/models.py:16 payments/models.py:30
 msgid "Waiting for payment"
 msgstr "En attente du paiement"
 
-#: payments/models.py:15
+#: payments/models.py:17
 msgid "Confirmed"
 msgstr "Confirmé"
 
-#: payments/models.py:16
+#: payments/models.py:18 payments/models.py:32
 msgid "Cancelled"
 msgstr "Annullé"
 
-#: payments/models.py:17
+#: payments/models.py:19
 msgid "Rejected by processor"
 msgstr "Rejeté"
 
-#: payments/models.py:18
+#: payments/models.py:20
 msgid "Payment processing failed"
 msgstr "Traitement échoué"
 
-#: payments/models.py:22
+#: payments/models.py:29
+msgid "Created"
+msgstr "Crée"
+
+#: payments/models.py:31
+msgid "Active"
+msgstr "Actif"
+
+#: payments/models.py:33
+msgid "Error"
+msgstr "Error"
+
+#: payments/models.py:37
+msgid "Every 3 months"
+msgstr "Tous les 3 mois"
+
+#: payments/models.py:38
 msgid "Every 6 months"
 msgstr "Tous les 6 mois"
 
-#: payments/models.py:23
-msgid "Yearly"
-msgstr "Annuel"
+#: payments/models.py:39
+msgid "Every year"
+msgstr "Tous les ans"
+
+#: payments/views.py:167
+msgid "Subscription cancelled!"
+msgstr "Abonnement annulé!"
 
 #: templates/account_layout.html:12
 msgid "Config Download"
@@ -378,8 +402,7 @@ msgstr "Paiements"
 msgid "Models in the %(name)s application"
 msgstr ""
 
-#: templates/admin/index.html:31 templates/lambdainst/account.html.py:61
-#: templates/lambdainst/account.html:83
+#: templates/admin/index.html:31 templates/lambdainst/account.html.py:141
 msgid "Add"
 msgstr "Ajouter"
 
@@ -607,17 +630,47 @@ msgstr "Mot de passe oublié ?"
 msgid "Need help?"
 msgstr "Besoin d'aide ?"
 
-#: templates/lambdainst/account.html:15
+#: templates/lambdainst/account.html:16
+#, python-format
+msgid ""
+"Your account is active. Your subscription will automatically renew on "
+"%(until)s (%(backend)s)."
+msgstr ""
+"Votre compte est actif. Votre abonnement sera automatiquement renouvellé "
+"le %(until)s via %(backend)s."
+
+#: templates/lambdainst/account.html:21
+msgid "You can cancel it from PayPal account."
+msgstr "Vous pouvez annuler depuis votre compte PayPal."
+
+#: templates/lambdainst/account.html:28
+msgid "Cancel Subscription"
+msgstr "Annuler l'abonnement"
+
+#: templates/lambdainst/account.html:36
+msgid "Do you really want to cancel your subscription?"
+msgstr "Voulez-vous vraimer annuler votre abonnement ?"
+
+#: templates/lambdainst/account.html:43
+#, python-format
+msgid ""
+"Your subscription is waiting for confirmation by %(backend)s. It may take up "
+"to a few minutes."
+msgstr ""
+"Votre abonnement est en attente de confirmation par %(backend)s. Cette étape "
+"peut prendre jusqu'à quelques minutes..."
+
+#: templates/lambdainst/account.html:51
 #, python-format
 msgid "Your account is paid until %(until)s"
 msgstr "Votre compte est activé jusqu'au %(until)s"
 
-#: templates/lambdainst/account.html:18
+#: templates/lambdainst/account.html:54
 #, python-format
 msgid "(%(left)s left)"
 msgstr "(%(left)s restant)"
 
-#: templates/lambdainst/account.html:24
+#: templates/lambdainst/account.html:60
 msgid ""
 "You can activate your free trial account for two hours periods for up to one "
 "week, by clicking this button:"
@@ -625,46 +678,75 @@ msgstr ""
 "Vous pouvez activez votre compte d'essai pour des périodes de deux heures "
 "pendant jusqu'à une semaine avec ce bouton:"
 
-#: templates/lambdainst/account.html:33
+#: templates/lambdainst/account.html:69
 msgid "Activate"
 msgstr "Activer"
 
-#: templates/lambdainst/account.html:50
+#: templates/lambdainst/account.html:86
 msgid "Your account is not paid."
 msgstr "Votre compte n'est pas payé."
 
-#: templates/lambdainst/account.html:63
-msgid "month"
-msgstr "mois"
+#: templates/lambdainst/account.html:95 templates/payments/list.html.py:6
+msgid "Subscription"
+msgstr "Abonnement"
 
-#: templates/lambdainst/account.html:64 templates/lambdainst/account.html:65
-#: templates/lambdainst/account.html:66
+#: templates/lambdainst/account.html:103
+msgid "Pay every"
+msgstr "Payer tous les"
+
+#: templates/lambdainst/account.html:105 templates/lambdainst/account.html:106
+#: templates/lambdainst/account.html:107 templates/lambdainst/account.html:144
+#: templates/lambdainst/account.html:145 templates/lambdainst/account.html:146
 msgid "months"
 msgstr "mois"
 
-#: templates/lambdainst/account.html:71
+#: templates/lambdainst/account.html:112 templates/lambdainst/account.html:151
 msgid "with"
 msgstr "avec"
 
-#: templates/lambdainst/account.html:93
+#: templates/lambdainst/account.html:124
+msgid "Subscribe"
+msgstr "S'abonner"
+
+#: templates/lambdainst/account.html:126
+msgid "You can cancel at any time."
+msgstr "Vous pouvez annuler à n'importe quel moment."
+
+#: templates/lambdainst/account.html:133
+msgid "One-time payment"
+msgstr "Paiement ponctuel"
+
+#: templates/lambdainst/account.html:143
+msgid "month"
+msgstr "mois"
+
+#: templates/lambdainst/account.html:163
+msgid "Buy Now"
+msgstr "Acheter"
+
+#: templates/lambdainst/account.html:165
+msgid "If you still have time, it will be added."
+msgstr "Si il vous reste du temps, il sera ajouté."
+
+#: templates/lambdainst/account.html:176
 msgid "Gift code"
 msgstr "Code cadeau"
 
-#: templates/lambdainst/account.html:99
-msgid "Use"
-msgstr "Utiliser"
+#: templates/lambdainst/account.html:182
+msgid "Redeem gift code"
+msgstr "Récupérer le code cadeau"
 
-#: templates/lambdainst/account.html:108
+#: templates/lambdainst/account.html:192
 msgid ""
 "Get two weeks for free for every referral that takes at least one month!"
 msgstr ""
 "Gagnez deux semaines gratuites pour chaque client qui a utilisé ce lien !"
 
-#: templates/lambdainst/account.html:111
+#: templates/lambdainst/account.html:195
 msgid "Share this link"
 msgstr "Partagez ce lien"
 
-#: templates/lambdainst/account.html:115
+#: templates/lambdainst/account.html:199
 msgid "tweet"
 msgstr ""
 
@@ -909,10 +991,6 @@ msgstr "Une question ? <b>Contactez nous</b>"
 msgid "Payment"
 msgstr "Paiement"
 
-#: templates/payments/list.html:6
-msgid "Subscription"
-msgstr "Abonnement"
-
 #: templates/payments/list.html:12
 msgid "Value"
 msgstr "Valeur"
@@ -1152,3 +1230,6 @@ msgstr "Peut envoyer des messages privés"
 #: tickets/models.py:56
 msgid "Waiting for staff"
 msgstr "En attente du support"
+
+#~ msgid "year"
+#~ msgstr "an"

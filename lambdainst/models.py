@@ -9,6 +9,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from . import core
 
+from payments.models import Subscription
+
 assert isinstance(settings.TRIAL_PERIOD, timedelta)
 assert isinstance(settings.TRIAL_PERIOD_LIMIT, int)
 
@@ -81,6 +83,18 @@ class VPNUser(models.Model):
             self.referrer.vpnuser.add_paid_time(timedelta(days=14))
             self.referrer.vpnuser.save()
             self.referrer_used = True
+
+    def get_subscription(self, include_unconfirmed=False):
+        """ Tries to get the active (and most recent) Subscription """
+        s = Subscription.objects.filter(user=self.user, status='active') \
+                                .order_by('-id') \
+                                .first()
+        if s is not None or include_unconfirmed is False:
+            return s
+        s = Subscription.objects.filter(user=self.user, status='unconfirmed') \
+                                .order_by('-id') \
+                                .first()
+        return s
 
     def __str__(self):
         return self.user.username

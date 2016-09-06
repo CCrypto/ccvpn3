@@ -10,7 +10,43 @@
     <h1>{% trans 'Account' %} : {{user.username}}</h1>
 
     <div class="account-status">
-        {% if user.vpnuser.is_paid %}
+        {% if subscription %}
+            {% if subscription.status == 'active' %}
+                <p class="account-status-paid">
+                    {% blocktrans trimmed with until=subscription.next_renew|date:'DATE_FORMAT' backend=subscription.backend.backend_verbose_name %}
+                    Your account is active. Your subscription will automatically renew on {{until}} ({{backend}}).
+                    {% endblocktrans %}
+                </p>
+                {% if subscription.backend_id == 'paypal' %}
+                    <p>{% trans 'You can cancel it from PayPal account.' %}</p>
+                {% else %}
+                    <form action="/payments/cancel_subscr/{{subscription.id}}" method="post" class="pure-form centered-form" id="cancel-form">
+                        {% csrf_token %}
+                        <fieldset>
+                            <div class="pure-controls">
+                                <input type="submit" class="pure-button pure-button-primary"
+                                       value="{% trans 'Cancel Subscription' %}" />
+                            </div>
+                        </fieldset>
+                    </form>
+                    <script type="text/javascript">
+                    (function() {
+                        var e = document.getElementById("cancel-form");
+                        e.onsubmit = function() {
+                            return confirm("{% trans 'Do you really want to cancel your subscription?' %}");
+                        };
+                    })();
+                    </script>
+                {% endif %}
+            {% else %}
+                <p class="account-status-paid">
+                    {% blocktrans trimmed with backend=subscription.backend.backend_verbose_name %}
+                    Your subscription is waiting for confirmation by {{backend}}.
+                    It may take up to a few minutes.
+                    {% endblocktrans %}
+                </p>
+            {% endif %}
+        {% elif user.vpnuser.is_paid %}
             <p class="account-status-paid">
                 {% blocktrans trimmed with until=user.vpnuser.expiration|date:'DATETIME_FORMAT' %}
                 Your account is paid until {{until}}
@@ -51,42 +87,89 @@
         {% endif %}
     </div>
 
+    {% if not subscription %}
     <div class="pure-g">
-        <div class="pure-u-1 pure-u-lg-1-2 account-payment-box">
-            <form action="/payments/new" method="post" class="pure-form pure-form-aligned">
-                {% csrf_token %}
+        <div class="pure-u-1 pure-u-lg-1-2 account-payment-box account-payment-tabs">
+            <div class="account-payment-tab">
+                <input type="radio" name="type" id="tab_subscr" value="subscr" checked />
+                <label for="tab_subscr"><span>{% trans 'Subscription' %}</span></label>
+                <div class="tab-content">
+                    <form action="/payments/new" method="post" class="pure-form pure-form-aligned centered-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="subscr" value="1" />
 
-                <fieldset>
-                    <div class="pure-control-group">
-                        <label for="ino_time">{% trans 'Add' %}</label>
-                        <select id="ino_time" name="time" class="pure-input-1-2">
-                            <option value="1">1 {% trans 'month' %}</option>
-                            <option value="3">3 {% trans 'months' %}</option>
-                            <option value="6">6 {% trans 'months' %}</option>
-                            <option value="12">12 {% trans 'months' %}</option>
-                        </select>
-                    </div>
+                        <fieldset>
+                            <div class="pure-control-group">
+                                <label for="ino_time">{% trans 'Pay every' %}</label>
+                                <select id="ino_time" name="time" class="pure-input-1-2">
+                                    <option value="3">3 {% trans 'months' %} ({{price.3}})</option>
+                                    <option value="6">6 {% trans 'months' %} ({{price.6}})</option>
+                                    <option value="12">12 {% trans 'months' %} ({{price.12}})</option>
+                                </select>
+                            </div>
 
-                    <div class="pure-control-group">
-                        <label for="ino_method">{% trans 'with' %}</label>
-                        <select id="ino_method" name="method" class="pure-input-1-2">
-                            {% for backend in backends %}
-                                <option value="{{ backend.backend_id }}" {% if backend.backend_id == default_backend %}selected{% endif %}>
-                                    {{ backend.backend_display_name }}
-                                </option>
-                            {% endfor %}
-                        </select>
-                    </div>
+                            <div class="pure-control-group">
+                                <label for="ino_method">{% trans 'with' %}</label>
+                                <select id="ino_method" name="method" class="pure-input-1-2">
+                                    {% for backend in subscr_backends %}
+                                        <option value="{{ backend.backend_id }}" {% if backend.backend_id == default_backend %}selected{% endif %}>
+                                            {{ backend.backend_display_name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
 
-                    <div class="pure-controls">
-                        <input type="submit" class="pure-button pure-button-primary"
-                               value="{% trans 'Add' %}" />
-                    </div>
-                </fieldset>
-            </form>
+                            <div class="pure-controls">
+                                <input type="submit" class="pure-button pure-button-primary"
+                                       value="{% trans 'Subscribe' %}" />
+                            </div>
+                            <p>{% trans 'You can cancel at any time.' %}</p>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+            <div class="account-payment-tab">
+                <input type="radio" name="type" id="tab_onetime" value="onetime" />
+                <label for="tab_onetime"><span>{% trans 'One-time payment' %}</span></label>
+                <div class="tab-content">
+                    <form action="/payments/new" method="post" class="pure-form pure-form-aligned centered-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="subscr" value="0" />
+
+                        <fieldset>
+                            <div class="pure-control-group">
+                                <label for="ino_time">{% trans 'Add' %}</label>
+                                <select id="ino_time" name="time" class="pure-input-1-2">
+                                    <option value="1">1 {% trans 'month' %} ({{price.1}})</option>
+                                    <option value="3">3 {% trans 'months' %} ({{price.3}})</option>
+                                    <option value="6">6 {% trans 'months' %} ({{price.6}})</option>
+                                    <option value="12">12 {% trans 'months' %} ({{price.12}})</option>
+                                </select>
+                            </div>
+
+                            <div class="pure-control-group">
+                                <label for="ino_method">{% trans 'with' %}</label>
+                                <select id="ino_method" name="method" class="pure-input-1-2">
+                                    {% for backend in backends %}
+                                        <option value="{{ backend.backend_id }}" {% if backend.backend_id == default_backend %}selected{% endif %}>
+                                            {{ backend.backend_display_name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="pure-controls">
+                                <input type="submit" class="pure-button pure-button-primary"
+                                       value="{% trans 'Buy Now' %}" />
+                            </div>
+                            <p>{% trans 'If you still have time, it will be added.' %}</p>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
         </div>
         <div class="pure-u-1 pure-u-lg-1-2 account-giftcode-box">
-            <form action="/account/gift_code" method="post" class="pure-form pure-form-aligned">
+            <form action="/account/gift_code" method="post" class="pure-form pure-form-aligned centered-form">
                 {% csrf_token %}
                 <fieldset>
                     <div class="pure-control-group">
@@ -96,12 +179,13 @@
                     </div>
                     <div class="pure-controls">
                         <input type="submit" class="pure-button pure-button-primary"
-                               value="{% trans 'Use' %}" />
+                               value="{% trans 'Redeem gift code' %}" />
                     </div>
                 </fieldset>
             </form>
         </div>
     </div>
+    {% endif %}
 
     <div class="account-aff-box">
         <p>
