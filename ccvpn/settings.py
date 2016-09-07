@@ -88,8 +88,8 @@ WSGI_APPLICATION = 'ccvpn.wsgi.application'
 LOGIN_URL = 'account:login'
 LOGOUT_URL = 'account:logout'
 
-LOGIN_REDIRECT_URL = 'ccvpn.views.index'
-LOGOUT_REDIRECT_URL = 'ccvpn.views.index'
+LOGIN_REDIRECT_URL = 'account:index'
+LOGOUT_REDIRECT_URL = '/'
 
 PAGES_DIR = BASE_DIR + '/pages/'
 
