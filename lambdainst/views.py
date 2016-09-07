@@ -284,7 +284,7 @@ def logs(request):
 @login_required
 def config(request):
     return render(request, 'lambdainst/config.html', dict(
-        titla=_("Config"),
+        title=_("Config"),
         config_os=openvpn.CONFIG_OS,
         config_countries=(c for _, c in get_locations()),
         config_protocols=openvpn.PROTOCOLS,

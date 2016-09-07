@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http.response import HttpResponseNotFound
 from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.utils.translation import ugettext as _
 
 from .models import Ticket, TicketMessage
 from .forms import NewTicketForm, ReplyForm, StaffReplyForm
@@ -45,7 +46,12 @@ def index(request, f=None, all=False):
     except EmptyPage:
         tickets = paginator.page(paginator.num_pages)
 
-    context = dict(tickets=tickets, filter=f, single_user=single_user)
+    context = dict(
+        tickets=tickets,
+        filter=f,
+        single_user=single_user,
+        title=_("Tickets"),
+    )
     context.update(common_context(request))
     if not f:
         return render(request, 'tickets/index.html', context)
@@ -56,6 +62,7 @@ def index(request, f=None, all=False):
 @login_required
 def new(request):
     context = common_context(request)
+    context['title'] = _("New Ticket")
     if request.method != 'POST':
         context['form'] = NewTicketForm()
         return render(request, 'tickets/new.html', context)
@@ -105,7 +112,12 @@ def view(request, id):
         else:
             form = ReplyForm()
 
-        ctx = dict(ticket=ticket, ticket_messages=messages, form=form)
+        ctx = dict(
+            ticket=ticket,
+            ticket_messages=messages,
+            form=form,
+            title=_("Ticket:") + " " + ticket.subject,
+        )
         ctx.update(common_context(request))
         return render(request, 'tickets/view.html', ctx)
 
@@ -130,7 +142,12 @@ def view(request, id):
         form = ReplyForm(request.POST)
 
     if not form.is_valid():
-        ctx = dict(ticket=ticket, ticket_messages=messages, form=form)
+        ctx = dict(
+            ticket=ticket,
+            ticket_messages=messages,
+            form=form,
+            title=_("Ticket:") + " " + ticket.subject,
+        )
         ctx.update(common_context(request))
         return render(request, 'tickets/view.html', ctx)
 

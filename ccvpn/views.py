@@ -25,7 +25,8 @@ def chat(request):
         username = request.user.username + '|cc'
     else:
         username = "cc?"
-    return render(request, 'ccvpn/chat.html', dict(username=username))
+    ctx = dict(username=username, title=_("Live Chat"))
+    return render(request, 'ccvpn/chat.html', ctx)
 
 
 def set_lang(request):

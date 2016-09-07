@@ -4,7 +4,11 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="{{ LANGUAGE_CODE }}">
 <head>
-    <title>{{ title | default:'CCrypto VPN' }}</title>
+    {% if title %}
+        <title>{{ title }} - CCrypto VPN</title>
+    {% else %}
+        <title>CCrypto VPN</title>
+    {% endif %}
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="{% static 'css/pure-min.css' %}" media="screen" />
     <link rel="stylesheet" href="{% static 'css/grids-responsive-min.css' %}" media="screen" />
