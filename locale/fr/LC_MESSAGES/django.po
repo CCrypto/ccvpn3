@@ -726,7 +726,7 @@ msgstr "Acheter"
 
 #: templates/lambdainst/account.html:165
 msgid "If you still have time, it will be added."
-msgstr "Si il vous reste du temps, il sera ajouté."
+msgstr "S'il vous reste du temps, il sera ajouté."
 
 #: templates/lambdainst/account.html:176
 msgid "Gift code"
