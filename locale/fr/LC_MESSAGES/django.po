@@ -640,7 +640,7 @@ msgid ""
 "Your account is active. Your subscription will automatically renew on "
 "%(until)s (%(backend)s)."
 msgstr ""
-"Votre compte est actif. Votre abonnement sera automatiquement renouvellé le "
+"Votre compte est actif. Votre abonnement sera automatiquement renouvelé le "
 "%(until)s via %(backend)s."
 
 #: templates/lambdainst/account.html:21
@@ -713,8 +713,8 @@ msgid "Subscribe"
 msgstr "S'abonner"
 
 #: templates/lambdainst/account.html:126
-msgid "You can cancel at any time."
-msgstr "Vous pouvez annuler à n'importe quel moment."
+msgid "You can cancel the recurring payment at any time."
+msgstr "Vous pouvez annuler le paiement récurrent à n'importe quel moment."
 
 #: templates/lambdainst/account.html:133
 msgid "One-time payment"
@@ -877,7 +877,7 @@ msgstr "Votre compte expirera le %(exp)s"
 
 #: templates/lambdainst/mail_expire_soon.txt:5
 msgid "You can renew it here:"
-msgstr "Vous pouvez le renouveller ici:"
+msgstr "Vous pouvez le renouveler ici:"
 
 #: templates/lambdainst/settings.html:12 templates/lambdainst/settings.html:17
 msgid "Change password"
