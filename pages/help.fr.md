@@ -12,5 +12,6 @@ Title: Guides
 ## Support
 
   - [**Questions fréquemment posées**](/page/faq)  
+  - [**Informations personnelles et vie privée**](/page/privacy)
   - [**Auto-Diagnostic**](/page/self-diagnosis) : Avant de demander de l'aide, vérifiez si vous trouvez la solution à votre problème ici.
 
