@@ -504,7 +504,7 @@ msgid "Compressed tunnel."
 msgstr "Tunnel compressé."
 
 #: templates/ccvpn/index.html:57
-msgid "Even on Youtube."
+msgid "Even on YouTube."
 msgstr "Même sur YouTube."
 
 #: templates/ccvpn/index.html:66
