@@ -13,5 +13,6 @@ Title: Guides
 ## Support
 
   - [**Frequently Asked Questions**](/page/faq)  
+  - [**Privacy**](/page/privacy)
   - **[Self-Diagnosis](/page/self-diagnosis)**: Before asking for help, check here if you find the solution to your problem.
 
