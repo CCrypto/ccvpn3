@@ -1,6 +1,6 @@
 Title: Privacy Policy
 
-We believe transparency is one of the most important quality a VPN service can have.
+We believe transparency is one of the most important qualities a VPN service can have.
 This page is meant to inform users about what informations CCrypto stores,
 in what conditions, and the exact limits under which it is kept and transfered.  
 If you have any question that is not answered by this page, please contact us.
@@ -35,6 +35,7 @@ We use no external analytics or advertisement network on our website.
 
 Each connection from a VPN client to our VPN server is logged for security and billing purposes.
 For each connection or authentication, we store for up to a year:
+
   - Username
   - Server used and shared server IP address
   - Client IP address and port
@@ -63,7 +64,7 @@ as explicitly described by a dedicated page: [NO-P2P](/page/nop2p)
 
 ## 3. DMCA handling
 
-DMCA cease & desists are *usually* ignored as we have very little control over it.
+DMCA cease & desists are usually ignored as we have very little control over it.
 If one user generates too many abuse, we may investigate and block their access
 to a server without notice as a warning.
 
