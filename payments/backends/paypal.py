@@ -202,3 +202,9 @@ class PaypalBackend(BackendBase):
         url = 'https://history.paypal.com/webscr?cmd=_history-details-from-hub&id=%s'
         return url % payment.backend_extid
 
+    def get_subscr_ext_url(self, subscr):
+        if not subscr.backend_extid:
+            return None
+        return ('https://www.paypal.com/fr/cgi-bin/webscr?cmd=_profile-recurring-payments'
+                '&encrypted_profile_id=%s' % subscr.backend_extid)
+
