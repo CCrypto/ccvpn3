@@ -26,6 +26,10 @@ Oui, vous pouvez partager un lien associé à votre compte, qui vous
 fera gagner 2 semaines de VPN pour chaque client l'ayant suivi.  
 Inviter 24 personnes vous donne donc 1 an de VPN gratuit !
 
+### Est-ce que le P2P est autorisé ?
+Sur certains serveurs. C'est indiqué dans CCVPNGUI et sur la page
+de téléchargement de config.
+
 ### Puis-je avoir une adresse statique ?
 Oui, chaque serveur a une adresse statique. Il suffit d'en choisir un.
 
@@ -116,10 +120,11 @@ les données passant par le VPN.
 C'est anonyme, parce que nous ne vous demandons pas votre nom et ne vérifions pas
 votre identité pour vous laisser profiter du VPN, et que nous autorisons des
 méthodes de payement anonymes, comme le Bitcoin.  
-C'est anonyme, parce que l'on ne peut pas associer une connexion à travers le VPN
-à votre vraie adresse.  
+C'est anonyme, parce que l'on ne peut pas directement associer une connexion à travers le VPN
+à votre identité.  
 Mais, les autorités françaises peuvent nous demander votre historique de
 connexions et les données associées à votre compte. (nom, adresse e-mail, ...)
+C'est donc traçable dans les cas extrêmes et ne vous permet pas d'échapper à la loi.
 
 ### Donnez vous des informations aux autorités ?
 Nous ne vous espionnerons jamais.  

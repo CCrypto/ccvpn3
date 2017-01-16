@@ -1,6 +1,5 @@
 Title: Install on GNU/Linux
 
-
 With NetworkManager
 -------------------
 

@@ -1,17 +1,22 @@
 Title: Install on Windows
 
-With CCVPNGUI
+With CCVPNGUI (recommended)
 -------------
 
 CCVPNGUI is made for CCrypto VPN and contains everything it needs. Just download and run:  
 <https://dl.ccrypto.org/ccvpngui/releases/ccvpngui-1.0.0-1.exe>
 [(sig)](https://dl.ccrypto.org/ccvpngui/releases/ccvpngui-1.0.0-1.exe.asc)
 
+The installer will ask if you want to create a desktop icon.  
+Once installed, you will only have to right click the icon in the notification
+area and select "Connect".  
+A window will open to show you the progression, you can close it at any time and
+the VPN will stay connected.
 
 It's open-source and based on [LVPNGUI](https://github.com/PacketImpact/lvpngui/).
 
 
-With OpenVPN GUI
+With OpenVPN GUI (advanved)
 ----------------
 
 1. Download OpenVPN for Windows on
@@ -34,8 +39,7 @@ With OpenVPN GUI
    Your are now connected and can enjoy your secure connection.
 
 
-Save username and password
---------------------------
+#### Save username and password
 
 You can make OpenVPN remember your username and password, so you don't need
 to type them everytime you want to use the VPN.  
