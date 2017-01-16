@@ -78,6 +78,7 @@ class StripeBackend(BackendBase):
             data-alipay="true">
           </script>
         </form>
+        <noscript><p>Please enable JavaScript to use the payment form.</p></noscript>
         '''
         return form.format(
             post=reverse('payments:cb_stripe_subscr', args=(subscr.id,)),
