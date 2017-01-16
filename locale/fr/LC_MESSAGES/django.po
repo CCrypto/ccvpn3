@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-16 03:12+0000\n"
+"POT-Creation-Date: 2017-01-16 18:37+0000\n"
 "PO-Revision-Date: 2016-04-07 01:32+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -205,50 +205,50 @@ msgstr ""
 msgid "%s Pbps"
 msgstr ""
 
-#: lambdainst/views.py:153
+#: lambdainst/views.py:154
 msgid "Awesome VPN! 3€ per month, with a free 7 days trial!"
 msgstr ""
 
-#: lambdainst/views.py:169 templates/account_layout.html:9
+#: lambdainst/views.py:170 templates/account_layout.html:9
 #: templates/account_layout.html:11 templates/lambdainst/account.html:10
 msgid "Account"
 msgstr "Compte"
 
-#: lambdainst/views.py:213 lambdainst/views.py:236 lambdainst/views.py:261
+#: lambdainst/views.py:214 lambdainst/views.py:237 lambdainst/views.py:262
 msgid "OK!"
 msgstr "OK!"
 
-#: lambdainst/views.py:215
+#: lambdainst/views.py:216
 msgid "Invalid captcha"
 msgstr "Captcha invalide"
 
-#: lambdainst/views.py:229
+#: lambdainst/views.py:230
 msgid "Passwords do not match"
 msgstr "Les mots de passe ne correspondent pas"
 
-#: lambdainst/views.py:246 templates/account_layout.html:13
+#: lambdainst/views.py:247 templates/account_layout.html:13
 #: templates/lambdainst/settings.html:6
 msgid "Settings"
 msgstr "Options"
 
-#: lambdainst/views.py:257
+#: lambdainst/views.py:258
 msgid "Gift code not found or already used."
 msgstr "Code inconnu ou déjà utilisé."
 
-#: lambdainst/views.py:259
+#: lambdainst/views.py:260
 msgid "Gift code only available to free accounts."
 msgstr "Code uniquement disponible pour les nouveaux comptes."
 
-#: lambdainst/views.py:287 templates/account_layout.html:15
+#: lambdainst/views.py:288 templates/account_layout.html:15
 #: templates/lambdainst/logs.html:6
 msgid "Logs"
 msgstr "Logs"
 
-#: lambdainst/views.py:294 templates/lambdainst/config.html:7
+#: lambdainst/views.py:295 templates/lambdainst/config.html:7
 msgid "Config"
 msgstr "Config"
 
-#: lambdainst/views.py:398 payments/backends/bitcoin.py:88
+#: lambdainst/views.py:399 payments/backends/bitcoin.py:88
 #: payments/backends/bitcoin.py:90 templates/admin/index.html:53
 #: templates/admin/index.html:56 templates/lambdainst/admin_ref.html:16
 #: templates/lambdainst/admin_status.html:16 templates/payments/list.html:13
@@ -393,8 +393,8 @@ msgstr "Tous les ans"
 msgid ""
 "Error subscribing. It usually means you don't have enough money available."
 msgstr ""
-"Il y a une erreur à l'inscription. C'est le plus souvent un manque "
-"de fonds sur la carte."
+"Il y a une erreur à l'inscription. C'est le plus souvent un manque de fonds "
+"sur la carte."
 
 #: payments/views.py:134
 msgid "Subscribed!"
@@ -986,19 +986,27 @@ msgstr "Support"
 msgid "Admin"
 msgstr "Admin"
 
-#: templates/layout.html:79
+#: templates/layout.html:80
+msgid "You are using the VPN."
+msgstr "Vous utilisez le VPN."
+
+#: templates/layout.html:82
+msgid "Your IP address: "
+msgstr "Votre adresse IP: "
+
+#: templates/layout.html:86
 msgid "CCrypto_VPN on Twitter"
 msgstr "CCrypto_VPN sur Twitter"
 
-#: templates/layout.html:80
+#: templates/layout.html:87
 msgid "ToS"
 msgstr "CGU"
 
-#: templates/layout.html:81
+#: templates/layout.html:88
 msgid "It's open-source!"
 msgstr "C'est open-source!"
 
-#: templates/layout.html:89
+#: templates/layout.html:96
 msgid "Any question? <b>Chat with us</b>"
 msgstr "Une question ? <b>Contactez nous</b>"
 
@@ -1102,7 +1110,7 @@ msgid "Subject"
 msgstr "Sujet"
 
 #: templates/tickets/layout.html:11 templates/tickets/new.html:7
-#: tickets/views.py:65
+#: tickets/views.py:66
 msgid "New Ticket"
 msgstr "Nouveau ticket"
 
@@ -1122,7 +1130,7 @@ msgstr "Tous ouverts"
 msgid "All Closed"
 msgstr "Tous fermés"
 
-#: templates/tickets/list.html:6 tickets/views.py:53
+#: templates/tickets/list.html:6 tickets/views.py:54
 msgid "Tickets"
 msgstr "Tickets"
 
@@ -1171,7 +1179,7 @@ msgid "Open Ticket"
 msgstr "Créer le ticket"
 
 #: templates/tickets/view.html:7 tickets/models.py:66 tickets/models.py:72
-#: tickets/views.py:115 tickets/views.py:145
+#: tickets/views.py:116 tickets/views.py:146
 msgid "Ticket:"
 msgstr "Ticket:"
 
@@ -1238,4 +1246,3 @@ msgstr "Peut envoyer des messages privés"
 #: tickets/models.py:56
 msgid "Waiting for staff"
 msgstr "En attente du support"
-

@@ -121,7 +121,6 @@ def get_gateway_exit_ips():
 
 def is_vpn_gateway(ip):
     addresses = get_gateway_exit_ips()
-    print(addresses)
     return ip in addresses
 
 
