@@ -25,6 +25,7 @@ from django.db.models import Count
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django_countries import countries
+import lcoreapi
 
 from payments.models import ACTIVE_BACKENDS
 from .forms import SignupForm, ReqEmailForm
@@ -270,13 +271,19 @@ def logs(request):
 
     base = core_api.info['current_instance']
     path = '/users/' + request.user.username + '/sessions/'
-    l = core_api.get(base + path, offset=offset, limit=page_size)
+    try:
+        l = core_api.get(base + path, offset=offset, limit=page_size)
+        total_count = l['total_count']
+        items = l['items']
+    except lcoreapi.APINotFoundError:
+        total_count = 0
+        items = []
     return render(request, 'lambdainst/logs.html', {
-        'sessions': l['items'],
+        'sessions': items,
         'page': page,
         'prev': page - 1 if page > 0 else None,
-        'next': page + 1 if offset + page_size < l['total_count'] else None,
-        'last_page': l['total_count'] // page_size,
+        'next': page + 1 if offset + page_size < total_count else None,
+        'last_page': total_count // page_size,
         'title': _("Logs"),
     })
 
