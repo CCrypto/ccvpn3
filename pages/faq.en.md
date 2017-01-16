@@ -23,6 +23,9 @@ everyday web browsing, or to play an online game. For that, a VPN is perfect.
 Yes! Share your affiliate link and earn 2 weeks for each referral.  
 Invite 24 friends and you get one year of free VPN!
 
+### Is P2P allowed?
+On some servers. You can see it in CCVPNGUI and on the configuration download page.
+
 ### Can I have a static IP address?
 Yes, as each server has its own address. You only have to choose one.
 
@@ -112,10 +115,11 @@ Depends of your definition of anonymous.
 It is anonymous, because we will not ask you for your name or verify your
 identity to be able to use the VPN, and we use anonymous payment methods
 like Bitcoin.  
-It is anonymous, because no one can find out your identity from the other side
+It is anonymous, because no one can directly find out your identity from the other side
 of the VPN.  
 However, French authorities can ask us for user data (username, email,
 payments, ...)
+It is traceable in extreme cases and will not hide you from the law.
 
 ### Will you log traffic or send user data to authorities?
 We won't log your traffic under any condition.  
