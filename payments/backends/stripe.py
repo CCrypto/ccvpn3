@@ -175,15 +175,12 @@ class StripeBackend(BackendBase):
             subscr.backend_data['stripe_error'] = e.json_body['error']['message']
             return
 
-        try:
-            if subscr.status == 'new':
-                subscr.status = 'unconfirmed'
-            subscr.backend_extid = cust['id']
-            subscr.save()
-        except (self.stripe.error.InvalidRequestError, self.stripe.error.CardError) as e:
-            subscr.status = 'error'
-            subscr.backend_data['stripe_error'] = e.json_body['error']['message']
-            subscr.save()
+        # We don't know much about the new Payment, but we know it
+        # succeeded. Wekhooks aren't very reliable, so let's mark it as active
+        # anyway.
+        subscr.status = 'active'
+        subscr.backend_extid = cust['id']
+        subscr.save()
 
     def webhook_payment_succeeded(self, event):
         from payments.models import Subscription, Payment
