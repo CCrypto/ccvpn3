@@ -35,7 +35,14 @@
 
     <form class="pure-form pure-form-stacked" action="" method="post">
         {% csrf_token %}
-        {{ form }}
+
+        <label for="id_message">Message:</label>
+        <textarea cols="40" id="id_message" name="message" rows="10"></textarea>
+
+        {% if staff_reply %}
+            <label for="id_staff_only">Private:</label>
+            <input id="id_staff_only" name="staff_only" type="checkbox" />
+        {% endif %}
 
         <input type="submit" class="pure-button pure-button-primary button-1-2" value="{% trans 'Reply' %}" />
         {% if ticket.is_open %}

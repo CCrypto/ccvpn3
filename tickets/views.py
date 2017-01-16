@@ -107,15 +107,11 @@ def view(request, id):
         messages = ticket.message_set.filter(staff_only=False)
 
     if request.method != 'POST':
-        if request.user.is_staff:
-            form = StaffReplyForm()
-        else:
-            form = ReplyForm()
-
         ctx = dict(
+            staff_reply=request.user.has_perm('tickets.post_private_message'),
             ticket=ticket,
             ticket_messages=messages,
-            form=form,
+            form=ReplyForm(),
             title=_("Ticket:") + " " + ticket.subject,
         )
         ctx.update(common_context(request))
@@ -142,6 +138,7 @@ def view(request, id):
 
     if not form.is_valid():
         ctx = dict(
+            staff_reply=request.user.has_perm('tickets.post_private_message'),
             ticket=ticket,
             ticket_messages=messages,
             form=form,
