@@ -101,6 +101,30 @@ def get_locations():
     return locations
 
 
+@APICache(initial=lambda: [])
+def get_gateway_exit_ips():
+    gateways = core_api.get('/gateways/', enabled=True)
+    ipv4_list = []
+    ipv6_list = []
+
+    for gw in gateways.list_iter():
+        ma = gw['main_addr']
+        if ma.get('ipv4'):
+            ipv4_list.append(ma['ipv4'])
+        if ma.get('ipv6'):
+            ipv6_list.append(ma['ipv6'])
+
+    # TODO: IPv6 support
+
+    return ipv4_list
+
+
+def is_vpn_gateway(ip):
+    addresses = get_gateway_exit_ips()
+    print(addresses)
+    return ip in addresses
+
+
 def create_user(username, cleartext_password):
     """ The password will be hashed and stored safely on the core,
     so we have to send it clearly here.

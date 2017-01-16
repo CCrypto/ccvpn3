@@ -180,6 +180,9 @@ TICKETS_SITE_NAME = 'CCrypto VPN Support'
 # Full URL to the site root
 ROOT_URL = ''
 
+# Forwarded for header name, if any (None will use remote_addr)
+REAL_IP_HEADER_NAME = None
+
 # reCAPTCHA API details. If empty, no captcha is displayed.
 RECAPTCHA_API = 'https://www.google.com/recaptcha/api/siteverify'
 RECAPTCHA_SITE_KEY = ''
