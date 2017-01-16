@@ -79,7 +79,7 @@ def current_active_sessions():
 
 @APICache(initial=lambda: [])
 def get_locations():
-    gateways = core_api.get('/gateways/')
+    gateways = core_api.get('/gateways/', enabled=True)
     locations = {}
 
     for gw in gateways.list_iter():
