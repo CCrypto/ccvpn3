@@ -6,15 +6,7 @@ from django.utils import formats
 from .models import Ticket, TicketMessage, TicketNotifyAddress
 
 
-def close_without_notice(modeladmin, request, queryset):
-    queryset.update(is_open=False, closed=timezone.now())
-close_without_notice.short_description = _("Close selected tickets (without notice)")
-
-
 def close_tickets(modeladmin, request, queryset):
-    for t in queryset:
-        if t.is_open:
-            t.notify_close()
     queryset.update(is_open=False, closed=timezone.now())
 close_tickets.short_description = _("Close selected tickets")
 
@@ -38,7 +30,7 @@ class TicketAdmin(admin.ModelAdmin):
     list_display = ('subject', 'user', 'created', 'category', 'is_open')
     list_filter = ('category', 'is_open')
     search_fields = ('subject', 'user__username', 'message_set__message')
-    actions = (close_tickets, close_without_notice)
+    actions = (close_tickets,)
     inlines = (TicketMessageAdmin,)
 
     def user_link(self, object):
