@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils.translation import ugettext as _
 
+from ccvpn.common import get_client_ip
 from .models import Ticket, TicketMessage
 from .forms import NewTicketForm, ReplyForm, StaffReplyForm
 
@@ -82,7 +83,7 @@ def new(request):
                              message=form.cleaned_data['message'])
 
     if not request.user.is_staff:
-        firstmsg.remote_addr = request.META['REMOTE_ADDR']
+        firstmsg.remote_addr = get_client_ip(request)
 
     firstmsg.save()
 
@@ -151,7 +152,7 @@ def view(request, id):
                         **form.cleaned_data)
 
     if not request.user.is_staff:
-        msg.remote_addr = request.META['REMOTE_ADDR']
+        msg.remote_addr = get_client_ip(request)
 
     msg.save()
 

@@ -27,6 +27,7 @@ from django.contrib.auth.models import User
 from django_countries import countries
 import lcoreapi
 
+from ccvpn.common import get_client_ip
 from payments.models import ACTIVE_BACKENDS
 from .forms import SignupForm, ReqEmailForm
 from .models import GiftCode, VPNUser
@@ -189,7 +190,7 @@ def captcha_test(grr, request):
         return True
 
     data = dict(secret=project_settings.RECAPTCHA_SECRET_KEY,
-                remoteip=request.META['REMOTE_ADDR'],
+                remoteip=get_client_ip(request),
                 response=grr)
 
     try:
