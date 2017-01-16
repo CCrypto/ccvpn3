@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 01:22+0000\n"
+"POT-Creation-Date: 2017-01-16 03:12+0000\n"
 "PO-Revision-Date: 2016-04-07 01:32+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -27,7 +27,7 @@ msgstr ""
 msgid "hash"
 msgstr ""
 
-#: ccvpn/views.py:28 templates/tickets/layout.html.py:10
+#: ccvpn/views.py:28 templates/tickets/layout.html:10
 msgid "Live Chat"
 msgstr "Chat Live"
 
@@ -63,7 +63,7 @@ msgstr "Dates importantes"
 msgid "Permissions"
 msgstr "Permissions"
 
-#: lambdainst/admin.py:133 tickets/admin.py:52
+#: lambdainst/admin.py:133 tickets/admin.py:44
 msgid "Comment"
 msgstr "Notes"
 
@@ -75,7 +75,7 @@ msgstr "Identifiant réservé."
 msgid "Username"
 msgstr "Identifiant"
 
-#: lambdainst/forms.py:39 templates/ccvpn/signup.html.py:19
+#: lambdainst/forms.py:39 templates/ccvpn/signup.html:19
 msgid "Password"
 msgstr "Mot de passe"
 
@@ -83,7 +83,7 @@ msgstr "Mot de passe"
 msgid "Anything"
 msgstr "N'importe quoi"
 
-#: lambdainst/forms.py:43 templates/ccvpn/signup.html.py:24
+#: lambdainst/forms.py:43 templates/ccvpn/signup.html:24
 msgid "Repeat"
 msgstr "Répétez"
 
@@ -92,8 +92,8 @@ msgid "Same Anything"
 msgstr "La même chose"
 
 #: lambdainst/forms.py:47 lambdainst/forms.py:48 lambdainst/forms.py:60
-#: lambdainst/forms.py:61 templates/ccvpn/require_email.html.py:13
-#: templates/ccvpn/signup.html:30 templates/lambdainst/settings.html.py:22
+#: lambdainst/forms.py:61 templates/ccvpn/require_email.html:13
+#: templates/ccvpn/signup.html:30 templates/lambdainst/settings.html:22
 #: templates/registration/password_reset_form.html:11
 msgid "E-Mail"
 msgstr "E-Mail"
@@ -110,27 +110,27 @@ msgstr "VPN User"
 msgid "VPN Users"
 msgstr "VPN Users"
 
-#: lambdainst/models.py:111
+#: lambdainst/models.py:113
 msgid "Gift Code"
 msgstr "Code cadeau"
 
-#: lambdainst/models.py:112
+#: lambdainst/models.py:114
 msgid "Gift Codes"
 msgstr "Codes cadeau"
 
-#: lambdainst/models.py:157
+#: lambdainst/models.py:159
 msgid "Gift Code User"
 msgstr "Utilisateur de codes"
 
-#: lambdainst/models.py:158
+#: lambdainst/models.py:160
 msgid "Gift Code Users"
 msgstr "Utilisateurs de codes"
 
-#: lambdainst/openvpn.py:8 templates/ccvpn/page.html.py:17
+#: lambdainst/openvpn.py:8 templates/ccvpn/page.html:17
 msgid "Windows"
 msgstr "Windows"
 
-#: lambdainst/openvpn.py:9 templates/ccvpn/page.html.py:16
+#: lambdainst/openvpn.py:9 templates/ccvpn/page.html:16
 msgid "Android"
 msgstr "Android"
 
@@ -138,7 +138,7 @@ msgstr "Android"
 msgid "Ubuntu"
 msgstr "Ubuntu"
 
-#: lambdainst/openvpn.py:11 templates/ccvpn/page.html.py:19
+#: lambdainst/openvpn.py:11 templates/ccvpn/page.html:19
 msgid "OS X"
 msgstr "OS X"
 
@@ -205,54 +205,54 @@ msgstr ""
 msgid "%s Pbps"
 msgstr ""
 
-#: lambdainst/views.py:152
+#: lambdainst/views.py:153
 msgid "Awesome VPN! 3€ per month, with a free 7 days trial!"
 msgstr ""
 
-#: lambdainst/views.py:168 templates/account_layout.html.py:9
-#: templates/account_layout.html:11 templates/lambdainst/account.html.py:10
+#: lambdainst/views.py:169 templates/account_layout.html:9
+#: templates/account_layout.html:11 templates/lambdainst/account.html:10
 msgid "Account"
 msgstr "Compte"
 
-#: lambdainst/views.py:212 lambdainst/views.py:235 lambdainst/views.py:260
+#: lambdainst/views.py:213 lambdainst/views.py:236 lambdainst/views.py:261
 msgid "OK!"
 msgstr "OK!"
 
-#: lambdainst/views.py:214
+#: lambdainst/views.py:215
 msgid "Invalid captcha"
 msgstr "Captcha invalide"
 
-#: lambdainst/views.py:228
+#: lambdainst/views.py:229
 msgid "Passwords do not match"
 msgstr "Les mots de passe ne correspondent pas"
 
-#: lambdainst/views.py:245 templates/account_layout.html.py:13
+#: lambdainst/views.py:246 templates/account_layout.html:13
 #: templates/lambdainst/settings.html:6
 msgid "Settings"
 msgstr "Options"
 
-#: lambdainst/views.py:256
+#: lambdainst/views.py:257
 msgid "Gift code not found or already used."
 msgstr "Code inconnu ou déjà utilisé."
 
-#: lambdainst/views.py:258
+#: lambdainst/views.py:259
 msgid "Gift code only available to free accounts."
 msgstr "Code uniquement disponible pour les nouveaux comptes."
 
-#: lambdainst/views.py:280 templates/account_layout.html.py:15
+#: lambdainst/views.py:287 templates/account_layout.html:15
 #: templates/lambdainst/logs.html:6
 msgid "Logs"
 msgstr "Logs"
 
-#: lambdainst/views.py:287 templates/lambdainst/config.html.py:7
+#: lambdainst/views.py:294 templates/lambdainst/config.html:7
 msgid "Config"
 msgstr "Config"
 
-#: lambdainst/views.py:391 payments/backends/bitcoin.py:88
-#: payments/backends/bitcoin.py:90 templates/admin/index.html.py:53
-#: templates/admin/index.html:56 templates/lambdainst/admin_ref.html.py:16
+#: lambdainst/views.py:398 payments/backends/bitcoin.py:88
+#: payments/backends/bitcoin.py:90 templates/admin/index.html:53
+#: templates/admin/index.html:56 templates/lambdainst/admin_ref.html:16
 #: templates/lambdainst/admin_status.html:16 templates/payments/list.html:13
-#: templates/tickets/index.html.py:29 templates/tickets/list.html:14
+#: templates/tickets/index.html:29 templates/tickets/list.html:14
 msgid "Status"
 msgstr "État"
 
@@ -333,15 +333,15 @@ msgstr "Stripe"
 msgid "Credit Card"
 msgstr "Carte"
 
-#: payments/backends/stripe.py:117
+#: payments/backends/stripe.py:118
 msgid "No payment information was received."
 msgstr "Aucune information de paiement reçue."
 
-#: payments/backends/stripe.py:134
+#: payments/backends/stripe.py:135
 msgid "The payment has been refunded or rejected."
 msgstr "Le paiement a été remboursé ou rejeté."
 
-#: payments/backends/stripe.py:142
+#: payments/backends/stripe.py:143
 msgid "The paid amount is under the required amount."
 msgstr "La montant payé est inférieur au montant requis."
 
@@ -389,7 +389,18 @@ msgstr "Tous les 6 mois"
 msgid "Every year"
 msgstr "Tous les ans"
 
-#: payments/views.py:167
+#: payments/views.py:131
+msgid ""
+"Error subscribing. It usually means you don't have enough money available."
+msgstr ""
+"Il y a une erreur à l'inscription. C'est le plus souvent un manque "
+"de fonds sur la carte."
+
+#: payments/views.py:134
+msgid "Subscribed!"
+msgstr "Abonné!"
+
+#: payments/views.py:173
 msgid "Subscription cancelled!"
 msgstr "Abonnement annulé!"
 
@@ -406,7 +417,7 @@ msgstr "Paiements"
 msgid "Models in the %(name)s application"
 msgstr ""
 
-#: templates/admin/index.html:31 templates/lambdainst/account.html.py:141
+#: templates/admin/index.html:31 templates/lambdainst/account.html:141
 msgid "Add"
 msgstr "Ajouter"
 
@@ -595,7 +606,7 @@ msgstr "Nécessaire pour les forums. Une confirmation sera envoyée."
 msgid "Continue"
 msgstr "Continuer"
 
-#: templates/ccvpn/signup.html:8 templates/ccvpn/signup.html.py:37
+#: templates/ccvpn/signup.html:8 templates/ccvpn/signup.html:37
 #: templates/layout.html:38
 msgid "Sign up"
 msgstr "Créer un compte"
@@ -624,11 +635,11 @@ msgstr "Utilisé pour retrouver votre mot de passe."
 msgid "Already a member? Log in"
 msgstr "Déjà membre ? Connectez vous"
 
-#: templates/ccvpn/signup.html:42 templates/registration/login.html.py:18
+#: templates/ccvpn/signup.html:42 templates/registration/login.html:18
 msgid "Forgot your password?"
 msgstr "Mot de passe oublié ?"
 
-#: templates/ccvpn/signup.html:43 templates/registration/login.html.py:19
+#: templates/ccvpn/signup.html:43 templates/registration/login.html:19
 #: templates/registration/password_reset_confirm.html:22
 #: templates/registration/password_reset_form.html:21
 msgid "Need help?"
@@ -690,7 +701,7 @@ msgstr "Activer"
 msgid "Your account is not paid."
 msgstr "Votre compte n'est pas payé."
 
-#: templates/lambdainst/account.html:95 templates/payments/list.html.py:6
+#: templates/lambdainst/account.html:95 templates/payments/list.html:6
 msgid "Subscription"
 msgstr "Abonnement"
 
@@ -842,7 +853,7 @@ msgstr ""
 "Tout ce que nous avons l'obligation de garder. Automatiquement éffacé au "
 "bout de 1 an."
 
-#: templates/lambdainst/logs.html:12 templates/payments/list.html.py:11
+#: templates/lambdainst/logs.html:12 templates/payments/list.html:11
 msgid "Date"
 msgstr "Date"
 
@@ -858,15 +869,15 @@ msgstr "IP Source"
 msgid "Shared IP"
 msgstr "IP Partagée"
 
-#: templates/lambdainst/logs.html:16 templates/lambdainst/status.html.py:42
+#: templates/lambdainst/logs.html:16 templates/lambdainst/status.html:42
 msgid "Bandwidth"
 msgstr "Bande passante"
 
-#: templates/lambdainst/logs.html:27 tickets/admin.py:58 tickets/models.py:58
+#: templates/lambdainst/logs.html:27 tickets/admin.py:50 tickets/models.py:58
 msgid "Open"
 msgstr "Open"
 
-#: templates/lambdainst/logs.html:30 templates/lambdainst/logs.html.py:31
+#: templates/lambdainst/logs.html:30 templates/lambdainst/logs.html:31
 msgid "[unknown]"
 msgstr "[inconnu]"
 
@@ -937,7 +948,7 @@ msgstr "Localisation"
 msgid "Hostname"
 msgstr "Nom"
 
-#: templates/lambdainst/status.html:41 templates/layout.html.py:54
+#: templates/lambdainst/status.html:41 templates/layout.html:54
 msgid "Servers"
 msgstr "Serveurs"
 
@@ -953,7 +964,7 @@ msgstr "Votre compte"
 msgid "Logout"
 msgstr "Se déconnecter"
 
-#: templates/layout.html:39 templates/registration/login.html.py:8
+#: templates/layout.html:39 templates/registration/login.html:8
 #: templates/registration/login.html:13
 msgid "Log in"
 msgstr "Se connecter"
@@ -966,7 +977,7 @@ msgstr "VPN"
 msgid "Guides"
 msgstr "Guides"
 
-#: templates/layout.html:57 templates/tickets/index.html.py:6
+#: templates/layout.html:57 templates/tickets/index.html:6
 #: templates/tickets/layout.html:8 tickets/models.py:14
 msgid "Support"
 msgstr "Support"
@@ -991,7 +1002,7 @@ msgstr "C'est open-source!"
 msgid "Any question? <b>Chat with us</b>"
 msgstr "Une question ? <b>Contactez nous</b>"
 
-#: templates/payments/form.html:7 templates/payments/view.html.py:13
+#: templates/payments/form.html:7 templates/payments/view.html:13
 msgid "Payment"
 msgstr "Paiement"
 
@@ -1081,16 +1092,16 @@ msgstr ""
 msgid "Your open tickets"
 msgstr "Vos tickets ouverts"
 
-#: templates/tickets/index.html:27 templates/tickets/list.html.py:12
+#: templates/tickets/index.html:27 templates/tickets/list.html:12
 msgid "ID"
 msgstr "ID"
 
-#: templates/tickets/index.html:28 templates/tickets/list.html.py:13
+#: templates/tickets/index.html:28 templates/tickets/list.html:13
 #: tickets/forms.py:8
 msgid "Subject"
 msgstr "Sujet"
 
-#: templates/tickets/layout.html:11 templates/tickets/new.html.py:7
+#: templates/tickets/layout.html:11 templates/tickets/new.html:7
 #: tickets/views.py:65
 msgid "New Ticket"
 msgstr "Nouveau ticket"
@@ -1160,7 +1171,7 @@ msgid "Open Ticket"
 msgstr "Créer le ticket"
 
 #: templates/tickets/view.html:7 tickets/models.py:66 tickets/models.py:72
-#: tickets/models.py:82 tickets/views.py:119 tickets/views.py:149
+#: tickets/views.py:115 tickets/views.py:145
 msgid "Ticket:"
 msgstr "Ticket:"
 
@@ -1172,31 +1183,27 @@ msgstr "fermé"
 msgid "Private"
 msgstr "Privé"
 
-#: templates/tickets/view.html:40
+#: templates/tickets/view.html:47
 msgid "Reply"
 msgstr "Répondre"
 
-#: templates/tickets/view.html:42
+#: templates/tickets/view.html:49
 msgid "Close Ticket"
 msgstr "Fermer le ticket"
 
-#: templates/tickets/view.html:44
+#: templates/tickets/view.html:51
 msgid "Re-open Ticket"
 msgstr "Ré-ouvrir le ticket"
 
 #: tickets/admin.py:11
-msgid "Close selected tickets (without notice)"
-msgstr "Fermer les tickets (sans notification)"
-
-#: tickets/admin.py:19
 msgid "Close selected tickets"
 msgstr "Fermer les tickets séléctionnés"
 
-#: tickets/admin.py:56
+#: tickets/admin.py:48
 msgid "Re-opened"
 msgstr "Ré-ouvert"
 
-#: tickets/admin.py:60 tickets/models.py:53
+#: tickets/admin.py:52 tickets/models.py:53
 msgid "Closed"
 msgstr "Fermé"
 
