@@ -170,6 +170,10 @@ class StripeBackend(BackendBase):
             )
         except self.stripe.error.InvalidRequestError:
             return
+        except self.stripe.CardError as e:
+            subscr.status = 'error'
+            subscr.backend_data['stripe_error'] = e.json_body['error']['message']
+            return
 
         try:
             if subscr.status == 'new':

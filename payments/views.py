@@ -126,6 +126,12 @@ def callback_stripe_subscr(request, id):
 
     p = Subscription.objects.get(id=id)
     BACKENDS['stripe'].callback_subscr(p, request)
+    if p.status == 'error' or p.status == 'cancelled':
+        messages.add_message(request, messages.ERROR,
+                             _("Error subscribing. It usually means you don't"
+                               " have enough money available."))
+    else:
+        messages.add_message(request, messages.INFO, _("Subscribed!"))
     return redirect(reverse('account:index'))
 
 
