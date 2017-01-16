@@ -128,7 +128,6 @@ def view(request, id):
         ticket.is_open = False
         ticket.closed = timezone.now()
         ticket.save()
-        ticket.notify_close()
         return redirect('tickets:view', id=ticket.id)
 
     if request.POST.get('reopen') or request.POST.get('button_reopen'):

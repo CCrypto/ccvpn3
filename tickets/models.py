@@ -77,12 +77,6 @@ class Ticket(models.Model):
                 return
             notify(subject, 'tickets/mail_user_reply.txt', [self.user.email], ctx)
 
-    def notify_close(self):
-        url = ROOT_URL + reverse('tickets:view', args=(self.id,))
-        subject = _("Ticket:") + " " + self.subject
-        ctx = dict(ticket=self, url=url)
-        notify(subject, 'tickets/mail_user_close.txt', [self.user.email], ctx)
-
     def __str__(self):
         return self.subject
 
