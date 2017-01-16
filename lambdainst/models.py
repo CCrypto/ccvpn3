@@ -44,6 +44,8 @@ class VPNUser(models.Model):
 
     @property
     def is_paid(self):
+        if self.get_subscription():
+            return True
         if not self.expiration:
             return False
         return self.expiration > timezone.now()

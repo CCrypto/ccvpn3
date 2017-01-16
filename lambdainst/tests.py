@@ -62,6 +62,19 @@ class UserModelTest(TestCase, UserTestMixin):
         vu.add_paid_time(p)
         self.assertTrue(vu.is_paid)
 
+    def test_paid_between_subscr_payments(self):
+        u = User.objects.get(username='aaa')
+        vu = u.vpnuser
+        s = Subscription(user=u, backend_id='paypal', status='new')
+        s.save()
+
+        self.assertFalse(vu.is_paid)
+
+        s.status = 'active'
+        s.save()
+
+        self.assertTrue(vu.is_paid)
+
     def test_grant_trial(self):
         p = timedelta(days=1)
         u = User.objects.get(username='aaa')
