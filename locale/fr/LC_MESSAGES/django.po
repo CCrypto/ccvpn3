@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-16 18:37+0000\n"
+"POT-Creation-Date: 2017-03-09 20:17+0000\n"
 "PO-Revision-Date: 2016-04-07 01:32+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -467,8 +467,8 @@ msgid "Uncensored"
 msgstr "Sans censure"
 
 #: templates/ccvpn/index.html:18
-msgid "We have porn and pirates."
-msgstr "Avec du porn et des pirates."
+msgid "The data must flow."
+msgstr ""
 
 #: templates/ccvpn/index.html:24
 msgid "Cheap"
@@ -1246,3 +1246,4 @@ msgstr "Peut envoyer des messages privés"
 #: tickets/models.py:56
 msgid "Waiting for staff"
 msgstr "En attente du support"
+
