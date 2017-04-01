@@ -3,7 +3,7 @@ Title: Install on Chrome OS
 1. Download the .onc file needed in [your account](/account/config). Select
   Chrome OS as the target OS.
 
-2. Go to <chrome://net-internals/#chromeos>, "ChromeOS" section, and import the downloaded file.
+2. Go to [chrome://net-internals/](chrome://net-internals/#chromeos), "ChromeOS" section, and import the downloaded file.
   It won't display any confirmation; don't worry, it should have imported it anyway.
 
     <img src="/static/pageimg/install_chromeos_1_arrows.png" alt="screenshot" />
