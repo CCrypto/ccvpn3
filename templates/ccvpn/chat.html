@@ -2,7 +2,18 @@
 {% load i18n %}
 {% load staticfiles %}
 
+
 {% block wrap %}
+    {% url 'tickets:new' as new_ticket %}
+    <div id="livechat-info">
+        <p>{% blocktrans trimmed with new_ticket as new_ticket %}
+            We're not able to chat all the time for now.
+            If we don't reply, please <a href="{{new_ticket}}">open a support ticket</a>
+            and we will get back to you as soon as possible!
+            {% endblocktrans %}
+        </p>
+    </div>
+
     <iframe id="livechat-iframe" src="https://vpn.ccrypto.org/kiwi/?nick={{username}}&theme=ccrelaxed#ccrypto"></iframe>
 
     <script type="text/javascript">
@@ -12,6 +23,7 @@
                          - document.getElementById("topbar").offsetHeight
                          - document.getElementById("header").offsetHeight
                          - document.getElementById("footer").offsetHeight
+                         - document.getElementById("livechat-info").offsetHeight
                          - 10);
                 console.log(h);
                 document.getElementById("livechat-iframe").style.height = h + "px";

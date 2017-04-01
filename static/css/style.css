@@ -715,6 +715,11 @@ div.ticket-message-private {
 /***************************************************/
 /********************* Live chat                   */
 
+#livechat-info {
+    border-bottom: 1px solid black;
+    text-align: center;
+}
+
 .livechat-thing {
     position: fixed;
     bottom: 0;

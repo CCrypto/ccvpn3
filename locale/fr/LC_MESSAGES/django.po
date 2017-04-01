@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-09 20:17+0000\n"
+"POT-Creation-Date: 2017-04-01 15:20+0000\n"
 "PO-Revision-Date: 2016-04-07 01:32+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -448,6 +448,17 @@ msgstr ""
 #: templates/admin/index.html:90
 msgid "Unknown content"
 msgstr ""
+
+#: templates/ccvpn/chat.html:9
+#, python-format
+msgid ""
+"We're not able to chat all the time for now. If we don't reply, please <a "
+"href=\"%(new_ticket)s\">open a support ticket</a> and we will get back to "
+"you as soon as possible!"
+msgstr ""
+"Nous ne pouvons pas encore être disponibles tout le temps. Si vous ne recevez "
+"pas de réponse, merci de <a href=\"%(new_ticket)s\">créer un ticket</a> et nous "
+"vous répondrons dès que possible."
 
 #: templates/ccvpn/index.html:6
 msgid "CCrypto VPN is a cheap, fast, anonymous and secure VPN service"
@@ -1246,4 +1257,3 @@ msgstr "Peut envoyer des messages privés"
 #: tickets/models.py:56
 msgid "Waiting for staff"
 msgstr "En attente du support"
-
