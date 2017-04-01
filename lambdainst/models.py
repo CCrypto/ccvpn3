@@ -41,6 +41,7 @@ class VPNUser(models.Model):
     referrer = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL,
                                  related_name='referrals')
     referrer_used = models.BooleanField(default=False)
+    campaign = models.CharField(blank=True, null=True, max_length=64)
 
     @property
     def is_paid(self):

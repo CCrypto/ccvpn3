@@ -85,6 +85,8 @@ def signup(request):
     except User.DoesNotExist:
         pass
 
+    user.vpnuser.campaign = request.session.get('campaign')
+
     user.vpnuser.save()
 
     user.backend = 'django.contrib.auth.backends.ModelBackend'
