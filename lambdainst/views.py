@@ -305,9 +305,12 @@ def config(request):
 def config_dl(request):
     allowed_cc = [cc for (cc, _) in get_locations()]
 
+    os = request.GET.get('client_os')
+
     common_options = {
+        'username': request.user.username,
         'protocol': request.GET.get('protocol'),
-        'os': request.GET.get('client_os'),
+        'os': os,
         'http_proxy': request.GET.get('http_proxy'),
         'ipv6': 'enable_ipv6' in request.GET,
     }
@@ -327,7 +330,10 @@ def config_dl(request):
         z = zipfile.ZipFile(f, mode='w')
 
         for gw_name in allowed_cc + ['random']:
-            filename = 'ccrypto-%s-%s.ovpn' % (gw_name, protocol)
+            if os == 'chromeos':
+                filename = 'ccrypto-%s-%s.onc' % (gw_name, protocol)
+            else:
+                filename = 'ccrypto-%s-%s.ovpn' % (gw_name, protocol)
             config = openvpn.make_config(gw_name=gw_name, **common_options)
             z.writestr(filename, config.encode('utf-8'))
 
@@ -342,15 +348,21 @@ def config_dl(request):
             gw_name = location[3:]
         else:
             gw_name = 'random'
-        filename = 'ccrypto-%s-%s.ovpn' % (gw_name, protocol)
+        if os == 'chromeos':
+            filename = 'ccrypto-%s-%s.onc' % (gw_name, protocol)
+        else:
+            filename = 'ccrypto-%s-%s.ovpn' % (gw_name, protocol)
 
         config = openvpn.make_config(gw_name=gw_name, **common_options)
 
         if 'plain' in request.GET:
             return HttpResponse(content=config, content_type='text/plain')
         else:
-            r = HttpResponse(content=config, content_type='application/x-openvpn-profile')
-            r['Content-Disposition'] = 'attachment; filename="%s.ovpn"' % filename
+            if os == 'chromeos':
+                r = HttpResponse(content=config, content_type='application/x-onc')
+            else:
+                r = HttpResponse(content=config, content_type='application/x-openvpn-profile')
+            r['Content-Disposition'] = 'attachment; filename="%s"' % filename
             return r
 
 

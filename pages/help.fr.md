@@ -7,6 +7,7 @@ Title: Guides
   <li><a href="/page/install-windows"><i class="fa fa-windows fa-5x"></i> Windows</a></li>
   <li><a href="/page/install-gnulinux"><i class="fa fa-linux fa-5x"></i> GNU/Linux</a></li>
   <li><a href="/page/install-osx"><i class="fa fa-apple fa-5x"></i> OS X</a></li>
+  <li><a href="/page/install-chromeos"><i class="fa fa-chrome fa-5x"></i> Chromebook</a></li>
 </ul>
 
 ## Support
