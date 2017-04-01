@@ -9,6 +9,7 @@ from django.utils.translation import ugettext as _
 from lambdainst.models import VPNUser, GiftCode, GiftCodeUser
 from . import core
 
+
 def make_user_link(user):
     change_url = resolve_url('admin:auth_user_change', user.id)
     return '<a href="%s">%s</a>' % (change_url, user.username)
@@ -31,8 +32,8 @@ class VPNUserInline(admin.StackedInline):
     fk_name = 'user'
 
     fields = ('notes', 'expiration', 'last_expiry_notice', 'notify_expiration',
-              'trial_periods_given', 'referrer_a', 'last_vpn_auth')
-    readonly_fields = ('referrer_a', 'last_vpn_auth')
+              'trial_periods_given', 'referrer_a', 'campaign', 'last_vpn_auth')
+    readonly_fields = ('referrer_a', 'last_vpn_auth', 'campaign')
 
     def referrer_a(self, object):
         if not object.referrer:

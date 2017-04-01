@@ -57,6 +57,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'lambdainst.middleware.ReferrerMiddleware',
+    'lambdainst.middleware.CampaignMiddleware',
 )
 
 ROOT_URLCONF = 'ccvpn.urls'
