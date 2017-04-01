@@ -71,7 +71,8 @@ class Ticket(models.Model):
         url = ROOT_URL + reverse('tickets:view', args=(self.id,))
         subject = _("Ticket:") + " " + self.subject
         ctx = dict(ticket=self, message=message, url=url)
-        notify(subject, 'tickets/mail_support_reply.txt', self.get_contacts(), ctx)
+        if message.user == self.user:
+            notify(subject, 'tickets/mail_support_reply.txt', self.get_contacts(), ctx)
         if self.user and self.user.email:
             if message.staff_only and not self.user.has_perm('tickets.view_private_message'):
                 return
