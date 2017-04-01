@@ -1,6 +1,6 @@
 Title: Installation sous Windows
 
-Avec CCVPNGUI (recommandé)
+Avec CCVPNGUI (recommandé, simple)
 -------------
 
 CCVPNGUI est fait pour CCrypto VPN et contient tout ce qu'il faut. Téléchargez et lancez juste :  
@@ -15,6 +15,7 @@ Une fenêtre s'affichera pour vous informer de la progression, vous pouvez la fe
 
 C'est open-source et basé sur [LVPNGUI](https://github.com/PacketImpact/lvpngui/).
 
+---
 
 Avec OpenVPN GUI (avancé)
 ----------------
@@ -44,8 +45,7 @@ Avec OpenVPN GUI (avancé)
 
 #### Enregistrer les identifiants
 Vous pouvez faire qu'OpenVPN enregistre votre nom d'utilisateur et votre mot de
-passe, pour ne pas avoir à l'entrer à chaque connexion.
-
+passe, pour ne pas avoir à l'entrer à chaque connexion.  
 Créez un fichier texte "ccrypto_creds.txt" contenant votre nom sur la
 première ligne, et votre mot de passe sur la deuxième, comme ceci:
 
