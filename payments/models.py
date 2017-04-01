@@ -51,6 +51,9 @@ for cls in BackendBase.__subclasses__():
     name = cls.backend_id
     assert isinstance(name, str)
 
+    if name not in backend_settings:
+        continue
+
     obj = cls(backend_settings.get(name, {}))
     if not obj.backend_enabled:
         if name in backend_settings:
