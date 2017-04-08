@@ -77,9 +77,7 @@ Vous n'avez qu'à [créer un compte](/account/signup) et [nous contacter](/page/
 
 ### Puis-je utiliser mon compte sur plusieurs machines ?
 Oui, vous pouvez utiliser votre compte avec un maximum de 10 connexions
-simultannées.  
-Vous devrez cependant créer un profile pour chacune des
-connexions.
+simultannées.
 
 ### Comment supprimer mon compte ?
 [Contactez nous](/page/help).
