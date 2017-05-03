@@ -6,7 +6,7 @@ Because of its high number of simultaneous connections and high bandwidth usage,
 and the amount of legal issues sometimes linked,
 we have to restrict the use of the BitTorrent protocol on specific servers.  
 Our servers marked as **NO-P2P** are more expensive to maintain
-and and cost more in bandwidth than in other countries,
+and cost more in bandwidth than in other countries,
 so we ask our clients to not use the BitTorrent protocol
 on these servers.
 
