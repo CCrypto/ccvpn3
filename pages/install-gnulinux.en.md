@@ -40,7 +40,7 @@ With systemd (Arch, Fedora 16 or later, Debian 8 or later, ...)
 
 1. Download and install OpenVPN with your package manager.
 
-    - Debian: `sudo apt-get install install openvpn`
+    - Debian: `sudo apt-get install openvpn`
     - Fedora: `sudo yum install openvpn`
     - Arch Linux: `sudo pacman -S openvpn`
 
