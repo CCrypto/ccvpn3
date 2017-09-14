@@ -15,7 +15,7 @@ class StripeBackendTest(TestCase):
         payment = Payment.objects.create(
             user=self.user,
             time=timedelta(days=30),
-            backend='stripe',
+            backend_id='stripe',
             amount=300
         )
 

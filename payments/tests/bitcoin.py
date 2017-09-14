@@ -38,7 +38,7 @@ class BitcoinBackendTest(TestCase):
         self.user = User.objects.create_user('test', 'test_user@example.com', None)
 
         self.p = Payment.objects.create(
-            user=self.user, time=timedelta(days=30), backend='bitcoin',
+            user=self.user, time=timedelta(days=30), backend_id='bitcoin',
             amount=300)
 
     def test_new(self):
@@ -77,7 +77,7 @@ class BitcoinBackendConfirmTest(TestCase):
         self.user = User.objects.create_user('test', 'test_user@example.com', None)
 
         self.p = Payment.objects.create(
-            user=self.user, time=timedelta(days=30), backend='bitcoin',
+            user=self.user, time=timedelta(days=30), backend_id='bitcoin',
             amount=300)
 
         # call new_payment
