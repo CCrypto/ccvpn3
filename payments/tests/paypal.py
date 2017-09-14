@@ -138,7 +138,7 @@ class PaypalBackendTest(TestCase):
         payment = Payment.objects.create(
             user=self.user,
             time=timedelta(days=30),
-            backend='paypal',
+            backend_id='paypal',
             amount=300
         )
 
@@ -191,7 +191,7 @@ class PaypalBackendTest(TestCase):
         payment = Payment.objects.create(
             user=self.user,
             time=timedelta(days=30),
-            backend='paypal',
+            backend_id='paypal',
             amount=300
         )
 
@@ -230,7 +230,7 @@ class PaypalBackendTest(TestCase):
     def test_paypal_subscr(self):
         subscription = Subscription.objects.create(
             user=self.user,
-            backend='paypal',
+            backend_id='paypal',
             period='3m'
         )
 
