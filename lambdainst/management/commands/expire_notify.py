@@ -7,14 +7,13 @@ from django.conf import settings
 from django.utils import timezone
 from django.template.loader import get_template
 from django.core.mail import send_mass_mail
+from constance import config as site_config
 
+from ccvpn.common import parse_integer_list
 from lambdainst.models import VPNUser
 
 ROOT_URL = settings.ROOT_URL
 SITE_NAME = settings.TICKETS_SITE_NAME
-
-NOTIFY_DAYS_BEFORE = settings.NOTIFY_DAYS_BEFORE
-assert isinstance(NOTIFY_DAYS_BEFORE, (list, tuple, set))
 
 
 def get_next_expirations(days=3):
@@ -40,7 +39,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         from_email = settings.DEFAULT_FROM_EMAIL
 
-        for v in NOTIFY_DAYS_BEFORE:
+        for v in parse_integer_list(site_config.NOTIFY_DAYS_BEFORE):
             emails = []
             qs = get_next_expirations(v)
             users = list(qs)

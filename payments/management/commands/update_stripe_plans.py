@@ -1,10 +1,10 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
 
+from ccvpn.common import get_price
 from payments.models import ACTIVE_BACKENDS, SUBSCR_PERIOD_CHOICES, period_months
 
 CURRENCY_CODE, CURRENCY_NAME = settings.PAYMENTS_CURRENCY
-MONTHLY_PRICE = settings.PAYMENTS_MONTHLY_PRICE
 
 
 class Command(BaseCommand):
@@ -26,11 +26,11 @@ class Command(BaseCommand):
         for period_id, period_name in SUBSCR_PERIOD_CHOICES:
             plan_id = backend.get_plan_id(period_id)
             months = period_months(period_id)
-            amount = months * MONTHLY_PRICE
+            amount = months * get_price()
 
             kwargs = dict(
                 id=plan_id,
-                amount=months * MONTHLY_PRICE,
+                amount=amount,
                 interval='month',
                 interval_count=months,
                 name=backend.name + " (%s)" % period_id,
