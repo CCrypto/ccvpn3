@@ -3,6 +3,7 @@ from datetime import timedelta
 from django.test import TestCase
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
+from constance.test import override_config
 
 from payments.models import Payment
 from payments.backends import BitcoinBackend
@@ -41,8 +42,9 @@ class BitcoinBackendTest(TestCase):
             user=self.user, time=timedelta(days=30), backend_id='bitcoin',
             amount=300)
 
+    @override_config(BTC_EUR_VALUE=300)
     def test_new(self):
-        backend = BitcoinBackend(dict(BITCOIN_VALUE=300, URL=''))
+        backend = BitcoinBackend(dict(URL=''))
         backend.make_rpc = FakeBTCRPCNew
 
         backend.new_payment(self.p)
@@ -61,18 +63,21 @@ class BitcoinBackendTest(TestCase):
         300 / 300 = 1 => 1.00000 BTC
         300 / 260 = Decimal('1.153846153846153846153846154') => 1.15385 BTC
         """
-        backend = BitcoinBackend(dict(BITCOIN_VALUE=300, URL=''))
-        backend.make_rpc = FakeBTCRPCNew
-        backend.new_payment(self.p)
-        self.assertEqual(self.p.status_message, "Please send 1.00000 BTC to TEST_ADDRESS")
+        with override_config(BTC_EUR_VALUE=300):
+            backend = BitcoinBackend(dict(URL=''))
+            backend.make_rpc = FakeBTCRPCNew
+            backend.new_payment(self.p)
+            self.assertEqual(self.p.status_message, "Please send 1.00000 BTC to TEST_ADDRESS")
 
-        backend = BitcoinBackend(dict(BITCOIN_VALUE=260, URL=''))
-        backend.make_rpc = FakeBTCRPCNew
-        backend.new_payment(self.p)
-        self.assertEqual(self.p.status_message, "Please send 1.15385 BTC to TEST_ADDRESS")
+        with override_config(BTC_EUR_VALUE=260):
+            backend = BitcoinBackend(dict(URL=''))
+            backend.make_rpc = FakeBTCRPCNew
+            backend.new_payment(self.p)
+            self.assertEqual(self.p.status_message, "Please send 1.15385 BTC to TEST_ADDRESS")
 
 
 class BitcoinBackendConfirmTest(TestCase):
+    @override_config(BTC_EUR_VALUE=300)
     def setUp(self):
         self.user = User.objects.create_user('test', 'test_user@example.com', None)
 
@@ -81,27 +86,30 @@ class BitcoinBackendConfirmTest(TestCase):
             amount=300)
 
         # call new_payment
-        backend = BitcoinBackend(dict(BITCOIN_VALUE=300, URL=''))
+        backend = BitcoinBackend(dict(URL=''))
         backend.make_rpc = FakeBTCRPCNew
         backend.new_payment(self.p)
 
+    @override_config(BTC_EUR_VALUE=300)
     def test_check_unpaid(self):
-        backend = BitcoinBackend(dict(BITCOIN_VALUE=300, URL=''))
+        backend = BitcoinBackend(dict(URL=''))
         backend.make_rpc = FakeBTCRPCUnpaid
 
         backend.check(self.p)
         self.assertEqual(self.p.status, 'new')
         self.assertEqual(self.p.paid_amount, 0)
 
+    @override_config(BTC_EUR_VALUE=300)
     def test_check_partially_paid(self):
-        backend = BitcoinBackend(dict(BITCOIN_VALUE=300, URL=''))
+        backend = BitcoinBackend(dict(URL=''))
         backend.make_rpc = FakeBTCRPCPartial
         backend.check(self.p)
         self.assertEqual(self.p.status, 'new')
         self.assertEqual(self.p.paid_amount, 150)
 
+    @override_config(BTC_EUR_VALUE=300)
     def test_check_paid(self):
-        backend = BitcoinBackend(dict(BITCOIN_VALUE=300, URL=''))
+        backend = BitcoinBackend(dict(URL=''))
         backend.make_rpc = FakeBTCRPCPaid
         backend.check(self.p)
         self.assertEqual(self.p.paid_amount, 300)
