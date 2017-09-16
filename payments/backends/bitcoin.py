@@ -3,6 +3,7 @@ from decimal import Decimal
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
+from constance import config as site_config
 
 from .base import BackendBase
 
@@ -21,7 +22,6 @@ class BitcoinBackend(BackendBase):
         from bitcoin import SelectParams
         from bitcoin.rpc import Proxy
 
-        self.btc_value = settings.get('BITCOIN_VALUE')
         self.account = settings.get('ACCOUNT', 'ccvpn3')
 
         chain = settings.get('CHAIN')
@@ -32,11 +32,13 @@ class BitcoinBackend(BackendBase):
         if not self.url:
             return
 
-        assert isinstance(self.btc_value, int)
-
         self.make_rpc = lambda: Proxy(self.url)
         self.rpc = self.make_rpc()
         self.backend_enabled = True
+
+    @property
+    def btc_value(self):
+        return site_config.BTC_EUR_VALUE
 
     def new_payment(self, payment):
         rpc = self.make_rpc()
