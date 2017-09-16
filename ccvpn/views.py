@@ -10,14 +10,17 @@ from django.utils.http import is_safe_url
 from django.utils.translation import (
     LANGUAGE_SESSION_KEY, check_for_language,
 )
+from constance import config
+
+from .common import get_price_float
 
 
 md = markdown.Markdown(extensions=['toc', 'meta', 'codehilite(noclasses=True)'])
 
 
 def index(request):
-    eur = '%.2f' % (settings.PAYMENTS_MONTHLY_PRICE / 100)
-    return render(request, 'ccvpn/index.html', dict(eur_price=eur))
+    eur = '%.2f' % get_price_float()
+    return render(request, 'ccvpn/index.html', dict(eur_price=eur, motd=config.MOTD))
 
 
 def chat(request):

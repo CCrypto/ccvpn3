@@ -25,9 +25,10 @@ from django.db.models import Count
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django_countries import countries
+from constance import config as site_config
 import lcoreapi
 
-from ccvpn.common import get_client_ip
+from ccvpn.common import get_client_ip, get_price_float
 from payments.models import ACTIVE_BACKENDS
 from .forms import SignupForm, ReqEmailForm
 from .models import GiftCode, VPNUser
@@ -164,7 +165,7 @@ def index(request):
         3 an arbitrary number of months
         """
         def __getitem__(self, months):
-            n = int(months) * project_settings.PAYMENTS_MONTHLY_PRICE / 100
+            n = int(months) * get_price_float()
             c = project_settings.PAYMENTS_CURRENCY[1]
             return '%.2f %s' % (n, c)
 
@@ -180,6 +181,7 @@ def index(request):
         default_backend='paypal',
         recaptcha_site_key=project_settings.RECAPTCHA_SITE_KEY,
         price=price_fn(),
+        user_motd=site_config.MOTD_USER,
     )
     return render(request, 'lambdainst/account.html', context)
 

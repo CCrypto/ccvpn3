@@ -65,6 +65,11 @@
     </header>
 
     {% block wrap %}
+    {% if motd %}
+        <div class="message motd">
+            <p>{{ motd | safe }}</p>
+        </div>
+    {% endif %}
     {% for message in messages %}
         <div class="message">
             <p class="{{message.tags}}">{{ message }}</p>

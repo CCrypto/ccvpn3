@@ -4,15 +4,13 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 from django.utils import timezone
-from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from constance import config as site_config
+
 from . import core
-
+from ccvpn.common import get_trial_period_duration
 from payments.models import Subscription
-
-assert isinstance(settings.TRIAL_PERIOD, timedelta)
-assert isinstance(settings.TRIAL_PERIOD_LIMIT, int)
 
 prng = random.SystemRandom()
 
@@ -66,12 +64,12 @@ class VPNUser(models.Model):
             core.update_user_expiration(self.user)
 
     def give_trial_period(self):
-        self.add_paid_time(settings.TRIAL_PERIOD)
+        self.add_paid_time(get_trial_period_duration())
         self.trial_periods_given += 1
 
     @property
     def can_have_trial(self):
-        if self.trial_periods_given >= settings.TRIAL_PERIOD_LIMIT:
+        if self.trial_periods_given >= site_config.TRIAL_PERIOD_MAX:
             return False
         if self.user.payment_set.filter(status='confirmed').count() > 0:
             return False
@@ -79,7 +77,7 @@ class VPNUser(models.Model):
 
     @property
     def remaining_trial_periods(self):
-        return settings.TRIAL_PERIOD_LIMIT - self.trial_periods_given
+        return site_config.TRIAL_PERIOD_MAX - self.trial_periods_given
 
     def on_payment_confirmed(self, payment):
         if self.referrer and not self.referrer_used:

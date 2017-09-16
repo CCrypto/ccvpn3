@@ -4,6 +4,8 @@ from django.utils import timezone
 from django.core.management import call_command
 from django.core import mail
 from django.utils.six import StringIO
+from constance import config as site_config
+from constance.test import override_config
 
 from .forms import SignupForm
 from .models import VPNUser, User, random_gift_code, GiftCode, GiftCodeUser
@@ -80,7 +82,7 @@ class UserModelTest(TestCase, UserTestMixin):
         u = User.objects.get(username='aaa')
         vu = u.vpnuser
 
-        with self.settings(TRIAL_PERIOD=p, TRIAL_PERIOD_LIMIT=2):
+        with override_config(TRIAL_PERIOD_HOURS=24, TRIAL_PERIOD_MAX=2):
             self.assertEqual(vu.remaining_trial_periods, 2)
             self.assertTrue(vu.can_have_trial)
             vu.give_trial_period()
@@ -103,7 +105,7 @@ class UserModelTest(TestCase, UserTestMixin):
 
         vu = u.vpnuser
 
-        with self.settings(TRIAL_PERIOD=p, TRIAL_PERIOD_LIMIT=2):
+        with override_config(TRIAL_PERIOD_HOURS=24, TRIAL_PERIOD_MAX=2):
             self.assertEqual(vu.remaining_trial_periods, 2)
             self.assertFalse(vu.can_have_trial)
 
@@ -186,25 +188,27 @@ class AccountViewsTest(TestCase, UserTestMixin):
 
     def test_trial(self):
         p = timedelta(days=1)
-        with self.settings(RECAPTCHA_API='TEST', TRIAL_PERIOD=p):
-            good_data = {'g-recaptcha-response': 'TEST-TOKEN'}
+        with self.settings(RECAPTCHA_API='TEST'):
+            with override_config(TRIAL_PERIOD_HOURS=24, TRIAL_PERIOD_MAX=2):
+                good_data = {'g-recaptcha-response': 'TEST-TOKEN'}
 
-            response = self.client.post('/account/trial', good_data)
-            self.assertRedirects(response, '/account/')
+                response = self.client.post('/account/trial', good_data)
+                self.assertRedirects(response, '/account/')
 
-            user = User.objects.get(username='test')
-            self.assertRemaining(user.vpnuser, p)
+                user = User.objects.get(username='test')
+                self.assertRemaining(user.vpnuser, p)
 
     def test_trial_fail(self):
         p = timedelta(days=1)
-        with self.settings(RECAPTCHA_API='TEST', TRIAL_PERIOD=p):
-            bad_data = {'g-recaptcha-response': 'TOTALLY-NOT-TEST-TOKEN'}
+        with self.settings(RECAPTCHA_API='TEST'):
+            with override_config(TRIAL_PERIOD_HOURS=24, TRIAL_PERIOD_MAX=2):
+                bad_data = {'g-recaptcha-response': 'TOTALLY-NOT-TEST-TOKEN'}
 
-            response = self.client.post('/account/trial', bad_data)
-            self.assertRedirects(response, '/account/')
+                response = self.client.post('/account/trial', bad_data)
+                self.assertRedirects(response, '/account/')
 
-            user = User.objects.get(username='test')
-            self.assertRemaining(user.vpnuser, timedelta())
+                user = User.objects.get(username='test')
+                self.assertRemaining(user.vpnuser, timedelta())
 
     def test_settings_form(self):
         response = self.client.get('/account/settings')

@@ -13,7 +13,8 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
-from datetime import timedelta
+from django.core.validators import RegexValidator
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -43,6 +44,8 @@ INSTALLED_APPS = (
     'lambdainst',
     'payments',
     'tickets',
+    'constance',
+    'constance.backends.database',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -229,10 +232,24 @@ PAYMENTS_BACKENDS = {
 }
 
 PAYMENTS_CURRENCY = ('eur', '€')
-PAYMENTS_MONTHLY_PRICE = 300  # in currency*100
-TRIAL_PERIOD = timedelta(hours=2)  # Time added on each trial awarded
-TRIAL_PERIOD_LIMIT = 2  # 2 * 2h = 4h, still has to push the button twice
-NOTIFY_DAYS_BEFORE = (3, 1)  # notify twice: 3 and 1 days before expiration
+
+CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
+CONSTANCE_CONFIG = {
+    'MOTD': ('', "Public site message, displayed on homepage"),
+    'MOTD_USER': ('', "Message for users, displayed on account home"),
+    'MONTHLY_PRICE_EUR': (300, "Base subscription price per month (x0.01€)"),
+    'BTC_EUR_VALUE': (300000, "Current value of a bitcoin (x0.01€/btc)"),
+    'TRIAL_PERIOD_HOURS': (2, "Hours given for each trial period"),
+    'TRIAL_PERIOD_MAX': (84, "Maximum number of trial periods to give (84*2h=1w)"),
+    'NOTIFY_DAYS_BEFORE': ("3, 1", "When to send account expiration notifications. In number of days before, separated y commas",
+                           'integer_list'),
+}
+
+CONSTANCE_ADDITIONAL_FIELDS = {
+    'integer_list': ['django.forms.fields.CharField', {
+        'validators': [RegexValidator(r'^([0-9]+[ ,]+)*([0-9]+)?$')],
+    }],
+}
 
 
 # Local settings

@@ -13,9 +13,6 @@ from .forms import NewPaymentForm
 from .models import Payment, Subscription, BACKENDS, ACTIVE_BACKENDS
 
 
-monthly_price = settings.PAYMENTS_MONTHLY_PRICE
-
-
 @login_required
 def new(request):
     if request.method != 'POST':

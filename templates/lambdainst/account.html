@@ -7,6 +7,13 @@
 
 {% block account_content %}
 <div>
+
+    {% if user_motd %}
+    <div class="account-motd">
+        <p> {{ user_motd | safe }} </p>
+    </div>
+    {% endif %}
+
     <h1>{% trans 'Account' %} : {{user.username}}</h1>
 
     <div class="account-status">

@@ -4,13 +4,13 @@ from django.utils.translation import ugettext_lazy as _
 from jsonfield import JSONField
 from datetime import timedelta
 
+from ccvpn.common import get_price
 from .backends import BackendBase
 
-backend_settings = settings.PAYMENTS_BACKENDS
-assert isinstance(backend_settings, dict)
+backends_settings = settings.PAYMENTS_BACKENDS
+assert isinstance(backends_settings, dict)
 
 CURRENCY_CODE, CURRENCY_NAME = settings.PAYMENTS_CURRENCY
-MONTHLY_PRICE = settings.PAYMENTS_MONTHLY_PRICE
 
 STATUS_CHOICES = (
     ('new', _("Waiting for payment")),
@@ -51,12 +51,17 @@ for cls in BackendBase.__subclasses__():
     name = cls.backend_id
     assert isinstance(name, str)
 
-    if name not in backend_settings:
+    if name not in backends_settings:
         continue
 
-    obj = cls(backend_settings.get(name, {}))
+    backend_settings = backends_settings.get(name, {})
+    for k, v in backend_settings.items():
+        if hasattr(v, '__call__'):
+            backend_settings[k] = v()
+
+    obj = cls(backend_settings)
     if not obj.backend_enabled:
-        if name in backend_settings:
+        if name in backends_settings:
             raise Exception("Invalid settings for payment backend %r" % name)
 
     BACKENDS[name] = obj
@@ -131,7 +136,7 @@ class Payment(models.Model):
             backend_id=backend_id,
             status='new',
             time=timedelta(days=30 * months),
-            amount=MONTHLY_PRICE * months
+            amount=get_price() * months
         )
         return payment
 
@@ -161,7 +166,7 @@ class Subscription(models.Model):
 
     @property
     def period_amount(self):
-        return self.months * MONTHLY_PRICE
+        return self.months * get_price()
 
     @property
     def next_renew(self):
@@ -172,7 +177,7 @@ class Subscription(models.Model):
 
     @property
     def monthly_amount(self):
-        return MONTHLY_PRICE
+        return get_price()
 
     def create_payment(self):
         payment = Payment(
@@ -180,7 +185,7 @@ class Subscription(models.Model):
             backend_id=self.backend_id,
             status='new',
             time=timedelta(days=30 * self.months),
-            amount=MONTHLY_PRICE * self.months,
+            amount=get_price() * self.months,
             subscription=self,
         )
         return payment
