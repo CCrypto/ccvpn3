@@ -41,7 +41,7 @@ def _make_onc(username, name, hostname, port, protocol, http_proxy=None, ipv6=Tr
     cert = {
         'GUID': cert_id,
         'Type': 'Authority',
-        'X509': CA_CERT.strip().replace('\n', '\\n'),
+        'X509': CA_CERT.strip(),
     }
     vpn = {
         'GUID': vpn_id,
