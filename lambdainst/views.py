@@ -398,8 +398,9 @@ def api_auth(request):
 
 def api_locations(request):
     def format_loc(cc, l):
+        msg = ' [%s]' % l['message'] if l['message'] else ''
         return {
-            'country_name': l['country_name'],
+            'country_name': l['country_name'] + msg,
             'country_code': cc,
             'hostname': l['hostname'],
             'bandwidth': l['bandwidth'],
