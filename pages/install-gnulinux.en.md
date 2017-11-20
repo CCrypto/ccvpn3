@@ -11,7 +11,7 @@ It is known to work with an up to date Arch Linux and Linux Mint 17 or later.
 
 1. Download and install OpenVPN and the NetworkManager plugin with your package manager.
 
-    - *Debian*: `sudo apt-get install install openvpn resolvconf network-manager-openvpn network-manager-openvpn-gnome`
+    - *Debian*: `sudo apt-get install openvpn resolvconf network-manager-openvpn network-manager-openvpn-gnome`
     - *Fedora*: `sudo yum install openvpn networkmanager-openvpn`
     - *Arch Linux*: `sudo pacman -S openvpn networkmanager-openvpn`
 
@@ -75,7 +75,7 @@ Without systemd (Debian before 8.0, ...)
 
 1. Download and install OpenVPN with your package manager.
 
-    - Debian: `sudo apt-get install install openvpn resolvconf`
+    - Debian: `sudo apt-get install openvpn resolvconf`
     - Fedora: `sudo yum install openvpn`
 
 2. Download the .ovpn file you need in [your account](/account/config) and put
