@@ -13,7 +13,7 @@ Elle a fonctionné avec Linux Mint 17 ou plus et Arch Linux à jour.
 
 1. Téléchargez et installez OpenVPN et le plugin NM avec votre gestionnaire de paquets :
 
-    - *Debian*: `sudo apt-get install install openvpn resolvconf network-manager-openvpn network-manager-openvpn-gnome`
+    - *Debian*: `sudo apt-get install openvpn resolvconf network-manager-openvpn network-manager-openvpn-gnome`
     - *Fedora*: `sudo yum install openvpn networkmanager-openvpn`
     - *Arch Linux*: `sudo pacman -S openvpn networkmanager-openvpn`
 
@@ -42,7 +42,7 @@ Avec systemd (Arch, Fedora 16 ou plus, Debian 8 ou plus, ...)
 
 1. Téléchargez et installez OpenVPN avec votre gestionnaire de paquets :
 
-    - Debian: `sudo apt-get install install openvpn`
+    - Debian: `sudo apt-get install openvpn`
     - Fedora: `sudo yum install openvpn`
     - Arch Linux: `sudo pacman -S openvpn`
 
@@ -77,7 +77,7 @@ Sans systemd (Debian avant 8.0, ...)
 
 1. Téléchargez et installez OpenVPN avec votre gestionnaire de paquets :
 
-    - Debian: `sudo apt-get install install openvpn resolvconf`
+    - Debian: `sudo apt-get install openvpn resolvconf`
     - Fedora: `sudo yum install openvpn`
 
 2. Téléchargez la configuration (.ovpn) dont vous avez besoin dans
