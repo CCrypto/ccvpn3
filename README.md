@@ -9,7 +9,11 @@ for VPN authentication.
 It communicates with an external service, lambdacore, that manages VPN servers
 and sessions.
 
-CCrypto's commercial support *does not* include this product and will not help you set it up.
+**Disclaimer: this is a specialized solution that requires proprietary software to function.
+This repo is a way for us to share our work freely as we don't believe keeping it secret will do any good;
+feel free to base your own work on it but don't except it to be of an use as-is.**
+
+CCrypto's commercial support *does not* include this and will not help you set it up.
 Feel free to contact us about ccvpn, but with no guarantee.  
 [PacketImpact](https://packetimpact.net/) however may provide you commercial support
 and more services about ccvpn and lambdacore.
